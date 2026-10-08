@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Thống kê bán hàng — MenuMind">
+  <title>S11 · Thống kê bán hàng | MenuMind</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#noi-dung">Đến nội dung chính</a>
+  <header class="topbar">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span>MenuMind</a>
+    <div class="header-user"><span>Lan · Quản lý</span><span class="avatar" aria-hidden="true">L</span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-label">QUẢN LÝ</p>
+      <nav class="side-nav" aria-label="Menu quản lý">
+        <a href="manager-menu-management.html"><span class="nav-number">S10</span>Quản lý thực đơn</a>
+        <a href="manager-sales-insights.html" class="active" aria-current="page"><span class="nav-number">S11</span>Thống kê bán hàng</a>
+        <a href="manager-feedback-center.html"><span class="nav-number">S12</span>Trung tâm phản hồi</a>
+      </nav>
+      <div class="sidebar-bottom"><a href="../index.html">Về trang giới thiệu</a><a href="login.html">Chọn vai trò khác</a></div>
+    </aside>
+  <main id="noi-dung" class="workspace">
+    <div class="page-heading"><div><span class="eyebrow">QUẢN LÝ NHÀ HÀNG</span><h1>Thống kê bán hàng</h1><p>Tổng hợp các đơn đã hoàn thành trong ngày.</p></div><button class="button secondary" type="button" disabled>Lưu báo cáo</button></div>
+    <div class="card toolbar"><label class="field"><span>Từ ngày</span><input type="date" name="from" value="2026-10-08"></label><label class="field"><span>Đến ngày</span><input type="date" name="to" value="2026-10-08"></label><button class="button" type="button" disabled>Xem thống kê</button></div>
+    <div class="grid four stats section"><article class="stat"><p>Giá trị đơn hoàn thành</p><strong>190.000 đ</strong><small>Đơn #103 và #105</small></article><article class="stat"><p>Đơn hoàn thành</p><strong>2</strong><small>Không tính đơn đang phục vụ</small></article><article class="stat"><p>Số phần đã bán</p><strong>5</strong><small>3 loại món</small></article><article class="stat"><p>Chờ trung bình</p><strong>15 phút</strong><small>Từ gửi đơn đến hoàn thành</small></article></div>
+    <div class="grid detail-grid section">
+      <section class="card"><div class="row"><h2>Món bán chạy</h2><span class="badge gray">Theo số lượng</span></div>
+        <div class="bar-chart">
+          <div class="bar-row"><span>Cơm gà</span><div class="bar-track"><div class="bar width-100">3 phần</div></div><strong>135.000 đ</strong></div>
+          <div class="bar-row"><span>Salad rau củ</span><div class="bar-track"><div class="bar width-33">1 phần</div></div><strong>35.000 đ</strong></div>
+          <div class="bar-row"><span>Trà đào</span><div class="bar-track"><div class="bar width-33">1 phần</div></div><strong>20.000 đ</strong></div>
+        </div>
+      </section>
+      <aside class="card"><span class="eyebrow">TỔNG QUAN</span><h2>Hôm nay có gì nổi bật?</h2><p>Cơm gà chiếm 3 trong 5 phần đã bán.</p><div class="summary-line"><span>Giá trị trung bình / đơn</span><strong>95.000 đ</strong></div><div class="summary-line"><span>Đơn thấp nhất</span><strong>90.000 đ</strong></div><div class="summary-line"><span>Đơn cao nhất</span><strong>100.000 đ</strong></div><small>Giá trị món của đơn hoàn thành, chưa phải báo cáo thu tiền.</small></aside>
+    </div>
+    <section class="card"><h2>Đơn đã hoàn thành</h2><div class="table-wrap"><table><thead><tr><th scope="col">Mã đơn</th><th scope="col">Bàn</th><th scope="col">Số phần</th><th scope="col">Giá trị</th><th scope="col">Thời gian chờ</th></tr></thead><tbody><tr><td>#103</td><td>B01</td><td>2</td><td>90.000 đ</td><td>14 phút</td></tr><tr><td>#105</td><td>B05</td><td>3</td><td>100.000 đ</td><td>16 phút</td></tr></tbody></table></div></section>
+    <footer class="footer"><span>MenuMind · Nhóm 9</span><span>S11 · Dữ liệu mẫu</span><a href="404.html">Trang 404</a></footer>
+  </main>
+  </div>
+</body>
+</html>

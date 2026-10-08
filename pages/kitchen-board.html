@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Bảng đơn bếp — MenuMind">
+  <title>S07 · Bảng đơn bếp | MenuMind</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#noi-dung">Đến nội dung chính</a>
+  <header class="topbar">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span>MenuMind</a>
+    <div class="header-user"><span>Minh · Bếp</span><span class="avatar" aria-hidden="true">M</span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-label">NHÂN VIÊN BẾP</p>
+      <nav class="side-nav" aria-label="Menu nhân viên bếp">
+        <a href="kitchen-board.html" class="active" aria-current="page"><span class="nav-number">S07</span>Bảng đơn bếp</a>
+        <a href="kitchen-order-detail.html"><span class="nav-number">S08</span>Chi tiết đơn bếp</a>
+        <a href="kitchen-wait-time-alerts.html"><span class="nav-number">S09</span>Cảnh báo chờ lâu</a>
+      </nav>
+      <div class="sidebar-bottom"><a href="../index.html">Về trang giới thiệu</a><a href="login.html">Chọn vai trò khác</a></div>
+    </aside>
+  <main id="noi-dung" class="workspace">
+    <div class="page-heading"><div><span class="eyebrow">NHÂN VIÊN BẾP</span><h1>Bảng đơn bếp</h1><p>Theo dõi các đơn đang phục vụ · 12:25, ngày 08/10/2026</p></div><a class="button secondary" href="kitchen-wait-time-alerts.html">Cảnh báo chờ lâu · 1</a></div>
+    <div class="card toolbar"><label class="field"><span>Tìm đơn</span><input type="search" name="order-search" placeholder="Mã đơn hoặc mã bàn"></label><label class="field"><span>Khu vực</span><select name="area"><option>Tất cả bàn</option><option>Tầng 1</option></select></label><label class="field"><span>Sắp xếp</span><select name="sort"><option>Đơn cũ trước</option><option>Đơn mới trước</option></select></label></div>
+    <div class="kanban">
+      <section class="kanban-column"><div class="row column-heading"><h2>Chờ nhận</h2><span class="badge orange">1</span></div>
+        <article class="order-card"><div class="row"><h3>#108</h3><span class="badge gray">B03</span></div><p>12:23 · Chờ 2 phút</p><ul class="order-items"><li>2 × Salad rau củ</li></ul><div class="row"><strong>70.000 đ</strong><button class="button small secondary" type="button" disabled>Chi tiết</button></div></article>
+      </section>
+      <section class="kanban-column"><div class="row column-heading"><h2>Đang làm</h2><span class="badge blue">2</span></div>
+        <article class="order-card"><div class="row"><h3>#104</h3><span class="badge gray">B04</span></div><p>11:57 · Chờ 28 phút</p><ul class="order-items"><li>1 × Cơm gà</li><li>1 × Bún bò</li></ul><p class="warning-text">Quá ngưỡng chờ 20 phút</p><div class="row"><strong>95.000 đ</strong><button class="button small secondary" type="button" disabled>Chi tiết</button></div></article>
+        <article class="order-card"><div class="row"><h3>#107</h3><span class="badge gray">B01</span></div><p>12:15 · Chờ 10 phút</p><ul class="order-items"><li>2 × Cơm gà · Để sốt riêng</li><li>1 × Trà đào · Ít đá</li></ul><p class="muted">Dự kiến phục vụ 12:35</p><div class="row"><strong>110.000 đ</strong><a class="button small secondary" href="kitchen-order-detail.html">Chi tiết</a></div></article>
+      </section>
+      <section class="kanban-column"><div class="row column-heading"><h2>Sẵn sàng</h2><span class="badge green">1</span></div>
+        <article class="order-card"><div class="row"><h3>#106</h3><span class="badge gray">B02</span></div><p>12:10 · Chờ 15 phút</p><ul class="order-items"><li>1 × Bún bò</li></ul><p class="success-text">Món đã sẵn sàng phục vụ</p><div class="row"><strong>50.000 đ</strong><button class="button small secondary" type="button" disabled>Chi tiết</button></div></article>
+      </section>
+    </div>
+    <footer class="footer"><span>MenuMind · Nhóm 9</span><span>S07 · Dữ liệu mẫu</span><a href="404.html">Trang 404</a></footer>
+  </main>
+  </div>
+</body>
+</html>

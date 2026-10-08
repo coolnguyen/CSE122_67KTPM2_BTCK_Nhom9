@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Trung tâm phản hồi — MenuMind">
+  <title>S12 · Trung tâm phản hồi | MenuMind</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#noi-dung">Đến nội dung chính</a>
+  <header class="topbar">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span>MenuMind</a>
+    <div class="header-user"><span>Lan · Quản lý</span><span class="avatar" aria-hidden="true">L</span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-label">QUẢN LÝ</p>
+      <nav class="side-nav" aria-label="Menu quản lý">
+        <a href="manager-menu-management.html"><span class="nav-number">S10</span>Quản lý thực đơn</a>
+        <a href="manager-sales-insights.html"><span class="nav-number">S11</span>Thống kê bán hàng</a>
+        <a href="manager-feedback-center.html" class="active" aria-current="page"><span class="nav-number">S12</span>Trung tâm phản hồi</a>
+      </nav>
+      <div class="sidebar-bottom"><a href="../index.html">Về trang giới thiệu</a><a href="login.html">Chọn vai trò khác</a></div>
+    </aside>
+  <main id="noi-dung" class="workspace">
+    <div class="page-heading"><div><span class="eyebrow">QUẢN LÝ NHÀ HÀNG</span><h1>Trung tâm phản hồi</h1><p>Lắng nghe khách hàng và theo dõi các vấn đề cần cải thiện.</p></div><span class="badge orange">1 phản hồi chưa xử lý</span></div>
+    <div class="card toolbar"><label class="field"><span>Tìm phản hồi</span><input type="search" name="feedback-search" placeholder="Mã đơn hoặc nội dung..."></label><label class="field"><span>Trạng thái</span><select name="feedback-status"><option>Tất cả</option><option>Chưa xử lý</option><option>Đã xử lý</option></select></label><label class="field"><span>Đánh giá</span><select name="stars"><option>Tất cả sao</option><option>5 sao</option><option>4 sao</option><option>3 sao trở xuống</option></select></label></div>
+    <div class="grid two section">
+      <section class="card"><h2>Ý kiến khách hàng</h2><article class="feedback-card active-feedback"><div class="row"><strong>#105 · B05</strong><span class="badge orange">Chưa xử lý</span></div><p class="stars" aria-label="4 trên 5 sao">★★★★☆</p><blockquote>Món ăn ngon, nhưng lên món hơi chậm.</blockquote><small>08/10/2026 · 12:05</small></article><article class="feedback-card"><div class="row"><strong>#103 · B01</strong><span class="badge green">Đã xử lý</span></div><p class="stars" aria-label="5 trên 5 sao">★★★★★</p><blockquote>Nhân viên nhiệt tình, món ăn vừa miệng.</blockquote><small>08/10/2026 · 11:50</small></article></section>
+      <section class="card"><span class="eyebrow">ĐƠN #105</span><h2>Phân loại và xử lý</h2><div class="sub-panel"><span class="badge blue">Gợi ý phân loại mẫu</span><h3>Thời gian phục vụ</h3><p>Cụm “lên món hơi chậm” gợi ý cần xem lại tốc độ phục vụ. Khách cũng có phản hồi tốt về món ăn.</p></div><div class="form-stack">
+      <label class="field"><span>Chủ đề</span><select name="topic"><option>Thời gian phục vụ</option><option>Chất lượng món</option><option>Thái độ nhân viên</option><option>Khác</option></select></label>
+      <label class="field"><span>Ghi chú xử lý</span><textarea name="handling-note" rows="4" placeholder="Ghi lại việc cần kiểm tra hoặc trao đổi với bếp..."></textarea></label>
+      </div><div class="actions"><button class="button" type="button" disabled>Lưu phân loại</button><button class="button secondary" type="button" disabled>Đánh dấu đã xử lý</button></div></section>
+    </div>
+    <footer class="footer"><span>MenuMind · Nhóm 9</span><span>S12 · Dữ liệu mẫu</span><a href="404.html">Trang 404</a></footer>
+  </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Quản lý tài khoản — MenuMind">
+  <title>S14 · Quản lý tài khoản | MenuMind</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#noi-dung">Đến nội dung chính</a>
+  <header class="topbar">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span>MenuMind</a>
+    <div class="header-user"><span>Hải · Quản trị</span><span class="avatar" aria-hidden="true">H</span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-label">QUẢN TRỊ VIÊN</p>
+      <nav class="side-nav" aria-label="Menu quản trị viên">
+        <a href="admin-table-management.html"><span class="nav-number">S13</span>Quản lý bàn</a>
+        <a href="admin-user-management.html" class="active" aria-current="page"><span class="nav-number">S14</span>Quản lý tài khoản</a>
+        <a href="admin-settings.html"><span class="nav-number">S15</span>Cài đặt hệ thống</a>
+      </nav>
+      <div class="sidebar-bottom"><a href="../index.html">Về trang giới thiệu</a><a href="login.html">Chọn vai trò khác</a></div>
+    </aside>
+  <main id="noi-dung" class="workspace">
+    <div class="page-heading"><div><span class="eyebrow">QUẢN TRỊ VIÊN</span><h1>Quản lý tài khoản</h1><p>Phân công đúng vai trò cho từng nhân viên.</p></div><a class="button" href="#them-tai-khoan">Thêm tài khoản</a></div>
+    <div class="card toolbar"><label class="field"><span>Tìm nhân viên</span><input type="search" name="user-search" placeholder="Tên hoặc tài khoản..."></label><label class="field"><span>Vai trò</span><select name="role-filter"><option>Tất cả</option><option>Nhân viên bếp</option><option>Quản lý</option><option>Quản trị viên</option></select></label><label class="field"><span>Trạng thái</span><select name="account-status"><option>Tất cả</option><option>Hoạt động</option><option>Đã khóa</option></select></label></div>
+    <section class="card section"><div class="table-wrap"><table><thead><tr><th scope="col">Nhân viên</th><th scope="col">Tài khoản</th><th scope="col">Vai trò</th><th scope="col">Trạng thái</th><th scope="col">Thao tác</th></tr></thead><tbody><tr><td><strong>Minh</strong></td><td>minh.bep</td><td>Nhân viên bếp</td><td><span class="badge green">Hoạt động</span></td><td><button class="button small secondary" type="button" disabled>Sửa</button> <button class="button small secondary" type="button" disabled>Khóa</button></td></tr><tr><td><strong>Lan</strong></td><td>lan.quanly</td><td>Quản lý</td><td><span class="badge green">Hoạt động</span></td><td><button class="button small secondary" type="button" disabled>Sửa</button> <button class="button small secondary" type="button" disabled>Khóa</button></td></tr><tr><td><strong>Hải</strong></td><td>hai.admin</td><td>Quản trị viên</td><td><span class="badge green">Hoạt động</span></td><td><button class="button small secondary" type="button" disabled>Sửa</button></td></tr><tr><td><strong>Nam</strong></td><td>nam.bep</td><td>Nhân viên bếp</td><td><span class="badge gray">Đã khóa</span></td><td><button class="button small secondary" type="button" disabled>Khôi phục</button></td></tr></tbody></table></div></section>
+    <section id="them-tai-khoan" class="card"><h2>Thêm tài khoản nhân viên</h2><div class="grid two form-stack">
+    <label class="field"><span>Họ tên</span><input name="full-name" placeholder="Nhập họ và tên"></label>
+    <label class="field"><span>Tên tài khoản</span><input name="username" placeholder="Ví dụ: an.bep" autocomplete="off"></label>
+    <label class="field"><span>Vai trò</span><select name="new-role"><option>Nhân viên bếp</option><option>Quản lý</option><option>Quản trị viên</option></select></label>
+    <label class="field"><span>Trạng thái</span><select name="new-account-status"><option>Hoạt động</option><option>Đã khóa</option></select></label>
+    </div><button class="button" type="button" disabled>Tạo tài khoản</button><p class="muted">Luôn giữ ít nhất một quản trị viên hoạt động.</p></section>
+    <footer class="footer"><span>MenuMind · Nhóm 9</span><span>S14 · Dữ liệu mẫu</span><a href="404.html">Trang 404</a></footer>
+  </main>
+  </div>
+</body>
+</html>

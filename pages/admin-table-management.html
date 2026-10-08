@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Quản lý bàn — MenuMind">
+  <title>S13 · Quản lý bàn | MenuMind</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#noi-dung">Đến nội dung chính</a>
+  <header class="topbar">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span>MenuMind</a>
+    <div class="header-user"><span>Hải · Quản trị</span><span class="avatar" aria-hidden="true">H</span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-label">QUẢN TRỊ VIÊN</p>
+      <nav class="side-nav" aria-label="Menu quản trị viên">
+        <a href="admin-table-management.html" class="active" aria-current="page"><span class="nav-number">S13</span>Quản lý bàn</a>
+        <a href="admin-user-management.html"><span class="nav-number">S14</span>Quản lý tài khoản</a>
+        <a href="admin-settings.html"><span class="nav-number">S15</span>Cài đặt hệ thống</a>
+      </nav>
+      <div class="sidebar-bottom"><a href="../index.html">Về trang giới thiệu</a><a href="login.html">Chọn vai trò khác</a></div>
+    </aside>
+  <main id="noi-dung" class="workspace">
+    <div class="page-heading"><div><span class="eyebrow">QUẢN TRỊ VIÊN</span><h1>Quản lý bàn</h1><p>Thiết lập bàn và theo dõi tình trạng sử dụng.</p></div><a class="button" href="#them-ban">Thêm bàn</a></div>
+    <div class="grid three stats"><article class="stat"><p>Tổng số bàn</p><strong>6</strong><small>Khu vực tầng 1</small></article><article class="stat"><p>Đang phục vụ</p><strong>4</strong><small>B01, B02, B03, B04</small></article><article class="stat"><p>Có thể sử dụng</p><strong>1</strong><small>B05 đang trống</small></article></div>
+    <div class="grid three section">
+    <article class="card table-card"><div class="row"><h2>B01</h2><span class="badge blue">Đang phục vụ</span></div><p>Tầng 1 · 4 chỗ</p><div class="summary-line"><span>Đơn hiện tại</span><strong>#107</strong></div><div class="actions"><button class="button small secondary" type="button" disabled>Sửa</button><button class="button small secondary" type="button" disabled>Vô hiệu</button></div></article><article class="card table-card"><div class="row"><h2>B02</h2><span class="badge blue">Đang phục vụ</span></div><p>Tầng 1 · 2 chỗ</p><div class="summary-line"><span>Đơn hiện tại</span><strong>#106</strong></div><div class="actions"><button class="button small secondary" type="button" disabled>Sửa</button><button class="button small secondary" type="button" disabled>Vô hiệu</button></div></article><article class="card table-card"><div class="row"><h2>B03</h2><span class="badge blue">Đang phục vụ</span></div><p>Tầng 1 · 4 chỗ</p><div class="summary-line"><span>Đơn hiện tại</span><strong>#108</strong></div><div class="actions"><button class="button small secondary" type="button" disabled>Sửa</button><button class="button small secondary" type="button" disabled>Vô hiệu</button></div></article><article class="card table-card"><div class="row"><h2>B04</h2><span class="badge blue">Đang phục vụ</span></div><p>Tầng 1 · 6 chỗ</p><div class="summary-line"><span>Đơn hiện tại</span><strong>#104</strong></div><div class="actions"><button class="button small secondary" type="button" disabled>Sửa</button><button class="button small secondary" type="button" disabled>Vô hiệu</button></div></article><article class="card table-card"><div class="row"><h2>B05</h2><span class="badge green">Trống</span></div><p>Tầng 1 · 4 chỗ</p><div class="summary-line"><span>Đơn hiện tại</span><strong>Chưa có đơn</strong></div><div class="actions"><button class="button small secondary" type="button" disabled>Sửa</button><button class="button small secondary" type="button" disabled>Vô hiệu</button></div></article><article class="card table-card"><div class="row"><h2>B06</h2><span class="badge gray">Tạm ngưng</span></div><p>Tầng 1 · 4 chỗ</p><div class="summary-line"><span>Đơn hiện tại</span><strong>Không nhận đơn</strong></div><div class="actions"><button class="button small secondary" type="button" disabled>Sửa</button><button class="button small secondary" type="button" disabled>Khôi phục</button></div></article>
+    </div>
+    <section class="card" id="them-ban"><h2>Thêm bàn mới</h2><div class="grid three form-stack"><label class="field"><span>Mã bàn</span><input name="table-code" placeholder="B07" maxlength="10"></label><label class="field"><span>Số chỗ</span><input type="number" name="seats" min="1" max="20" value="4"></label><label class="field"><span>Khu vực</span><select name="table-area"><option>Tầng 1</option></select></label></div><button class="button" type="button" disabled>Lưu bàn</button><p class="muted">Bàn đang có đơn phục vụ cần hoàn tất đơn trước khi vô hiệu.</p></section>
+    <footer class="footer"><span>MenuMind · Nhóm 9</span><span>S13 · Dữ liệu mẫu</span><a href="404.html">Trang 404</a></footer>
+  </main>
+  </div>
+</body>
+</html>

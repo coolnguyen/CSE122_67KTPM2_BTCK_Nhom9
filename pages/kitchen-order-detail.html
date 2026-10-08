@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Chi tiết đơn bếp — MenuMind">
+  <title>S08 · Chi tiết đơn bếp | MenuMind</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#noi-dung">Đến nội dung chính</a>
+  <header class="topbar">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span>MenuMind</a>
+    <div class="header-user"><span>Minh · Bếp</span><span class="avatar" aria-hidden="true">M</span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-label">NHÂN VIÊN BẾP</p>
+      <nav class="side-nav" aria-label="Menu nhân viên bếp">
+        <a href="kitchen-board.html"><span class="nav-number">S07</span>Bảng đơn bếp</a>
+        <a href="kitchen-order-detail.html" class="active" aria-current="page"><span class="nav-number">S08</span>Chi tiết đơn bếp</a>
+        <a href="kitchen-wait-time-alerts.html"><span class="nav-number">S09</span>Cảnh báo chờ lâu</a>
+      </nav>
+      <div class="sidebar-bottom"><a href="../index.html">Về trang giới thiệu</a><a href="login.html">Chọn vai trò khác</a></div>
+    </aside>
+  <main id="noi-dung" class="workspace">
+    <div class="page-heading"><div><a class="text-link" href="kitchen-board.html">← Bảng đơn bếp</a><h1>Chi tiết đơn #107</h1><p>Bàn B01 · Gửi lúc 12:15 · Nhận lúc 12:18</p></div><span class="badge blue">Đang làm</span></div>
+    <div class="grid detail-grid">
+      <section class="card"><div class="row"><h2>Món cần chuẩn bị</h2><span class="muted">3 phần</span></div>
+        <div class="table-wrap"><table><thead><tr><th scope="col">Món</th><th scope="col">Số lượng</th><th scope="col">Ghi chú</th></tr></thead><tbody><tr><td><strong>Cơm gà</strong><br><small>45.000 đ / phần</small></td><td>2</td><td>Để sốt riêng</td></tr><tr><td><strong>Trà đào</strong><br><small>20.000 đ / ly</small></td><td>1</td><td>Ít đá</td></tr></tbody></table></div>
+        <div class="summary-line"><span>Tổng đơn</span><strong>110.000 đ</strong></div><h3>Tiến độ phục vụ</h3>
+        <div class="notice">Đơn đang chế biến. Chuyển sang sẵn sàng khi tất cả món đã được chuẩn bị.</div>
+        <div class="actions"><button class="button" type="button" disabled>Đánh dấu sẵn sàng</button><button class="button secondary" type="button" disabled>Đã giao cho khách</button></div>
+        <details class="sub-panel"><summary>Lịch sử xử lý</summary><p>12:15 · Khách gửi đơn.</p><p>12:18 · Minh nhận đơn và bắt đầu chế biến.</p></details>
+      </section>
+      <aside class="card">
+        <span class="eyebrow">THỜI GIAN DỰ KIẾN</span><h2>Phục vụ lúc 12:35</h2><p>Khách đã chờ 10 phút tính đến 12:25.</p>
+        <div class="form-stack"><label class="field"><span>Giờ phục vụ dự kiến</span><input type="time" name="ready-at" value="12:35"></label><label class="field"><span>Ghi chú cho khách</span><textarea name="customer-message" rows="3">Bếp đang chuẩn bị món của bạn.</textarea></label><button class="button full" type="button" disabled>Cập nhật dự kiến</button></div>
+        <div class="sub-panel"><span class="badge blue">Gợi ý thời gian</span><h3>Nhập dự kiến thủ công</h3><p>Đang có 2 đơn chế biến. Chưa đủ điều kiện để tính gợi ý theo mô hình một trạm bếp.</p></div>
+      </aside>
+    </div>
+    <footer class="footer"><span>MenuMind · Nhóm 9</span><span>S08 · Dữ liệu mẫu</span><a href="404.html">Trang 404</a></footer>
+  </main>
+  </div>
+</body>
+</html>

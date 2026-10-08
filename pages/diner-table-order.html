@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Giỏ món & gửi đơn — MenuMind">
+  <title>S05 · Giỏ món & gửi đơn | MenuMind</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#noi-dung">Đến nội dung chính</a>
+  <header class="topbar">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span>MenuMind</a>
+    <div class="header-user"><span>Khách · B01</span><span class="avatar" aria-hidden="true">B</span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-label">KHÁCH HÀNG</p>
+      <nav class="side-nav" aria-label="Menu khách hàng">
+        <a href="diner-menu.html"><span class="nav-number">S03</span>Thực đơn</a>
+        <a href="diner-table-order.html" class="active" aria-current="page"><span class="nav-number">S05</span>Giỏ món & gửi đơn</a>
+        <a href="diner-order-status.html"><span class="nav-number">S06</span>Theo dõi đơn & phản hồi</a>
+      </nav>
+      <div class="sidebar-bottom"><a href="../index.html">Về trang giới thiệu</a><a href="login.html">Chọn vai trò khác</a></div>
+    </aside>
+  <main id="noi-dung" class="workspace">
+    <div class="page-heading"><div><span class="eyebrow">KHÁCH HÀNG · BÀN B01</span><h1>Giỏ món của bạn</h1><p>Kiểm tra món và ghi chú trước khi gửi đến bếp.</p></div><a class="button secondary" href="diner-menu.html">Chọn thêm món</a></div>
+    <div class="grid detail-grid">
+      <section class="card">
+        <div class="row"><h2>3 phần · 2 món</h2><span class="badge blue">Bàn B01</span></div>
+        <article class="cart-item"><img src="../assets/com-ga.svg" alt="Cơm gà" width="120" height="88"><div><h3>Cơm gà</h3><p>45.000 đ / phần</p><small>Ghi chú: để sốt riêng</small></div><label class="field"><span>Số lượng cơm gà</span><input class="quantity" type="number" min="1" max="20" value="2" name="rice-quantity"></label><div class="cart-price"><strong>90.000 đ</strong><button class="text-button" type="button" disabled>Xóa</button></div></article>
+        <article class="cart-item"><img src="../assets/tra-dao.svg" alt="Trà đào" width="120" height="88"><div><h3>Trà đào</h3><p>20.000 đ / ly</p><small>Ghi chú: ít đá</small></div><label class="field"><span>Số lượng trà đào</span><input class="quantity" type="number" min="1" max="20" value="1" name="tea-quantity"></label><div class="cart-price"><strong>20.000 đ</strong><button class="text-button" type="button" disabled>Xóa</button></div></article>
+        <label class="field"><span>Ghi chú chung</span><textarea name="order-note" rows="3" placeholder="Yêu cầu thêm cho đơn của bạn"></textarea></label>
+      </section>
+      <aside class="card">
+        <h2>Tóm tắt đơn</h2><div class="summary-line"><span>Bàn phục vụ</span><strong>B01</strong></div><div class="summary-line"><span>Tiền món</span><strong>110.000 đ</strong></div><div class="summary-line"><span>Phụ phí</span><strong>0 đ</strong></div><div class="summary-line total"><span>Tổng cộng</span><strong>110.000 đ</strong></div>
+        <label class="check"><input type="checkbox" name="confirm-table" checked><span>Tôi đã kiểm tra món và bàn B01.</span></label>
+        <button class="button full" type="button" disabled>Gửi đơn đến bếp</button>
+        <a class="button secondary full" href="diner-order-status.html">Xem đơn mẫu #107</a>
+      </aside>
+    </div>
+    <footer class="footer"><span>MenuMind · Nhóm 9</span><span>S05 · Dữ liệu mẫu</span><a href="404.html">Trang 404</a></footer>
+  </main>
+  </div>
+</body>
+</html>

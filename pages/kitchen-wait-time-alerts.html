@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Cảnh báo chờ lâu — MenuMind">
+  <title>S09 · Cảnh báo chờ lâu | MenuMind</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#noi-dung">Đến nội dung chính</a>
+  <header class="topbar">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span>MenuMind</a>
+    <div class="header-user"><span>Minh · Bếp</span><span class="avatar" aria-hidden="true">M</span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-label">NHÂN VIÊN BẾP</p>
+      <nav class="side-nav" aria-label="Menu nhân viên bếp">
+        <a href="kitchen-board.html"><span class="nav-number">S07</span>Bảng đơn bếp</a>
+        <a href="kitchen-order-detail.html"><span class="nav-number">S08</span>Chi tiết đơn bếp</a>
+        <a href="kitchen-wait-time-alerts.html" class="active" aria-current="page"><span class="nav-number">S09</span>Cảnh báo chờ lâu</a>
+      </nav>
+      <div class="sidebar-bottom"><a href="../index.html">Về trang giới thiệu</a><a href="login.html">Chọn vai trò khác</a></div>
+    </aside>
+  <main id="noi-dung" class="workspace">
+    <div class="page-heading"><div><span class="eyebrow">NHÂN VIÊN BẾP</span><h1>Cảnh báo chờ lâu</h1><p>Ưu tiên các bàn đã chờ quá 20 phút.</p></div><a class="button secondary" href="kitchen-board.html">Về bảng đơn</a></div>
+    <div class="grid three stats"><article class="stat"><p>Đơn cần chú ý</p><strong>1</strong><small>Đang vượt ngưỡng chờ</small></article><article class="stat"><p>Chờ lâu nhất</p><strong>28 phút</strong><small>Bàn B04 · Đơn #104</small></article><article class="stat"><p>Ngưỡng cảnh báo</p><strong>20 phút</strong><small>Tính từ khi khách gửi đơn</small></article></div>
+    <section class="card section"><div class="row"><h2>Đơn cần ưu tiên</h2><span class="badge gray">Cập nhật 12:25</span></div>
+      <div class="table-wrap"><table><thead><tr><th scope="col">Đơn / Bàn</th><th scope="col">Gửi lúc</th><th scope="col">Đã chờ</th><th scope="col">Trạng thái</th><th scope="col">Thao tác</th></tr></thead><tbody><tr><td><strong>#104 · B04</strong></td><td>11:57</td><td><span class="badge orange">28 phút</span></td><td><span class="badge blue">Đang làm</span></td><td><button class="button small secondary" type="button" disabled>Đã xem</button></td></tr></tbody></table></div>
+      <details class="sub-panel" open><summary>Chi tiết đơn #104 · B04</summary><div class="details-content"><p><strong>1 × Cơm gà + 1 × Bún bò · 95.000 đ</strong></p><p>Quá ngưỡng chờ 8 phút. Chưa có thời gian phục vụ mới.</p><div class="toolbar"><label class="field"><span>Dự kiến phục vụ</span><input type="time" name="delayed-ready-at" value="12:30"></label><button class="button" type="button" disabled>Cập nhật dự kiến</button></div></div></details>
+    </section>
+    <div class="notice orange-notice">Xác nhận đã xem giúp theo dõi việc xử lý. Đơn chỉ kết thúc khi đã phục vụ xong.</div>
+    <footer class="footer"><span>MenuMind · Nhóm 9</span><span>S09 · Dữ liệu mẫu</span><a href="404.html">Trang 404</a></footer>
+  </main>
+  </div>
+</body>
+</html>

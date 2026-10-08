@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Cài đặt hệ thống — MenuMind">
+  <title>S15 · Cài đặt hệ thống | MenuMind</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#noi-dung">Đến nội dung chính</a>
+  <header class="topbar">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span>MenuMind</a>
+    <div class="header-user"><span>Hải · Quản trị</span><span class="avatar" aria-hidden="true">H</span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-label">QUẢN TRỊ VIÊN</p>
+      <nav class="side-nav" aria-label="Menu quản trị viên">
+        <a href="admin-table-management.html"><span class="nav-number">S13</span>Quản lý bàn</a>
+        <a href="admin-user-management.html"><span class="nav-number">S14</span>Quản lý tài khoản</a>
+        <a href="admin-settings.html" class="active" aria-current="page"><span class="nav-number">S15</span>Cài đặt hệ thống</a>
+      </nav>
+      <div class="sidebar-bottom"><a href="../index.html">Về trang giới thiệu</a><a href="login.html">Chọn vai trò khác</a></div>
+    </aside>
+  <main id="noi-dung" class="workspace">
+    <div class="page-heading"><div><span class="eyebrow">QUẢN TRỊ VIÊN</span><h1>Cài đặt hệ thống</h1><p>Thông tin nhà hàng và các thiết lập phục vụ.</p></div><span class="badge gray">MenuMind</span></div>
+    <div class="grid detail-grid">
+      <section class="card"><h2>Thông tin chung</h2><div class="form-stack"><label class="field"><span>Tên nhà hàng</span><input name="restaurant-name" type="text" value="MenuMind Kitchen"></label><label class="field"><span>Địa chỉ</span><input name="address" type="text" value="175 Tây Sơn, Hà Nội"></label><label class="field"><span>Số điện thoại</span><input name="phone" type="tel" placeholder="Nhập số điện thoại nhà hàng"></label></div><h3>Thiết lập phục vụ</h3><div class="grid two form-stack"><label class="field"><span>Giờ mở cửa</span><input type="time" name="open-at" value="10:00"></label><label class="field"><span>Giờ đóng cửa</span><input type="time" name="close-at" value="22:00"></label><label class="field"><span>Ngưỡng cảnh báo chờ (phút)</span><input type="number" name="wait-threshold" min="5" max="60" value="20"></label><label class="field"><span>Đơn vị tiền</span><select name="currency"><option>Việt Nam Đồng (đ)</option></select></label></div><button class="button" type="button" disabled>Lưu cài đặt</button></section>
+      <aside class="form-stack"><section class="card"><span class="eyebrow">DỮ LIỆU</span><h2>Sao lưu</h2><p>Lưu một bản dữ liệu để sử dụng lại khi cần.</p><button class="button secondary full" type="button" disabled>Xuất bản sao JSON</button></section><section class="card danger-card"><h2>Khôi phục dữ liệu mẫu</h2><p>Thay toàn bộ dữ liệu hiện tại bằng bộ dữ liệu ban đầu.</p><label class="field"><span>Nhập RESET để xác nhận</span><input name="reset-confirmation" placeholder="RESET" autocomplete="off"></label><button class="button danger full" type="button" disabled>Khôi phục dữ liệu</button></section></aside>
+    </div>
+    <footer class="footer"><span>MenuMind · Nhóm 9</span><span>S15 · Dữ liệu mẫu</span><a href="404.html">Trang 404</a></footer>
+  </main>
+  </div>
+</body>
+</html>

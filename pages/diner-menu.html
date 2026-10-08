@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Thực đơn — MenuMind">
+  <title>S03 · Thực đơn | MenuMind</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#noi-dung">Đến nội dung chính</a>
+  <header class="topbar">
+    <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">M</span>MenuMind</a>
+    <div class="header-user"><span>Khách · B01</span><span class="avatar" aria-hidden="true">B</span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-label">KHÁCH HÀNG</p>
+      <nav class="side-nav" aria-label="Menu khách hàng">
+        <a href="diner-menu.html" class="active" aria-current="page"><span class="nav-number">S03</span>Thực đơn</a>
+        <a href="diner-table-order.html"><span class="nav-number">S05</span>Giỏ món & gửi đơn</a>
+        <a href="diner-order-status.html"><span class="nav-number">S06</span>Theo dõi đơn & phản hồi</a>
+      </nav>
+      <div class="sidebar-bottom"><a href="../index.html">Về trang giới thiệu</a><a href="login.html">Chọn vai trò khác</a></div>
+    </aside>
+  <main id="noi-dung" class="workspace">
+    <div class="page-heading"><div><span class="eyebrow">KHÁCH HÀNG · BÀN B01</span><h1>Hôm nay bạn muốn ăn gì?</h1><p>Chọn một món ngon cho bữa ăn của bạn.</p></div><a class="button" href="diner-table-order.html">Giỏ món · 3 phần</a></div>
+    <div class="menu-layout">
+      <section>
+        <div class="card toolbar"><label class="field"><span>Tìm món</span><input type="search" name="search" placeholder="Nhập tên món..."></label><label class="field"><span>Danh mục</span><select name="category"><option>Tất cả món</option><option>Món chính</option><option>Món nhẹ</option><option>Đồ uống</option></select></label></div>
+        <div class="row list-heading"><h2>Thực đơn hôm nay</h2><span class="muted">4 món</span></div>
+        <div class="food-grid">
+          <article class="food-card"><img src="../assets/com-ga.svg" alt="Cơm gà" width="480" height="280"><div class="food-body"><div class="row"><span class="badge gray">Món chính</span></div><h2>Cơm gà</h2><p>Gà áp chảo, cơm nóng và rau tươi.</p><div class="row"><strong>45.000 đ</strong><a class="button small" href="diner-dish-detail.html">Xem món</a></div></div></article>
+          <article class="food-card"><img src="../assets/salad.svg" alt="Salad rau củ" width="480" height="280"><div class="food-body"><div class="row"><span class="badge gray">Món nhẹ</span></div><h2>Salad rau củ</h2><p>Rau theo mùa, ngô ngọt và sốt mè.</p><div class="row"><strong>35.000 đ</strong><button class="button small secondary" type="button" disabled>Xem món</button></div></div></article>
+          <article class="food-card"><img src="../assets/bun-bo.svg" alt="Bún bò" width="480" height="280"><div class="food-body"><div class="row"><span class="badge gray">Món chính</span></div><h2>Bún bò</h2><p>Nước dùng đậm đà, thịt bò và rau thơm.</p><div class="row"><strong>50.000 đ</strong><button class="button small secondary" type="button" disabled>Xem món</button></div></div></article>
+          <article class="food-card"><img src="../assets/tra-dao.svg" alt="Trà đào" width="480" height="280"><div class="food-body"><div class="row"><span class="badge gray">Đồ uống</span></div><h2>Trà đào</h2><p>Trà thanh mát cùng đào tươi.</p><div class="row"><strong>20.000 đ</strong><button class="button small secondary" type="button" disabled>Xem món</button></div></div></article>
+        </div>
+      </section>
+      <aside class="card suggestion">
+        <span class="badge blue">Gợi ý khẩu vị</span><h2>Món hợp với bạn</h2><p>Chọn sở thích để chuẩn bị một gợi ý phù hợp.</p>
+        <label class="field"><span>Bạn thích ăn gì?</span><select name="taste"><option>Đậm đà, dễ ăn</option><option>Thanh nhẹ</option><option>Ít cay</option><option>Món chay</option></select></label>
+        <label class="field"><span>Ngân sách mỗi người</span><select name="budget"><option>Dưới 70.000 đ</option><option>70.000 – 100.000 đ</option><option>Trên 100.000 đ</option></select></label>
+        <button class="button full" type="button" disabled>Xem gợi ý</button>
+        <div class="recommendation"><span class="eyebrow">GỢI Ý MẪU</span><h3>Cơm gà + Trà đào</h3><p>Bữa ăn dễ chọn, vị nhẹ, tổng 65.000 đ.</p><a class="text-link" href="diner-dish-detail.html">Xem cơm gà</a></div>
+      </aside>
+    </div>
+    <footer class="footer"><span>MenuMind · Nhóm 9</span><span>S03 · Dữ liệu mẫu</span><a href="404.html">Trang 404</a></footer>
+  </main>
+  </div>
+</body>
+</html>
