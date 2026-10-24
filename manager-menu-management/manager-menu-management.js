@@ -3,13 +3,19 @@ var MON_MAU=[
 {id:2,ma:"M02",ten:"Ramen miso cay",mota:"Nước dùng miso cay, mì dai, thịt xá xíu",gia:95000,phut:15,loai:"chinh",ban:true,cay:true,anh:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80",tp:"Mì ramen · nước dùng miso · xá xíu · trứng · hành lá"},
 {id:3,ma:"M03",ten:"Tempura tôm",mota:"Tôm chiên giòn kiểu Nhật, kèm sốt tentsuyu",gia:75000,phut:10,loai:"nhe",ban:true,anh:"https://images.unsplash.com/photo-1615361200141-f45040f367be?auto=format&fit=crop&w=600&q=80",tp:"Tôm · bột tempura · củ cải daikon · sốt tentsuyu"},
 {id:4,ma:"M04",ten:"Udon bò",mota:"Mì udon sợi to trong nước dùng dashi",gia:79000,phut:12,loai:"chinh",ban:true,anh:"https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=600&q=80",tp:"Mì udon · thịt bò · kamaboko · hành lá"},
-{id:5,ma:"M05",ten:"Takoyaki",mota:"Bánh bạch tuộc nướng, sốt và mayonnaise",gia:55000,phut:10,loai:"nhe",ban:true,anh:"https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=600&q=80",tp:"Bạch tuộc · bột mì · sốt takoyaki · cá bào"},
+{id:5,ma:"M05",ten:"Takoyaki",mota:"Bánh bạch tuộc nướng, sốt và mayonnaise",gia:55000,phut:10,loai:"nhe",ban:true,anh:"https://images.unsplash.com/photo-1752079437572-823698bbf26c?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0",du:["https://images.unsplash.com/photo-1751094364516-02b351f9c277?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0","https://images.unsplash.com/photo-1742633882704-41ec3a57dbb7?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0","https://images.unsplash.com/photo-1756918341033-c03cfbccee63?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0"],tp:"Bạch tuộc · bột mì · sốt takoyaki · cá bào"},
 {id:6,ma:"M06",ten:"Cơm gà Teriyaki",mota:"Gà áp chảo sốt teriyaki, cơm dẻo",gia:65000,phut:12,loai:"chinh",ban:true,anh:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80",tp:"Thịt gà · cơm · bông cải xanh · mè rang"},
 {id:7,ma:"M07",ten:"Salad rong biển",mota:"Rong biển wakame, mè rang, sốt giấm",gia:45000,phut:5,loai:"chay",ban:true,anh:"https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",tp:"Rong biển · dưa leo · cà rốt · mè rang"},
 {id:8,ma:"M08",ten:"Edamame",mota:"Đậu nành Nhật luộc rắc muối biển",gia:35000,phut:5,loai:"chay",ban:true,anh:"https://images.unsplash.com/photo-1564834744159-ff0ea41ba4b9?auto=format&fit=crop&w=600&q=80",tp:"Đậu nành edamame · muối biển"},
-{id:9,ma:"M09",ten:"Trà xanh matcha",mota:"Matcha nguyên chất, vị thanh nhẹ",gia:40000,phut:3,loai:"uong",ban:true,anh:"https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=600&q=80",tp:"Bột matcha · nước · sữa (tùy chọn)"},
+{id:9,ma:"M09",ten:"Trà xanh matcha",mota:"Matcha nguyên chất, vị thanh nhẹ",gia:40000,phut:3,loai:"uong",ban:true,anh:"https://images.unsplash.com/photo-1515823064-d6e0c04616a7?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0",du:["https://images.unsplash.com/photo-1766426910014-63a302fa137e?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0","https://images.unsplash.com/photo-1582785513054-8d1bf9d69c1a?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0"],tp:"Bột matcha · nước · sữa (tùy chọn)"},
 {id:10,ma:"M10",ten:"Soda Ramune",mota:"Soda chanh kiểu Nhật, mát lạnh",gia:30000,phut:2,loai:"uong",ban:true,anh:"https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80",tp:"Soda · chanh · đường"}];
 var MON=JSON.parse(localStorage.getItem("mon")||"null")||MON_MAU;
+
+var ANH_LOI="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"><rect width="600" height="400" fill="#eef3fb"/><text x="300" y="210" font-family="Arial" font-size="28" text-anchor="middle" fill="#63738a">Ảnh món ăn</text></svg>');
+
+MON.forEach(function(m){var g=MON_MAU.filter(function(x){return x.id==m.id})[0];if(g){m.anh=g.anh;m.du=g.du;m.fit=g.fit}});
+
+function loiAnh(img){var d=(img.dataset.du||"").split("|").filter(Boolean),i=+(img.dataset.n||0);if(i<d.length){img.dataset.n=i+1;img.src=d[i]}else{img.onerror=null;img.src=ANH_LOI}}
 function tien(n){return n.toLocaleString("vi-VN")+" đ"}
 function timMon(id){return MON.filter(function(m){return m.id==id})[0]}
 function luuMon(){localStorage.setItem("mon",JSON.stringify(MON))}
@@ -27,7 +33,7 @@ function ve(){
   p.forEach(function(m){
     var mau=m.luutru?"gray":(m.ban?"green":"orange"),chu=m.luutru?"Đã lưu trữ":(m.ban?"Còn bán":"Tạm hết");
     var imgSrc = m.anh && m.anh.startsWith('http') ? m.anh : ('../images/' + (m.anh || "mon-moi.svg"));
-    h+='<tr><td><img src="'+imgSrc+'" class="thumb" alt="'+m.ten+'"></td><td>'+m.ma+' · '+m.ten+'</td><td>'+TEN[m.loai]+'</td><td>'+tien(m.gia)+'</td><td>'+m.phut+' phút</td><td><span class="badge '+mau+'">'+chu+'</span></td><td><button class="button secondary small" onclick="sua('+m.id+')">Chỉnh sửa</button></td></tr>';
+    h+='<tr><td><img src="'+imgSrc+'" class="thumb" alt="'+m.ten+'" data-du="'+(m.du||[]).join("|").replace(/&/g,"&amp;")+'" onerror="loiAnh(this)"></td><td>'+m.ma+' · '+m.ten+'</td><td>'+TEN[m.loai]+'</td><td>'+tien(m.gia)+'</td><td>'+m.phut+' phút</td><td><span class="badge '+mau+'">'+chu+'</span></td><td><button class="button secondary small" onclick="sua('+m.id+')">Chỉnh sửa</button></td></tr>';
   });
   document.getElementById("bang").innerHTML=h||'<tr><td colspan="7">Không có món nào.</td></tr>';
   dat("tt-trang","Hiển thị "+p.length+" món · Trang "+trang+" / "+tong);
