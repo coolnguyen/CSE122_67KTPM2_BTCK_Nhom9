@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MenuMind - Thống kê bán hàng</title>
+  <link rel="stylesheet" href="manager-sales-insights.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">M</span>MenuMind</a>
+    <div class="header-user"><span class="badge gray">Phiên demo</span><span>An · Quản lý</span><span class="avatar violet-avatar">A</span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-label">QUẢN LÝ NHÀ HÀNG</p>
+      <nav class="side-nav"><a href="manager-menu-management.html"><span class="nav-number">01</span>Quản lý thực đơn</a><a class="active" href="manager-sales-insights.html"><span class="nav-number">02</span>Thống kê bán hàng</a><a href="manager-feedback-center.html"><span class="nav-number">03</span>Trung tâm phản hồi</a></nav>
+      <div class="sidebar-bottom"><small>MỘT TRẢI NGHIỆM RÕ RÀNG</small><p class="muted">Từ chọn món đến hoàn tất.</p><a href="login.html">Đăng xuất</a><a href="index.html">← Về trang giới thiệu</a></div>
+    </aside>
+    <main class="workspace" id="main">
+<div class="page-heading"><div><span class="eyebrow">QUẢN LÝ NHÀ HÀNG / THỐNG KÊ BÁN HÀNG</span><h1>Thống kê bán hàng</h1><p>Xem kết quả của những đơn đã hoàn thành trong khoảng ngày đã chọn.</p></div><button class="button" onclick="luuBaoCao()">Lưu báo cáo</button></div>
+<section class="card">
+  <div class="toolbar">
+    <label class="field"><span>Từ ngày</span><input type="date" id="tu" value="2026-10-01" onchange="tinh()"></label>
+    <label class="field"><span>Đến ngày</span><input type="date" id="den" value="2026-10-01" onchange="tinh()"></label>
+    <span class="badge orange">Dữ liệu mô phỏng</span><span class="badge gray">Theo ngày hoàn thành</span>
+  </div>
+</section>
+<div class="grid four stats section">
+  <div class="stat"><p>Giá trị đơn hoàn thành</p><strong id="s1"></strong><small>Chưa phải doanh thu thực thu</small></div>
+  <div class="stat"><p>Đơn hoàn thành</p><strong id="s2"></strong><small>Không tính đơn hủy / từ chối</small></div>
+  <div class="stat"><p>Số phần đã bán</p><strong id="s3"></strong><small>Tổng số lượng trong các đơn</small></div>
+  <div class="stat"><p>Chờ trung bình</p><strong id="s4"></strong><small>Từ gửi đơn đến món sẵn sàng</small></div>
+</div>
+<div class="grid two section">
+  <section class="card"><h2>Món bán trong kỳ</h2><p>Số phần từ các đơn hoàn thành</p><div class="bar-chart" id="ds-mon"></div></section>
+  <section class="card"><h2>Cách đọc số liệu</h2><div id="congthuc"></div></section>
+</div>
+<div class="notice"><strong>Tổng hợp theo đơn hoàn thành.</strong> Không có dữ liệu: hiển thị tổng 0; thời gian chờ là “Chưa có dữ liệu”.</div>
+      <footer class="footer"><span>MenuMind · Thông tin rõ ràng, phục vụ chu đáo.</span><span>Nhà hàng món Nhật · Bản mô phỏng bài tập lớn</span></footer>
+    </main>
+  </div>
+  <script src="manager-sales-insights.js"></script>
+</body>
+</html>
