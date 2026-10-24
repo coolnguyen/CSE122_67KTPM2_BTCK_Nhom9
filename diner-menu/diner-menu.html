@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MenuMind - Thực đơn</title>
+    <link rel="stylesheet" href="diner-menu.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+    <header class="topbar">
+        <a class="brand" href="index.html"><span class="brand-mark">M</span>MenuMind</a>
+        <div class="header-user"><span class="badge blue" id="ban">Bàn B01</span><a class="button secondary small"
+                id="giomon" href="diner-cart.html">Giỏ món · 3 phần</a><span class="avatar">K</span></div>
+    </header>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <p class="nav-label">KHÁCH HÀNG</p>
+            <nav class="side-nav"><a class="active" href="diner-menu.html"><span class="nav-number">01</span>Thực
+                    đơn</a><a href="diner-cart.html"><span class="nav-number">02</span>Giỏ món</a><a
+                    href="diner-order-tracking.html"><span class="nav-number">03</span>Đơn của tôi</a></nav>
+            <div class="sidebar-bottom"><small>MỘT TRẢI NGHIỆM RÕ RÀNG</small>
+                <p class="muted">Từ chọn món đến hoàn tất.</p><a href="index.html">← Về trang giới thiệu</a>
+            </div>
+        </aside>
+        <main class="workspace" id="main">
+            <div class="page-heading">
+                <div><span class="eyebrow">KHÁCH HÀNG / THỰC ĐƠN</span>
+                    <h1>Thực đơn</h1>
+                    <p>Chọn món hôm nay theo cách của bạn.</p>
+                </div>
+            </div>
+            <div class="menu-layout">
+                <section>
+                    <div class="card">
+                        <div class="toolbar">
+                            <label class="field"><span>Tìm món</span><input type="text" id="tim"
+                                    placeholder="Tìm tên món..." oninput="ve()"></label>
+                        </div>
+                        <div class="actions" id="loc">
+                            <button class="button small" onclick="chonLoai('',this)">Tất cả</button>
+                            <button class="button secondary small" onclick="chonLoai('chinh',this)">Món chính</button>
+                            <button class="button secondary small" onclick="chonLoai('chay',this)">Món chay</button>
+                            <button class="button secondary small" onclick="chonLoai('nhe',this)">Ăn nhẹ</button>
+                            <button class="button secondary small" onclick="chonLoai('uong',this)">Đồ uống</button>
+                        </div>
+                    </div>
+                    <div class="row list-heading">
+                        <h2>Món hôm nay</h2><span class="muted" id="dem-mon"></span>
+                    </div>
+                    <div class="food-grid" id="luoi"></div>
+                </section>
+                <aside class="card suggestion">
+                    <span class="badge orange">AI mô phỏng</span>
+                    <h2>Gợi ý theo khẩu vị</h2>
+                    <p>Một vài lựa chọn dành riêng cho bạn.</p>
+                    <label class="field"><span>Chế độ ăn</span><select id="an" onchange="goiYMon()">
+                            <option value="chay">Ăn chay</option>
+                            <option value="man">Ăn mặn</option>
+                        </select></label>
+                    <label class="field"><span>Giá tối đa / món</span><input type="text" id="max" value="50.000 đ"
+                            onchange="this.value=tien(+this.value.replace(/\D/g,''));goiYMon()"></label>
+                    <label class="field"><span>Mức cay</span><select id="cay" onchange="goiYMon()">
+                            <option value="khong">Không cay</option>
+                            <option value="vua">Cay vừa</option>
+                        </select></label>
+                    <div class="recommendation" id="kq"></div>
+                    <button class="button full" id="ok" onclick="chapNhan()">Chấp nhận</button>
+                    <div class="actions">
+                        <button class="button secondary small" onclick="document.getElementById('an').focus()">Sửa điều
+                            kiện</button>
+                        <button class="button secondary small" onclick="goiYMon()">Tạo lại</button>
+                        <button class="button secondary small" onclick="tuChoi()">Từ chối</button>
+                        <button class="button secondary small" onclick="luuGoiY()">Lưu gợi ý</button>
+                    </div>
+                </aside>
+            </div>
+            <footer class="footer"><span>MenuMind · Thông tin rõ ràng, phục vụ chu đáo.</span><span>Nhà hàng món Nhật ·
+                    Bản mô phỏng bài tập lớn</span></footer>
+        </main>
+    </div>
+    <script src="diner-menu.js"></script>
+</body>
+
+</html>
