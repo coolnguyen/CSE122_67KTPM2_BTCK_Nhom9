@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MenuMind - Chi tiết món</title>
+  <link rel="stylesheet" href="diner-dish-detail.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">M</span>MenuMind</a>
+    <div class="header-user"><span class="badge blue" id="ban">Bàn B01</span><a class="button secondary small" id="giomon" href="diner-cart.html">Giỏ món · 3 phần</a><span class="avatar">K</span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <p class="nav-label">KHÁCH HÀNG</p>
+      <nav class="side-nav"><a class="active" href="diner-menu.html"><span class="nav-number">01</span>Thực đơn</a><a href="diner-cart.html"><span class="nav-number">02</span>Giỏ món</a><a href="diner-order-tracking.html"><span class="nav-number">03</span>Đơn của tôi</a></nav>
+      <div class="sidebar-bottom"><small>MỘT TRẢI NGHIỆM RÕ RÀNG</small><p class="muted">Từ chọn món đến hoàn tất.</p><a href="index.html">← Về trang giới thiệu</a></div>
+    </aside>
+    <main class="workspace" id="main">
+<div class="page-heading"><div><span class="eyebrow">KHÁCH HÀNG / CHI TIẾT MÓN</span><h1>Chi tiết món</h1><p>Thêm ghi chú để bếp chuẩn bị theo mong muốn của bạn.</p></div></div>
+<div class="grid detail-grid">
+  <article class="card dish-detail">
+    <img class="dish-image" id="anh" src="../images/sushi-ca-hoi.svg" alt="Sushi cá hồi">
+    <div class="dish-copy">
+      <div class="row"><h2 id="ten"></h2><strong class="price" id="gia"></strong></div>
+      <div class="chips"><span class="badge blue" id="loai"></span><span class="badge green" id="tt"></span></div>
+      <p id="mota"></p>
+      <h3>Thành phần</h3>
+      <p id="tp"></p>
+      <small id="phut"></small>
+    </div>
+  </article>
+  <aside class="card">
+    <h2>Chọn phần ăn của bạn</h2>
+    <div class="form-stack">
+      <div class="field"><span>Số lượng (tối đa 20)</span>
+        <div class="actions qty"><button class="button secondary small" onclick="doiSL(-1)">−</button><strong id="sl">2</strong><button class="button secondary small" onclick="doiSL(1)">+</button></div>
+      </div>
+      <label class="field"><span>Ghi chú cho món</span><textarea id="ghichu" rows="4" maxlength="200" oninput="demChu()">Ít cơm, thêm rau.</textarea><small id="dem">17 / 200</small></label>
+    </div>
+    <div class="summary-line total"><span>Thành tiền</span><strong id="tong"></strong></div>
+    <button class="button full" id="nut" onclick="them()">Thêm vào giỏ</button>
+    <a class="button secondary full" href="diner-menu.html">Quay lại thực đơn</a>
+  </aside>
+</div>
+      <footer class="footer"><span>MenuMind · Thông tin rõ ràng, phục vụ chu đáo.</span><span>Nhà hàng món Nhật · Bản mô phỏng bài tập lớn</span></footer>
+    </main>
+  </div>
+  <script src="diner-dish-detail.js"></script>
+</body>
+</html>
