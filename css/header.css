@@ -1,0 +1,225 @@
+.site-header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 30px;
+  min-height: 76px;
+  padding-inline: clamp(18px, 4vw, 60px);
+  border-block-end: 1px solid rgba(16, 42, 43, .1);
+  background: rgba(244, 246, 241, .9);
+  backdrop-filter: blur(16px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 800 1.18rem Manrope, sans-serif;
+  letter-spacing: -.04em;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50% 50% 50% 7px;
+  color: white;
+  background: var(--leaf);
+  font-size: .9rem;
+  transform: rotate(-6deg);
+}
+
+.global-nav {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 3vw, 36px);
+  font-size: .82rem;
+  font-weight: 600;
+}
+
+.global-nav a {
+  position: relative;
+}
+
+.global-nav a::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -8px;
+  height: 2px;
+  background: var(--citrus);
+  transform: scaleX(0);
+  transition: transform .2s ease;
+}
+
+.global-nav a:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.role-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: .76rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.role-pill:hover {
+  border-color: var(--leaf);
+  color: var(--leaf);
+}
+
+/* Role Switcher Popup (Demo Switcher) */
+.role-switcher-wrap {
+  position: relative;
+  justify-self: end;
+}
+
+.role-switcher-dropdown {
+  position: absolute;
+  inset-block-start: calc(100% + 10px);
+  inset-inline-end: 0;
+  z-index: 100;
+  width: 270px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 16px 40px rgba(16, 42, 43, .16);
+  display: none;
+}
+
+.role-switcher-dropdown.active {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: dropdownFade .18s ease-out;
+}
+
+@keyframes dropdownFade {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.switcher-header {
+  font-size: .7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+  margin-block-end: 6px;
+  padding-block-end: 6px;
+  border-block-end: 1px solid var(--line);
+}
+
+.switcher-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: .84rem;
+  font-weight: 700;
+  color: var(--ink);
+  transition: background .15s ease, color .15s ease;
+}
+
+.switcher-item:hover,
+.switcher-item:focus-visible {
+  background: rgba(23, 107, 91, .08);
+  color: var(--leaf);
+}
+
+.switcher-icon {
+  font-size: 1.15rem;
+}
+
+.switcher-desc {
+  display: block;
+  font-size: .7rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3ba36e;
+  box-shadow: 0 0 0 4px rgba(59, 163, 110, .13);
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    grid-template-columns: auto auto 1fr;
+    gap: 12px;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .global-nav {
+    position: absolute;
+    inset: 76px 14px auto;
+    display: none;
+    padding: 12px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .global-nav.open {
+    display: grid;
+  }
+
+  .global-nav a {
+    padding: 10px;
+  }
+
+  .role-pill {
+    justify-self: end;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    min-height: 68px;
+    padding-inline: 14px;
+  }
+
+  .brand span:last-child {
+    display: none;
+  }
+
+  .global-nav {
+    inset-block-start: 68px;
+  }
+
+  .role-pill {
+    padding: 8px;
+    font-size: .68rem;
+  }
+}
