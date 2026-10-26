@@ -33,61 +33,62 @@
 
     <div class="page-frame">
         <aside>
-        <nav class="side-nav" aria-label="Điều hướng manager">
-            <p>Không gian làm việc</p>
-            <a href="admin-table-management.html"><span aria-hidden="true">◇</span>Bàn ăn</a>
-            <a href="manager-menu-management.html"><span aria-hidden="true">◇</span>Thực đơn</a>
-            <a class="active" href="manager-payment-requests.html"><span aria-hidden="true">◇</span>Thanh toán</a>
-            <a href="manager-feedback-center.html"><span aria-hidden="true">◇</span>Phản hồi</a>
-            <a href="login.html"><span aria-hidden="true">↗</span>Đổi vai trò</a>
-        </nav>
-    </aside>
+            <nav class="side-nav" aria-label="Điều hướng manager">
+                <p>Không gian làm việc</p>
+                <a href="admin-table-management.html"><span aria-hidden="true">◇</span>Bàn ăn</a>
+                <a href="manager-menu-management.html"><span aria-hidden="true">◇</span>Thực đơn</a>
+                <a class="active" href="manager-payment-requests.html"><span aria-hidden="true">◇</span>Thanh toán</a>
+                <a href="manager-feedback-center.html"><span aria-hidden="true">◇</span>Phản hồi</a>
+                <a href="login.html"><span aria-hidden="true">↗</span>Đổi vai trò</a>
+            </nav>
+        </aside>
 
-    <main id="main-content" class="site-main">
-        <div id="manager-payments-wrapper">
-            <header class="page-head">
-                <div>
-                    <p class="kicker">Thu ngân tại bàn</p>
-                    <h1>Yêu cầu thanh toán</h1>
-                    <p>Các bàn đang chờ hỗ trợ được đưa lên đầu. Xác nhận chỉ sau khi nhân viên đã thu tiền tại bàn.</p>
-                </div>
-                <div class="head-actions">
-                    <button class="button primary" data-action="refresh-payments">↻ Làm mới</button>
-                </div>
-            </header>
-
-            <section class="metric-strip payment-metrics">
-                <div><span>Bàn đang chờ</span><strong id="pending-count">0</strong></div>
-                <div><span>Tổng cần thu</span><strong id="pending-total">0 ₫</strong></div>
-                <div><span>Tiền mặt</span><strong id="cash-count">0</strong></div>
-                <div><span>Thẻ / chuyển khoản</span><strong id="card-count">0</strong></div>
-            </section>
-
-            <section class="surface payment-queue">
-                <div class="section-title compact">
+        <main id="main-content" class="site-main">
+            <div id="manager-payments-wrapper">
+                <header class="page-head">
                     <div>
-                        <p class="kicker">Cần hỗ trợ ngay</p>
-                        <h2 id="pending-section-title">Bàn bật cờ thanh toán</h2>
+                        <p class="kicker">Thu ngân tại bàn</p>
+                        <h1>Yêu cầu thanh toán</h1>
+                        <p>Các bàn đang chờ hỗ trợ được đưa lên đầu. Xác nhận chỉ sau khi nhân viên đã thu tiền tại bàn.
+                        </p>
                     </div>
-                </div>
-                <div id="pending-payments-table">
-                    <!-- Bảng các bàn đang chờ thanh toán -->
-                </div>
-            </section>
+                    <div class="head-actions">
+                        <button class="button primary" data-action="refresh-payments">↻ Làm mới</button>
+                    </div>
+                </header>
 
-            <section class="surface payment-history">
-                <div class="section-title compact">
-                    <div>
-                        <p class="kicker">Đối soát</p>
-                        <h2 id="history-section-title">Lịch sử thanh toán gần đây</h2>
+                <section class="metric-strip payment-metrics">
+                    <div><span>Bàn đang chờ</span><strong id="pending-count">0</strong></div>
+                    <div><span>Tổng cần thu</span><strong id="pending-total">0 ₫</strong></div>
+                    <div><span>Tiền mặt</span><strong id="cash-count">0</strong></div>
+                    <div><span>Thẻ / chuyển khoản</span><strong id="card-count">0</strong></div>
+                </section>
+
+                <section class="surface payment-queue">
+                    <div class="section-title compact">
+                        <div>
+                            <p class="kicker">Cần hỗ trợ ngay</p>
+                            <h2 id="pending-section-title">Bàn bật cờ thanh toán</h2>
+                        </div>
                     </div>
-                </div>
-                <div id="history-payments-table">
-                    <!-- Bảng lịch sử các bàn đã thanh toán -->
-                </div>
-            </section>
-        </div>
-    </main>
+                    <div id="pending-payments-table">
+                        <!-- Bảng các bàn đang chờ thanh toán -->
+                    </div>
+                </section>
+
+                <section class="surface payment-history">
+                    <div class="section-title compact">
+                        <div>
+                            <p class="kicker">Đối soát</p>
+                            <h2 id="history-section-title">Lịch sử thanh toán gần đây</h2>
+                        </div>
+                    </div>
+                    <div id="history-payments-table">
+                        <!-- Bảng lịch sử các bàn đã thanh toán -->
+                    </div>
+                </section>
+            </div>
+        </main>
     </div>
 
     <footer class="site-footer">
