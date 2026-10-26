@@ -10,7 +10,7 @@
 
 * **Công cụ hỗ trợ:** Claude 3.5 Sonnet, ChatGPT-4o, GitHub Copilot.
 * **Phạm vi hỗ trợ:** Gợi ý cấu trúc HTML5 ngữ nghĩa ban đầu, khung CSS Grid/Flexbox, thuật toán xử lý dữ liệu và kịch bản kiểm thử.
-* **Cam kết của nhóm:** 100% mã nguồn do AI gợi ý đã được từng thành viên trong nhóm trực tiếp đọc hiểu, kiểm tra bảo mật (chống XSS), đối soát với barem và tự tay chỉnh sửa lỗi trước khi commit lên nhánh Git cá nhân.
+* **Cam kết của nhóm:** mã nguồn do AI gợi ý đã được từng thành viên trong nhóm trực tiếp đọc hiểu, kiểm tra bảo mật (chống XSS), đối soát với barem và tự tay chỉnh sửa lỗi trước khi commit lên nhánh Git cá nhân.
 
 ---
 
