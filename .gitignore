@@ -1,4 +1,4 @@
-﻿# Python cache
+# Python cache
 __pycache__/
 *.pyc
 
@@ -12,3 +12,8 @@ skills-lock.json
 .DS_Store
 Thumbs.db
 *.pdf
+
+# Project Brief & Bundles
+BTL-09*.md
+_bundles/
+
