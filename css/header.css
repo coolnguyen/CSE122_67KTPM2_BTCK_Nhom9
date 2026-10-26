@@ -69,6 +69,73 @@
   background: var(--surface);
 }
 
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: end;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--leaf);
+  color: var(--leaf);
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .08);
+}
+
+.theme-toggle:active {
+  transform: scale(.95);
+}
+
+.theme-toggle svg {
+  width: 19px;
+  height: 19px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform .3s ease;
+}
+
+.theme-toggle .icon-sun {
+  display: none;
+  color: #f1a33a;
+}
+
+.theme-toggle .icon-moon {
+  display: block;
+  color: var(--ink);
+}
+
+[data-theme="dark"] .site-header {
+  border-block-end: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(22, 36, 37, .88);
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+  display: block;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+
 .role-pill {
   display: inline-flex;
   align-items: center;
@@ -80,86 +147,6 @@
   font-size: .76rem;
   font-weight: 700;
   white-space: nowrap;
-  cursor: pointer;
-  transition: all .2s ease;
-}
-
-.role-pill:hover {
-  border-color: var(--leaf);
-  color: var(--leaf);
-}
-
-/* Role Switcher Popup (Demo Switcher) */
-.role-switcher-wrap {
-  position: relative;
-  justify-self: end;
-}
-
-.role-switcher-dropdown {
-  position: absolute;
-  inset-block-start: calc(100% + 10px);
-  inset-inline-end: 0;
-  z-index: 100;
-  width: 270px;
-  padding: 12px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: 0 16px 40px rgba(16, 42, 43, .16);
-  display: none;
-}
-
-.role-switcher-dropdown.active {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  animation: dropdownFade .18s ease-out;
-}
-
-@keyframes dropdownFade {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.switcher-header {
-  font-size: .7rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: .06em;
-  color: var(--muted);
-  margin-block-end: 6px;
-  padding-block-end: 6px;
-  border-block-end: 1px solid var(--line);
-}
-
-.switcher-item {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  font-size: .84rem;
-  font-weight: 700;
-  color: var(--ink);
-  transition: background .15s ease, color .15s ease;
-}
-
-.switcher-item:hover,
-.switcher-item:focus-visible {
-  background: rgba(23, 107, 91, .08);
-  color: var(--leaf);
-}
-
-.switcher-icon {
-  font-size: 1.15rem;
-}
-
-.switcher-desc {
-  display: block;
-  font-size: .7rem;
-  font-weight: 400;
-  color: var(--muted);
 }
 
 .pulse-dot {
@@ -199,7 +186,8 @@
     padding: 10px;
   }
 
-  .role-pill {
+  .role-pill,
+  .header-actions {
     justify-self: end;
   }
 }
@@ -216,6 +204,16 @@
 
   .global-nav {
     inset-block-start: 68px;
+  }
+
+  .theme-toggle {
+    width: 34px;
+    height: 34px;
+  }
+
+  .theme-toggle svg {
+    width: 17px;
+    height: 17px;
   }
 
   .role-pill {
