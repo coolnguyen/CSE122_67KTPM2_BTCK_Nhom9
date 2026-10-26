@@ -45,6 +45,10 @@
   font-size: 2rem;
 }
 
+.mini-food.is-placeholder {
+  background: #e9eee7;
+}
+
 .mini-food-photo {
   position: absolute;
   inset: 0;
