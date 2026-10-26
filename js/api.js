@@ -206,3 +206,4 @@ window.addEventListener('storage', event => {
     }
   }
 });
+
