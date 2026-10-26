@@ -3,19 +3,19 @@
 > **Học phần:** Phát triển ứng dụng Web cơ bản – CSE122  
 > **Đề tài:** BTL-09 – MenuMind (Lĩnh vực: Nhà hàng / F&B)  
 > **Giảng viên hướng dẫn & chấm điểm:** ThS. Kiều Tuấn Dũng – ThS. Tạ Chí Hiếu  
-> **Nhóm thực hiện:** Nhóm 09 (Lớp 67KTPM2 – Khoa CNTT, Đại học Thủy Lợi)  
+> **Nhóm thực hiện:** Nhóm 09 (Lớp 67KTPM2 – Khoa CNTT, Trường Đại học Thủy Lợi)  
 
 ---
 
-## 👥 1. Thông Tin Nhóm & Phân Công Nhiệm Vụ
+## 👥 1. Thông Tin Nhóm & Phân Công Nhiệm Vụ 2 Chiều
 
 Dự án áp dụng mô hình phân bổ công việc cân bằng **6 – 5 – 6** theo Lát cắt dọc (Vertical Slice) và Trách nhiệm chéo (Cross-Responsibility):
 
 | Thành viên | Vai trò | Phụ trách khối nghiệp vụ (Lát cắt dọc) | Trách nhiệm chéo toàn hệ thống |
 | :--- | :---: | :--- | :--- |
-| **Trương Việt Hoàng** | Thành viên (SV1) | **Khối Khách hàng (6 màn):** S01 $\rightarrow$ S06<br>⭐ Phụ trách **AI-1: Taste Recommender** | Design System, Typography, Biến `:root`, Role Switcher, Khả năng tiếp cận A11y |
-| **Đặng Xuân Dương** | Thành viên (SV2) | **Khối Vận hành Bếp & Sảnh (5 màn):** S07 $\rightarrow$ S11<br>⭐ Phụ trách **AI-2: Kitchen Load Predictor** | Kiến trúc dữ liệu `localStorage`, Data JSON 24 món, Hàm chống XSS `escapeHTML()` |
-| **Nguyễn Hoàng Hải** | **Trưởng nhóm (SV3)** | **Khối Quản trị & Báo cáo (6 màn):** S12 $\rightarrow$ S17<br>⭐ Phụ trách **AI-3: Feedback Theme Extractor** | Kiểm thử Responsive (320px–Desktop), Quản trị kiến trúc Git & PRs, Live Deploy |
+| **Trương Việt Hoàng** | Thành viên (SV1) | **Khối mặt tiền (6 màn):** S01 $\rightarrow$ S06<br>⭐ Phụ trách **AI-1: Taste Recommender** | **Trục chéo 1**: Kiểm thử Responsive đa thiết bị (320px, 768px, 1024px+), Thanh điều hướng chung (Navigation / Role Switcher), Khả năng tiếp cận (A11y) |
+| **Đặng Xuân Dương** | Thành viên (SV2) | **Khối vận hành (5 màn):** S07 $\rightarrow$ S11<br>⭐ Phụ trách **AI-2: Kitchen Load Predictor** | **Trục chéo 2**: Xử lý dữ liệu (backend / localStorage / API), Dữ liệu mẫu JSON (15–25 bản ghi), Triển khai (Deploy) & QA |
+| **Nguyễn Hoàng Hải** | **Trưởng nhóm (SV3)** | **Khối quản trị (6 màn):** S12 $\rightarrow$ S17<br>⭐ Phụ trách **AI-3: Feedback Theme Extractor** | **Trục chéo 3**: Hệ thống thiết kế (`css/common.css`, biến `:root`), Quản lý hợp nhất nhánh Git (`dev` $\rightarrow$ `main`) |
 
 ---
 

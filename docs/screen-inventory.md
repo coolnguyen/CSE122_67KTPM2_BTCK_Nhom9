@@ -45,10 +45,10 @@
 
 ## 3. Thống Kê Phân Bổ Công Việc Cân Bằng (Tỷ Lệ Vàng 6 – 5 – 6)
 
-| Thành viên | Khối nghiệp vụ phụ trách | Số màn hình | Tính năng AI sở hữu | Trách nhiệm chéo toàn hệ thống |
+| Thành viên | Khối nghiệp vụ phụ trách (Lát cắt dọc) | Số màn hình | Tính năng AI sở hữu | Trách nhiệm chéo toàn hệ thống (Cross-Responsibility) |
 | :---: | :--- | :---: | :---: | :--- |
-| **Trương Việt Hoàng (SV1)** | Khách hàng & Màn hình khởi đầu | **6 màn** (S01 – S06) | **AI-1: Taste Recommender** | Design System, Typography, Biến `:root`, Role Switcher, Accessibility (Tab/Esc) |
-| **Đặng Xuân Dương (SV2)** | Bếp điều phối & Vận hành sảnh bàn | **5 màn** (S07 – S11) | **AI-2: Kitchen Load Predictor** | Kiến trúc dữ liệu `localStorage`, File JSON 24 món, Hàm dùng chung chống XSS `escapeHTML()` |
-| **Nguyễn Hoàng Hải (SV3 - Leader)** | Quản lý kinh doanh & Quản trị hệ thống | **6 màn** (S12 – S17) | **AI-3: Feedback Theme Extractor** | Kiểm thử Responsive đa thiết bị (320px–Desktop), Quản lý merge Git (`dev` $\rightarrow$ `main`), Live Deploy & QA |
+| **Trương Việt Hoàng (SV1)** | **Khối mặt tiền (Hành trình Thực khách)** | **6 màn** (S01 – S06) | **AI-1: Taste Recommender** | **Trục chéo 1**: Kiểm thử Responsive đa thiết bị (320px, 768px, 1024px+), Thanh điều hướng chung (Navigation / Role Switcher), Khả năng tiếp cận (A11y) |
+| **Đặng Xuân Dương (SV2)** | **Khối vận hành (Điều phối Bếp & Sảnh bàn)** | **5 màn** (S07 – S11) | **AI-2: Kitchen Load Predictor** | **Trục chéo 2**: Xử lý dữ liệu (backend / localStorage / API), Dữ liệu mẫu JSON (15–25 bản ghi), Triển khai (Deploy) & QA |
+| **Nguyễn Hoàng Hải (Leader - SV3)** | **Khối quản trị (Quản lý kinh doanh & Admin)** | **6 màn** (S12 – S17) | **AI-3: Feedback Theme Extractor** | **Trục chéo 3**: Hệ thống thiết kế (`css/common.css`, biến `:root`), Quản lý hợp nhất nhánh Git (`dev` $\rightarrow$ `main`) |
 
 > 📌 **Lưu ý trước giờ bảo vệ:** Cột **OBS** sẽ được cập nhật link video thực tế sau khi từng thành viên hoàn thành video quay màn hình độc lập có webcam rõ khuôn mặt theo đúng quy chế.
