@@ -177,3 +177,4 @@ document.addEventListener('click', e => {
 
 // Khởi chạy trang
 bootPage(settingsPage);
+
