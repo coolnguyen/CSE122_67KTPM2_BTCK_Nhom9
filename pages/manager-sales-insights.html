@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Thống kê doanh thu và báo cáo bán hàng - MenuMind.">
+    <title>Bán hàng · MenuMind</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/manager-sales-insights.css">
+    <script src="../js/database.js" defer></script>
+    <script src="../js/common.js" defer></script>
+    <script src="../js/header.js" defer></script>
+    <script src="../js/manager-sales-insights.js" defer></script>
+</head>
+
+<body data-root=".." data-page="manager-sales" data-title="Bán hàng">
+    <header class="site-header">
+        <a class="skip-link" href="#main-content">Bỏ qua điều hướng</a>
+        <div class="brand"><span class="brand-mark" aria-hidden="true">M</span><span>MenuMind</span></div>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav">
+            <span aria-hidden="true">☰</span>
+            <span class="sr-only">Mở điều hướng</span>
+        </button>
+        <nav id="global-nav" class="global-nav" aria-label="Điều hướng chính">
+            <a href="../index.html#qr-order">Gọi món bằng QR</a>
+            <a href="diner-order-status.html">Theo dõi đơn</a>
+            <a href="login.html">Khu vực nhân viên</a>
+        </nav>
+        <a class="role-pill" href="login.html" aria-label="Đổi vai trò"><span class="pulse-dot"></span>Quản trị</a>
+    </header>
+
+    <div class="page-frame">
+        <aside>
+            <nav class="side-nav" aria-label="Điều hướng admin">
+                <p>Không gian làm việc</p>
+                <a href="admin-user-management.html"><span aria-hidden="true">□</span>Tài khoản</a>
+                <a href="admin-table-management.html"><span aria-hidden="true">□</span>Bàn ăn</a>
+                <a href="manager-menu-management.html"><span aria-hidden="true">□</span>Thực đơn</a>
+                <a class="active" href="manager-sales-insights.html"><span aria-hidden="true">□</span>Bán hàng</a>
+                <a href="manager-payment-requests.html"><span aria-hidden="true">□</span>Thanh toán</a>
+                <a href="manager-feedback-center.html"><span aria-hidden="true">□</span>Phản hồi</a>
+                <a href="admin-settings.html"><span aria-hidden="true">□</span>Cài đặt</a>
+                <a href="login.html"><span aria-hidden="true">↗</span>Đổi vai trò</a>
+            </nav>
+        </aside>
+
+        <main id="main-content" class="site-main">
+            <header class="page-head">
+                <div>
+                    <p class="kicker">Tổng quan kinh doanh</p>
+                    <h1>Báo cáo doanh số & Thống kê</h1>
+                    <p>Theo dõi doanh thu, hiệu suất món và thời gian phục vụ theo từng chu kỳ.</p>
+                </div>
+                <div class="head-actions">
+                    <button class="button quiet" data-action="export-csv" id="btn-export-csv" type="button">↓ Xuất CSV</button>
+                </div>
+            </header>
+
+            <section class="metric-strip manager" aria-label="Các chỉ số bán hàng then chốt">
+                <div>
+                    <span>Doanh thu</span>
+                    <strong id="metric-revenue">48,6<small> tr</small></strong>
+                    <em id="metric-revenue-trend" class="trend-up">+12,4%</em>
+                </div>
+                <div>
+                    <span>Đơn hoàn tất</span>
+                    <strong id="metric-orders">326</strong>
+                    <em id="metric-orders-trend" class="trend-up">+8,1%</em>
+                </div>
+                <div>
+                    <span>Giá trị đơn TB</span>
+                    <strong id="metric-aov">149<small>k</small></strong>
+                    <em id="metric-aov-trend" class="trend-up">+3,2%</em>
+                </div>
+                <div>
+                    <span>Thời gian chờ TB</span>
+                    <strong id="metric-wait">13<small>′</small></strong>
+                    <em id="metric-wait-trend" class="down">−2 phút</em>
+                </div>
+            </section>
+
+            <div class="content-grid">
+                <section class="surface chart-card">
+                    <div class="section-title compact">
+                        <div>
+                            <p class="kicker" id="chart-kicker">Chu kỳ 7 ngày</p>
+                            <h2>Doanh thu theo ngày</h2>
+                        </div>
+                        <label class="compact-field" for="period-select">
+                            <span>Giai đoạn</span>
+                            <select id="period-select" aria-label="Chọn giai đoạn báo cáo">
+                                <option value="this-week">Tuần này</option>
+                                <option value="last-week">Tuần trước</option>
+                                <option value="this-month">Tháng này</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div id="sales-chart" class="chart" role="img" aria-label="Biểu đồ cột doanh thu theo ngày">
+                        <!-- Biểu đồ cột render bởi JS -->
+                    </div>
+                </section>
+
+                <section class="surface" id="sales-ranking-section">
+                    <p class="kicker">Món dẫn đầu</p>
+                    <h2>Top món theo doanh thu</h2>
+                    <div id="top-dish-ranks" aria-live="polite">
+                        <!-- Danh sách top món bán chạy render bởi JS -->
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <span>MenuMind · vận hành thông minh, phục vụ có nhịp</span>
+        <span>Hệ thống vận hành nhà hàng</span>
+    </footer>
+</body>
+
+</html>
+

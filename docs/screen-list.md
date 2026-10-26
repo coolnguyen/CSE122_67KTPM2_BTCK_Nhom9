@@ -21,3 +21,5 @@
 | S17 | Dùng chung | Không tìm thấy trang | `pages/404.html` | Điều hướng khi đường dẫn không tồn tại |
 
 [Thiết kế Figma](https://www.figma.com/design/N8wER6qISetc5Gf4pANqka/MenuMind)
+
+[Thiết kế Figma có màu ( dự kiến ban đầu nhưng về sau để style màu khác )](https://www.figma.com/design/N8wER6qISetc5Gf4pANqka/MenuMind?node-id=6-2)
