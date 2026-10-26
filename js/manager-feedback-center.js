@@ -3,7 +3,6 @@
  * Nguyễn Hoàng Hải (SV3 - Leader)
  * Tiêu chí: Đầy đủ 6 bước AI trên UI, AI Failure/Uncertainty UX, Lưu localStorage thật
  */
-
 const DEFAULT_FEEDBACK = [
   { id: 'f01', table: 'A02', rating: 5, text: 'Cá hồi áp chảo rất tươi và ngon, nhân viên phục vụ tận tình chu đáo.', theme: 'Hương vị món', status: 'new' },
   { id: 'f02', table: 'C01', rating: 3, text: 'Món ăn ngon vừa miệng nhưng khung giờ tối chờ món chính hơi lâu (khoảng 25 phút).', theme: 'Thời gian chờ', status: 'new' },

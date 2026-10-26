@@ -1,12 +1,10 @@
 /* CSS cho màn hình Trung tâm phản hồi & AI-3 (S14) */
-
 .content-grid.wide-right {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) 390px;
   gap: 22px;
   align-items: start;
 }
-
 .feedback-summary {
   display: grid;
   grid-template-columns: 0.8fr 1fr 1fr;
