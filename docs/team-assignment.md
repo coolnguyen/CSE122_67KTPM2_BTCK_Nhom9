@@ -41,7 +41,7 @@ Nhóm áp dụng mô hình phân chia công việc cân bằng theo tỷ lệ v�
   1. `pages/kitchen-board.html` — Bảng Kanban điều phối món (Chờ $\rightarrow$ Nấu $\rightarrow$ Xong) (`TASK-07` / `feature/kitchen-board`)
   2. `pages/kitchen-order-detail.html` — Chi tiết từng đơn cần nấu, tick xong từng món (`TASK-08` / `feature/kitchen-order-detail`)
   3. `pages/kitchen-wait-time-alerts.html` — Cảnh báo đơn trễ thời gian chờ (`TASK-09` / `feature/kitchen-wait-time-alerts`)
-  4. `pages/admin-table-management.html` — Quản lý trạng thái bàn (Trống / Có khách) & in QR bàn (`TASK-10` / `feature/admin-table-management`)
+  4. `pages/manager-table-management.html` — Quản lý trạng thái bàn (Trống / Có khách) & in QR bàn (`TASK-10` / `feature/manager-table-management`)
   5. `pages/manager-payment-requests.html` — Danh sách bàn yêu cầu thanh toán & xác nhận thu tiền (`TASK-11` / `feature/manager-payment-requests`)
 * **Tính năng AI phụ trách:** **AI-2 — Kitchen Load Predictor** (Dự báo quá tải bếp và cảnh báo thời gian chờ).
 * **Trách nhiệm chéo toàn hệ thống (Trục chéo 2):** Xử lý dữ liệu (backend / localStorage trong `js/database.js`, `js/api.js`), Bộ dữ liệu mẫu JSON 24 món ăn (`assets/data/app-data.json`), viết hàm dùng chung chống XSS `escapeHTML()`, Triển khai (Deploy) & QA.
@@ -52,7 +52,7 @@ Nhóm áp dụng mô hình phân chia công việc cân bằng theo tỷ lệ v�
 * **Logic nghiệp vụ:** Bộ não chiến lược của nhà hàng (quản lý món bán, xem doanh thu lời lỗ, xem đánh giá của khách, quản lý tài khoản nhân viên và cấu hình quán).
 * **Danh sách màn hình (6 màn):**
   1. `pages/manager-menu-management.html` — CRUD quản lý món ăn, đổi giá, bật/tắt hết hàng (`TASK-12` / `feature/manager-menu-management`)
-  2. `pages/manager-sales-insights.html` — Báo cáo doanh số bán chạy, biểu đồ & xuất CSV (`TASK-13` / `feature/manager-sales-insights`)
+  2. `pages/admin-sales-insights.html` — Báo cáo doanh số bán chạy, biểu đồ & xuất CSV (`TASK-13` / `feature/admin-sales-insights`)
   3. `pages/manager-feedback-center.html` — Trung tâm tiếp nhận và xử lý đánh giá của khách (`TASK-14` / `feature/manager-feedback-center`)
   4. `pages/admin-user-management.html` — Quản lý tài khoản nhân viên (cấp quyền, vô hiệu hóa) (`TASK-15` / `feature/admin-user-management`)
   5. `pages/admin-settings.html` — Cài đặt thông tin nhà hàng, hotline, chế độ Sáng/Tối (`TASK-16` / `feature/admin-settings`)

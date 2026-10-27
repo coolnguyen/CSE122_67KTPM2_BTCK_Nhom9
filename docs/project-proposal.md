@@ -152,11 +152,11 @@ Dự án tuyệt đối không sử dụng khung chat hỏi đáp generic, mà x
          ├──► [QUẢN LÝ NHÀ HÀNG]
          │      ├── Quản lý thực đơn & giá (pages/manager-menu-management.html)
          │      ├── Yêu cầu thanh toán bàn (pages/manager-payment-requests.html)
-         │      ├── Báo cáo doanh số & Xuất CSV (pages/manager-sales-insights.html)
+         │      ├── Báo cáo doanh số & Xuất CSV (pages/admin-sales-insights.html)
          │      └── Phản hồi khách & AI Chủ đề (pages/manager-feedback-center.html)
          │
          └──► [QUẢN TRỊ VIÊN / CHỦ QUÁN]
-                ├── Sơ đồ bàn & Mã QR bàn (pages/admin-table-management.html)
+                ├── Sơ đồ bàn & Mã QR bàn (pages/manager-table-management.html)
                 ├── Quản lý tài khoản nhân viên (pages/admin-user-management.html)
                 └── Cài đặt hệ thống nhà hàng (pages/admin-settings.html)
 ```
@@ -192,7 +192,7 @@ Khách ăn xong, bấm:            [Màn hình Quản lý - manager-payment-requ
 2. Yêu cầu tính tiền           Quản lý xác nhận đã thu tiền → Bàn đổi về "Đang dọn"
    │                              │
    ▼                              ▼
-Gửi feedback lên hệ thống      Doanh số cập nhật vào manager-sales-insights.html
+Gửi feedback lên hệ thống      Doanh số cập nhật vào admin-sales-insights.html
 AI Theme Extractor gom nhóm    Quản lý xem báo cáo & xuất CSV
 trên feedback-center.html
 ```
