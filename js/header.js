@@ -92,7 +92,18 @@ document.addEventListener('click', e => {
 
 // Tự động gắn nút theme vào header khi DOM sẵn sàng
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', mountThemeButton);
+  document.addEventListener('DOMContentLoaded', () => { mountThemeButton(); updateRolePill(); });
 } else {
-  mountThemeButton();
+  mountThemeButton(); updateRolePill();
+}
+
+function updateRolePill() {
+  const rolePill = document.querySelector('.role-pill');
+  if (!rolePill) return;
+  const session = typeof getAuthSession === 'function' ? getAuthSession() : null;
+  if (session?.staff?.role) {
+    const roleLabels = { manager: 'Quản lý', admin: 'Quản trị', kitchen: 'Bếp', service: 'Phục vụ' };
+    const label = roleLabels[session.staff.role] || session.staff.role;
+    rolePill.innerHTML = `<span class="pulse-dot"></span>${label}`;
+  }
 }

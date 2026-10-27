@@ -94,10 +94,19 @@ function roleHome(role) {
 }
 
 const protectedRoles = {
-  'kitchen-board': 'kitchen', 'kitchen-detail': 'kitchen', 'kitchen-alerts': 'kitchen',
-  'manager-menu': 'manager', 'manager-payments': 'manager',
-  'manager-feedback': 'manager', 'manager-sales': 'admin', 'admin-sales': 'admin', 'admin-sales-insights': 'admin',
-  'manager-tables': ['manager', 'service'], 'admin-tables': ['manager', 'service'], 'admin-users': 'admin', 'admin-settings': 'admin'
+  'kitchen-board': ['kitchen', 'admin'],
+  'kitchen-detail': ['kitchen', 'admin'],
+  'kitchen-alerts': ['kitchen', 'admin'],
+  'manager-menu': ['manager', 'admin'],
+  'manager-payments': ['manager', 'admin'],
+  'manager-feedback': ['manager', 'admin'],
+  'manager-sales': ['admin', 'manager'],
+  'admin-sales': ['admin', 'manager'],
+  'admin-sales-insights': ['admin', 'manager'],
+  'manager-tables': ['manager', 'service', 'admin'],
+  'admin-tables': ['manager', 'service', 'admin'],
+  'admin-users': 'admin',
+  'admin-settings': 'admin'
 };
 
 function guardPage() {
