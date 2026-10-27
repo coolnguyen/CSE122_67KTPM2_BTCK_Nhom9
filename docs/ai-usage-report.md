@@ -40,7 +40,7 @@
 | Màn hình & Task | Câu lệnh Prompt | Lỗi / Rủi ro do AI sinh ra | Cách Dương tự tay khắc phục |
 | :--- | :--- | :--- | :--- |
 | **S09:** Cảnh báo thời gian chờ<br>`TASK-09` | *"Viết thuật toán AI dự báo thời gian chờ của bếp dựa trên số đơn hàng."* | • AI tính thời gian chờ cố định (hardcode 15 phút), **không tính đến số lượng đầu bếp đang làm việc thực tế**.<br>• Thiếu kịch bản cảnh báo khi bếp bị quá tải nghiêm trọng. | • Lập trình công thức tính tải động: `loadIndex = totalItems / (cookCount * 3)`.<br>• Bổ sung kịch bản AI Overload/Failure UX: Khi tỷ lệ vượt quá 8 món/đầu bếp, hệ thống hiện cảnh báo đỏ rực yêu cầu điều phối thêm nhân sự. |
-| **S07:** Bảng Kanban bếp<br>`TASK-07` | *"Tạo giao diện Kanban bếp chia 3 cột: Chờ nấu, Đang nấu, Hoàn tất."* | • Khi bấm chuyển trạng thái đơn, AI chỉ đổi trên DOM tạm thời, **F5 lại trang thì đơn bị reset về trạng thái cũ**.<br>• Thiếu hiệu ứng Loading khi đơn hàng đang được cập nhật. | • Viết hàm đồng bộ hai chiều: Cập nhật trực tiếp vào mảng `orders` trong `localStorage` và gửi API Supabase.<br>• Bổ sung Spinner Loading và Toast thông báo khi chuyển trạng thái món. |
+| **S07:** Bảng Kanban bếp<br>`TASK-07` | *"Tạo ra các ô chứa thông tin đơn hàng đang nấu , chờ phục vụ"* | • Khi bấm chuyển trạng thái đơn, AI chỉ đổi trên DOM tạm thời, **F5 lại trang thì đơn bị reset về trạng thái cũ**.<br>• Thiếu hiệu ứng Loading khi đơn hàng đang được cập nhật. | • Viết hàm đồng bộ hai chiều: Cập nhật trực tiếp vào mảng `orders` trong `localStorage` và gửi API Supabase.<br>• Bổ sung Spinner Loading và Toast thông báo khi chuyển trạng thái món. |
 
 ---
 
