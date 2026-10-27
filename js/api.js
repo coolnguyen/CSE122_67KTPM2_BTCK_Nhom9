@@ -1,9 +1,4 @@
-/**
- * js/api.js - MenuMind Data Access Layer & API Module
- * Phụ trách: SV2 (Trần Văn Dương - Trục chéo 2: Kiến trúc Dữ liệu & An toàn mã nguồn)
- * Đạt chuẩn: Tiêu chí 5.3 (Quản lý dữ liệu giả lập), Tiêu chí 5.4 (Kiến trúc mô-đun & Chống XSS)
- * Điểm thưởng mở rộng: Đồng bộ dữ liệu liên thông thời gian thực giữa các Tab (+0.50đ)
- */
+
 
 const API_STORAGE_PREFIX = 'menumind:';
 
