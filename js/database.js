@@ -56,7 +56,8 @@ async function configureSupabase() {
 async function readRemoteData() {
   if (!remoteEnabled) return null;
   const auth = typeof getAuthSession === 'function' ? getAuthSession() : null;
-  const secured = auth?.accessToken ? { headers: { Authorization: `Bearer ${auth.accessToken}` } } : null;
+  const isDemo = !auth?.accessToken || auth.accessToken.startsWith('demo-') || auth.accessToken === 'demo-local-token';
+  const secured = (!isDemo && auth?.accessToken) ? { headers: { Authorization: `Bearer ${auth.accessToken}` } } : null;
   const safeRead = async (resource, options = {}) => {
     try { return await apiFetch(resource, options); }
     catch (error) { console.warn(`Không thể tải ${resource.split('?')[0]} từ Supabase`, error); return []; }

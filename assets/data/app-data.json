@@ -724,5 +724,45 @@
       "status": "inactive",
       "shift": "Sáng"
     }
+  ],
+  "payments": [
+    {
+      "id": "p01",
+      "table_code": "A02",
+      "reference": "HD-A02-091",
+      "method": "cash",
+      "amount": 378000,
+      "status": "pending",
+      "created_at": "2026-10-27T12:45:00Z"
+    },
+    {
+      "id": "p02",
+      "table_code": "B01",
+      "reference": "HD-B01-092",
+      "method": "bank_transfer",
+      "amount": 520000,
+      "status": "pending",
+      "created_at": "2026-10-27T13:10:00Z"
+    },
+    {
+      "id": "p03",
+      "table_code": "A04",
+      "reference": "HD-A04-089",
+      "method": "card",
+      "amount": 640000,
+      "status": "paid",
+      "created_at": "2026-10-27T11:30:00Z",
+      "paid_at": "2026-10-27T12:00:00Z"
+    },
+    {
+      "id": "p04",
+      "table_code": "C03",
+      "reference": "HD-C03-088",
+      "method": "cash",
+      "amount": 219000,
+      "status": "paid",
+      "created_at": "2026-10-27T10:15:00Z",
+      "paid_at": "2026-10-27T10:45:00Z"
+    }
   ]
 }

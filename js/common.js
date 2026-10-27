@@ -97,14 +97,14 @@ const protectedRoles = {
   'kitchen-board': ['kitchen', 'admin'],
   'kitchen-detail': ['kitchen', 'admin'],
   'kitchen-alerts': ['kitchen', 'admin'],
-  'manager-menu': ['manager', 'admin'],
-  'manager-payments': ['manager', 'admin'],
+  'manager-menu': ['manager'],
+  'manager-payments': ['manager', 'service'],
   'manager-feedback': ['manager', 'admin'],
   'manager-sales': ['admin', 'manager'],
   'admin-sales': ['admin', 'manager'],
   'admin-sales-insights': ['admin', 'manager'],
-  'manager-tables': ['manager', 'service', 'admin'],
-  'admin-tables': ['manager', 'service', 'admin'],
+  'manager-tables': ['manager', 'service'],
+  'admin-tables': ['manager', 'service'],
   'admin-users': 'admin',
   'admin-settings': 'admin'
 };
@@ -231,40 +231,68 @@ function badge(s) {
 }
 
 function cacheData(data) {
+  const seed = getStore('seed', fallbackData);
+  ['staff', 'orders', 'feedback', 'payments', 'tables', 'menuItems'].forEach(key => {
+    if (!data[key] || !Array.isArray(data[key]) || data[key].length === 0) {
+      const existing = getStore(key, null);
+      if (Array.isArray(existing) && existing.length > 0) {
+        data[key] = existing;
+      } else if (seed && Array.isArray(seed[key]) && seed[key].length > 0) {
+        data[key] = seed[key];
+      }
+    }
+  });
   appData = data;
-  Object.entries(data).forEach(([key, value]) => setStore(key, value));
+  Object.entries(data).forEach(([key, value]) => {
+    if (Array.isArray(value) && value.length === 0) {
+      const existing = getStore(key, null);
+      if (Array.isArray(existing) && existing.length > 0) return;
+    }
+    setStore(key, value);
+  });
 }
 
 async function bootPage(renderPage) {
+  // 1. Luôn nạp dữ liệu mẫu từ app-data.json để làm seed dữ liệu dự phòng
+  try {
+    const res = await fetch(`${ROOT}/assets/data/app-data.json`);
+    if (res.ok) {
+      const localSeed = await res.json();
+      appData = localSeed;
+      if (!localStorage.getItem('menumind:seed')) {
+        setStore('seed', localSeed);
+      }
+      ['staff', 'orders', 'feedback', 'payments', 'tables', 'menuItems'].forEach(key => {
+        const current = getStore(key, null);
+        if ((!current || (Array.isArray(current) && current.length === 0)) && localSeed[key]) {
+          setStore(key, localSeed[key]);
+        }
+      });
+    }
+  } catch (err) {
+    appData = getStore('seed', fallbackData);
+  }
+
+  // 2. Thử đồng bộ dữ liệu từ Supabase nếu có cấu hình
   if (typeof configureSupabase === 'function') {
     await configureSupabase();
     try {
       const remote = typeof readRemoteData === 'function' ? await readRemoteData() : null;
-      if (!remote || !remote.menuItems.length) throw new Error('empty remote');
-      cacheData(remote);
-    } catch (remoteError) {
-      try {
-        const res = await fetch(`${ROOT}/assets/data/app-data.json`);
-        if (!res.ok) throw new Error('load');
-        appData = await res.json();
-      } catch {
-        appData = getStore('seed', fallbackData);
+      if (remote && remote.menuItems && remote.menuItems.length) {
+        cacheData(remote);
       }
+    } catch (remoteError) {
       if (typeof remoteEnabled !== 'undefined' && remoteEnabled) {
         console.warn('Supabase unavailable; using local fallback.', remoteError);
       }
     }
-  } else {
-    try {
-      const res = await fetch(`${ROOT}/assets/data/app-data.json`);
-      if (!res.ok) throw new Error('load');
-      appData = await res.json();
-    } catch {
-      appData = getStore('seed', fallbackData);
-    }
   }
 
-  if (!appData.menuItems.length) {
+  if (!appData.menuItems || !appData.menuItems.length) {
+    appData = getStore('seed', fallbackData);
+  }
+
+  if (!appData.menuItems || !appData.menuItems.length) {
     const mainEl = document.querySelector('main');
     if (mainEl) mainEl.innerHTML = emptyState('Không tải được dữ liệu', 'Hãy chạy website qua máy chủ cục bộ và thử lại.', `<button class="button primary" onclick="location.reload()">Thử lại</button>`);
     return;
