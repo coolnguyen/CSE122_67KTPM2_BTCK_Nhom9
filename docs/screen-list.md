@@ -12,7 +12,7 @@
 | S08 | Nhân viên bếp | Chi tiết đơn bếp | `pages/kitchen-order-detail.html` | Xem món và cập nhật tiến độ |
 | S09 | Nhân viên bếp | Cảnh báo chờ lâu | `pages/kitchen-wait-time-alerts.html` | Theo dõi các đơn cần ưu tiên |
 | S10 | Quản lý | Quản lý thực đơn | `pages/manager-menu-management.html` | Quản lý món, giá và tình trạng bán |
-| S11 | Quản trị viên | Thống kê bán hàng | `pages/manager-sales-insights.html` | Xem kết quả bán hàng |
+| S11 | Quản trị viên | Thống kê bán hàng | `pages/admin-sales-insights.html` | Xem kết quả bán hàng |
 | S12 | Quản lý & Quản trị viên | Trung tâm phản hồi | `pages/manager-feedback-center.html` | Xem và xử lý ý kiến khách hàng |
 | S13 | Quản lý | Yêu cầu thanh toán | `pages/manager-payment-requests.html` | Xem bàn đang chờ và xác nhận đã thu tiền |
 | S14 | Quản lý & Nhân viên phục vụ | Quản lý bàn | `pages/admin-table-management.html` | Quản lý bàn và trạng thái sử dụng |

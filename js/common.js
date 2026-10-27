@@ -96,7 +96,7 @@ function roleHome(role) {
 const protectedRoles = {
   'kitchen-board': 'kitchen', 'kitchen-detail': 'kitchen', 'kitchen-alerts': 'kitchen',
   'manager-menu': 'manager', 'manager-payments': 'manager',
-  'manager-feedback': 'manager', 'manager-sales': 'admin',
+  'manager-feedback': 'manager', 'manager-sales': 'admin', 'admin-sales': 'admin', 'admin-sales-insights': 'admin',
   'admin-tables': ['manager', 'service'], 'admin-users': 'admin', 'admin-settings': 'admin'
 };
 

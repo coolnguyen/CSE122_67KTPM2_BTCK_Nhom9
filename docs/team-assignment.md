@@ -52,7 +52,7 @@ Nhóm áp dụng mô hình phân chia công việc cân bằng theo tỷ lệ v�
 * **Logic nghiệp vụ:** Bộ não chiến lược của nhà hàng (quản lý món bán, xem doanh thu lời lỗ, xem đánh giá của khách, quản lý tài khoản nhân viên và cấu hình quán).
 * **Danh sách màn hình (6 màn):**
   1. `pages/manager-menu-management.html` — CRUD quản lý món ăn, đổi giá, bật/tắt hết hàng (`TASK-12` / `feature/manager-menu-management`)
-  2. `pages/manager-sales-insights.html` — Báo cáo doanh số bán chạy, biểu đồ & xuất CSV (`TASK-13` / `feature/manager-sales-insights`)
+  2. `pages/admin-sales-insights.html` — Báo cáo doanh số bán chạy, biểu đồ & xuất CSV (`TASK-13` / `feature/admin-sales-insights`)
   3. `pages/manager-feedback-center.html` — Trung tâm tiếp nhận và xử lý đánh giá của khách (`TASK-14` / `feature/manager-feedback-center`)
   4. `pages/admin-user-management.html` — Quản lý tài khoản nhân viên (cấp quyền, vô hiệu hóa) (`TASK-15` / `feature/admin-user-management`)
   5. `pages/admin-settings.html` — Cài đặt thông tin nhà hàng, hotline, chế độ Sáng/Tối (`TASK-16` / `feature/admin-settings`)
