@@ -21,8 +21,39 @@ const uid = prefix => `${prefix}-${Date.now().toString(36).toUpperCase()}`;
 const getStore = (key, fallback) => JSON.parse(localStorage.getItem(`menumind:${key}`) || JSON.stringify(fallback));
 const setStore = (key, value) => localStorage.setItem(`menumind:${key}`, JSON.stringify(value));
 const escapeHtml = value => String(value ?? '').replace(/[&<>'"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' }[ch]));
-window.escapeHTML = escapeHtml;
-window.escapeHtml = escapeHtml;
+
+function parseOrderDate(createdAt) {
+  if (!createdAt) return null;
+  const d = new Date(createdAt);
+  if (!Number.isNaN(d.getTime())) {
+    return { date: d, isFullDate: String(createdAt).includes('-') || String(createdAt).includes('T') };
+  }
+  const match = String(createdAt).match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+  if (match) {
+    const now = new Date();
+    const candidate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(match[1], 10), parseInt(match[2], 10), parseInt(match[3] || '0', 10));
+    if (candidate.getTime() > now.getTime() + 2 * 60000) {
+      candidate.setDate(candidate.getDate() - 1);
+    }
+    return { date: candidate, isFullDate: false };
+  }
+  return null;
+}
+
+function getOrderWait(order, nowMs = Date.now()) {
+  if (!order) return 0;
+  const done = ['served', 'cancelled'].includes(order.status);
+  const parsed = parseOrderDate(order.createdAt);
+
+  if (parsed) {
+    const elapsed = Math.max(0, Math.floor((nowMs - parsed.date.getTime()) / 60000));
+    if (done && Number(order.wait) > 0) return Number(order.wait);
+    if (!parsed.isFullDate && Number(order.wait) > 0) return Number(order.wait);
+    if (!done) return elapsed;
+    return Number(order.wait) || elapsed;
+  }
+  return Number(order.wait) || 0;
+}
 
 function dishImage(item) {
   const configured = String(item?.image || '').trim();
@@ -64,8 +95,8 @@ function roleHome(role) {
 
 const protectedRoles = {
   'kitchen-board': 'kitchen', 'kitchen-detail': 'kitchen', 'kitchen-alerts': 'kitchen',
-  'manager-menu': 'manager', 'manager-payments': ['manager', 'admin'],
-  'manager-feedback': ['manager', 'admin'], 'manager-sales': 'admin',
+  'manager-menu': 'manager', 'manager-payments': 'manager',
+  'manager-feedback': 'manager', 'manager-sales': 'admin',
   'admin-tables': ['manager', 'service'], 'admin-users': 'admin', 'admin-settings': 'admin'
 };
 
@@ -260,12 +291,3 @@ document.addEventListener('error', e => {
     e.target.nextElementSibling.hidden = false;
   }
 }, true);
-
-// Cross-tab real-time synchronization (+0.50 bonus points)
-window.addEventListener('storage', e => {
-  if (e.key && e.key.startsWith('menumind:')) {
-    if (typeof renderPage === 'function') {
-      renderPage();
-    }
-  }
-});
