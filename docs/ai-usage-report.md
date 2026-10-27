@@ -48,55 +48,14 @@
 
 | Màn hình & Task | Câu lệnh Prompt | Lỗi / Rủi ro do AI sinh ra | Cách Hải tự tay khắc phục |
 | :--- | :--- | :--- | :--- |
-| **S12:** Quản lý thực đơn<br>`TASK-12` | *"Viết hàm tìm kiếm và lọc danh sách món ăn trong bảng thực đơn."* | • AI bắt sự kiện `input` trực tiếp ở từng ký tự, **thiếu `debounce(300ms)`** gây lag giao diện khi gõ nhanh.<br>• Lọc từ khóa và lọc danh mục chạy tách rời, làm mất điều kiện của nhau.<br>• Thiếu Empty State có nút CTA khi không có kết quả. | • Tự viết hàm `debounce(fn, 300)` để tối ưu hiệu năng.<br>• Viết hàm `applyMenuFilters()` gộp chung 3 tiêu chí: từ khóa + danh mục + trạng thái.<br>• Bổ sung Empty State hiển thị icon 🔍 kèm nút CTA **[ Xóa bộ lọc ]**. |
 | **S14:** Trung tâm phản hồi<br>`TASK-14` | *"Tạo giao diện phân tích chủ đề nhận xét bằng AI đủ 6 bước theo barem."* | • Nhập 1-2 ký tự AI vẫn sinh kết quả, **hoàn toàn thiếu kịch bản AI Failure UX**.<br>• Nút "Lưu insight" chỉ dùng `alert()`, không lưu thật vào `localStorage`.<br>• Thẻ `<textarea>` đề xuất bị khóa `readonly`, người dùng không sửa được. | • Thêm điều kiện `if (goal.length < 10)` hiển thị cảnh báo vàng: *"Độ tin cậy thấp: 32%"* kèm các nút chip gợi ý.<br>• Thay `alert()` bằng hàm `setStore('aiDecision', ...)` lưu đối tượng thật vào `localStorage`.<br>• Cho phép người dùng chỉnh sửa trực tiếp nội dung đề xuất trước khi lưu. |
 
 ---
 
 ## 4. Minh Chứng Khắc Phục Lỗi Mã Nguồn Cụ Thể (Code Diff Thực Tế)
 
-### Minh chứng 1: Sửa lỗi thiếu Debounce và Lọc rời rạc (Màn S12 - Hải SV3)
-```javascript
-// ❌ CODE AI SINH RA (LỖI: Bắt sự kiện trực tiếp, không debounce, lọc rời rạc)
-document.addEventListener('input', e => {
-  if (e.target.id === 'manager-menu-search') {
-    const q = e.target.value.toLowerCase();
-    const filtered = appData.menuItems.filter(i => i.name.toLowerCase().includes(q));
-    tableEl.innerHTML = menuTable(filtered); // Mất lọc trạng thái!
-  }
-});
 
-// ✅ CODE SINH VIÊN TỰ SỬA LẠI (CHUẨN 4.4: Debounce 300ms + Lọc kết hợp 3 tiêu chí + Empty State CTA)
-const debouncedMenuSearch = debounce(() => {
-  applyMenuFilters();
-}, 300);
-
-function applyMenuFilters() {
-  const query = document.querySelector('#manager-menu-search')?.value.trim().toLowerCase();
-  const catFilter = document.querySelector('#manager-menu-category-filter')?.value;
-  const statusFilter = document.querySelector('#manager-menu-status-filter')?.value;
-
-  const filtered = getMenuItems().filter(item => {
-    const matchesQuery = !query || item.name.toLowerCase().includes(query);
-    const matchesCat = catFilter === 'all' || item.category === catFilter;
-    const matchesStatus = statusFilter === 'all' || (statusFilter === 'available' ? item.available : !item.available);
-    return matchesQuery && matchesCat && matchesStatus;
-  });
-
-  if (filtered.length === 0) {
-    tableEl.innerHTML = `
-      <div class="table-empty-state">
-        <span class="empty-icon">🔍</span>
-        <h3>Không tìm thấy món ăn phù hợp</h3>
-        <button type="button" class="button quiet" id="btn-reset-menu-filters">Xóa bộ lọc</button>
-      </div>`;
-  } else {
-    tableEl.innerHTML = renderMenuTable(filtered);
-  }
-}
-```
-
-### Minh chứng 2: Bổ sung AI Failure / Uncertainty UX (Màn S14 - Hải SV3)
+### Minh chứng : Bổ sung AI Failure / Uncertainty UX (Màn S14 - Hải SV3)
 ```javascript
 // ❌ CODE AI SINH RA (LỖI: Luôn sinh kết quả dù nhập lung tung, thiếu Failure UX)
 function runThemeAI(form) {
