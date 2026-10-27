@@ -1,22 +1,6 @@
 function cartPage() {
   const cart = getStore('cart', []);
-  const menuItems = [...appData.menuItems, ...getStore('menuItems', [])];
-  const details = cart.map((entry, index) => {
-    const menuId = String(entry.menuId ?? entry.id ?? '');
-    const menuItem = menuItems.find(item => String(item.id) === menuId) || entry.item || {};
-    return {
-      ...entry,
-      index,
-      qty: Math.max(1, Number(entry.qty) || 1),
-      item: {
-        ...menuItem,
-        id: String(menuItem.id ?? menuId),
-        name: menuItem.name || entry.name || entry.itemName || (menuId ? `Món ${menuId}` : 'Món chưa xác định'),
-        price: Number(menuItem.price ?? entry.price ?? entry.unitPrice) || 0,
-        emoji: menuItem.emoji || '🍽️'
-      }
-    };
-  });
+  const details = cart.map((c, index) => ({ ...c, index, item: appData.menuItems.find(i => i.id === c.menuId) })).filter(x => x.item);
   const subtotal = details.reduce((s, x) => s + x.item.price * x.qty, 0);
   const payment = getStore('payment', null);
   const locked = paymentLocksOrdering(payment);
@@ -43,7 +27,7 @@ function cartPage() {
     return;
   }
 
-  wrapper.innerHTML = `<div class="checkout-layout"><section class="cart-list" id="cart-list" aria-label="Các món đã chọn">${details.map(x => `<article class="cart-row"><div class="mini-food tone-${x.item.id.slice(-1)}${x.item.image ? '' : ' is-placeholder'}" data-dish-id="${escapeHtml(x.item.id)}">${x.item.image ? dishPicture(x.item, 'mini-food-photo') : `<span aria-hidden="true">${escapeHtml(x.item.emoji)}</span>`}</div><div><h2>${escapeHtml(x.item.name)}</h2><p>${x.note ? `Ghi chú: ${escapeHtml(x.note)}` : 'Không có ghi chú'}</p><button class="link-button danger-text" data-remove-cart="${x.index}" ${locked ? 'disabled' : ''}>Bỏ món</button></div><label>Số lượng<input type="number" min="1" max="10" value="${x.qty}" data-cart-qty="${x.index}" ${locked ? 'disabled' : ''}></label><strong>${money(x.item.price * x.qty)}</strong></article>`).join('')}</section><aside class="bill-panel"><p class="kicker">Tóm tắt đơn</p><h2>${details.reduce((s, x) => s + x.qty, 0)} món · Bàn ${escapeHtml(table)}</h2><dl><div><dt>Tạm tính</dt><dd>${money(subtotal)}</dd></div><div><dt>Phí phục vụ</dt><dd>${money(Math.round(subtotal * .05))}</dd></div><div class="total"><dt>Tổng cộng</dt><dd>${money(Math.round(subtotal * 1.05))}</dd></div></dl>${locked ? `<div class="order-lock-notice" role="alert"><strong>Không thể gửi thêm món</strong><span>${escapeHtml(lockMessage)}</span></div>` : ''}<label class="check"><input id="confirm-order" type="checkbox" ${locked ? 'disabled' : ''}>Tôi đã kiểm tra món và các ghi chú</label><button id="submit-order" class="button primary full" disabled>${locked ? (payment?.status === 'paid' ? 'Phiên đã thanh toán' : 'Đã yêu cầu thanh toán') : 'Gửi đơn đến bếp'}</button><p class="fine-print">${locked ? 'Vui lòng nhờ nhân viên cấp phiên QR mới nếu muốn mở lượt dùng bàn mới.' : 'Thời gian dự kiến sẽ được cập nhật sau khi bếp nhận đơn.'}</p></aside></div>`;
+  wrapper.innerHTML = `<div class="checkout-layout"><section class="cart-list" aria-label="Các món đã chọn">${details.map(x => `<article class="cart-row"><div class="mini-food tone-${x.item.id.slice(-1)}" data-dish-id="${escapeHtml(x.item.id)}">${dishPicture(x.item, 'mini-food-photo')}</div><div><h2>${escapeHtml(x.item.name)}</h2><p>${x.note ? `Ghi chú: ${escapeHtml(x.note)}` : 'Không có ghi chú'}</p><button class="link-button danger-text" data-remove-cart="${x.index}" ${locked ? 'disabled' : ''}>Bỏ món</button></div><label>Số lượng<input type="number" min="1" max="10" value="${x.qty}" data-cart-qty="${x.index}" ${locked ? 'disabled' : ''}></label><strong>${money(x.item.price * x.qty)}</strong></article>`).join('')}</section><aside class="bill-panel"><p class="kicker">Tóm tắt đơn</p><h2>${details.reduce((s, x) => s + x.qty, 0)} món · Bàn ${escapeHtml(table)}</h2><dl><div><dt>Tạm tính</dt><dd>${money(subtotal)}</dd></div><div><dt>Phí phục vụ</dt><dd>${money(Math.round(subtotal * .05))}</dd></div><div class="total"><dt>Tổng cộng</dt><dd>${money(Math.round(subtotal * 1.05))}</dd></div></dl>${locked ? `<div class="order-lock-notice" role="alert"><strong>Không thể gửi thêm món</strong><span>${escapeHtml(lockMessage)}</span></div>` : ''}<label class="check"><input id="confirm-order" type="checkbox" ${locked ? 'disabled' : ''}>Tôi đã kiểm tra món và các ghi chú</label><button id="submit-order" class="button primary full" disabled>${locked ? (payment?.status === 'paid' ? 'Phiên đã thanh toán' : 'Đã yêu cầu thanh toán') : 'Gửi đơn đến bếp'}</button><p class="fine-print">${locked ? 'Vui lòng nhờ nhân viên cấp phiên QR mới nếu muốn mở lượt dùng bàn mới.' : 'Thời gian dự kiến sẽ được cập nhật sau khi bếp nhận đơn.'}</p></aside></div>`;
 }
 
 async function submitOrder() {
@@ -57,10 +41,9 @@ async function submitOrder() {
     if (button) button.textContent = 'Đang gửi đơn...';
 
     const orders = getStore('orders', appData.orders);
-    const menuItems = [...appData.menuItems, ...getStore('menuItems', [])];
     const items = cart.map(x => {
-      const menuItem = menuItems.find(i => String(i.id) === String(x.menuId ?? x.id)) || x.item;
-      return { ...x, unitPrice: Number(menuItem?.price ?? x.price ?? x.unitPrice) || 0 };
+      const menuItem = appData.menuItems.find(i => i.id === x.menuId);
+      return { ...x, unitPrice: menuItem?.price || 0 };
     });
     const order = {
       id: `MM-${Date.now().toString().slice(-8)}`,
