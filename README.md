@@ -31,7 +31,7 @@ Dự án áp dụng mô hình phân bổ công việc cân bằng **6 – 5 – 
 
 ## 🔗 3. Liên Kết Minh Chứng Dự Án
 
-* 🌐 **Website chạy thử (Live Deployment):** `[Đang triển khai GitHub Pages / Vercel]`
+* 🌐 **Website chạy thử (Live Deployment):** https://test-ebon-eta-25.vercel.app/
 * 📁 **Kho mã nguồn GitHub:** [https://github.com/coolnguyen/CSE122_67KTPM2_BTCK_Nhom9](https://github.com/coolnguyen/CSE122_67KTPM2_BTCK_Nhom9)
 * 🎨 **Bản thiết kế Figma:** [https://www.figma.com/design/N8wER6qISetc5Gf4pANqka/MenuMind](https://www.figma.com/design/N8wER6qISetc5Gf4pANqka/MenuMind)
 * 📋 **Bảng tiến độ Trello:** https://trello.com/b/W1fnZ2hI/menumind
