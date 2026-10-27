@@ -47,13 +47,10 @@
         <aside>
             <nav class="side-nav" aria-label="Điều hướng manager">
                 <p>Không gian làm việc</p>
-                <a href="admin-user-management.html"><span aria-hidden="true">◇</span>Tài khoản</a>
                 <a href="manager-table-management.html"><span aria-hidden="true">◇</span>Bàn ăn</a>
                 <a href="manager-menu-management.html"><span aria-hidden="true">◇</span>Thực đơn</a>
-                <a href="admin-sales-insights.html"><span aria-hidden="true">◇</span>Bán hàng</a>
                 <a href="manager-payment-requests.html"><span aria-hidden="true">◇</span>Thanh toán</a>
                 <a class="active" href="manager-feedback-center.html"><span aria-hidden="true">◇</span>Phản hồi</a>
-                <a href="admin-settings.html"><span aria-hidden="true">◇</span>Cài đặt</a>
                 <a href="login.html"><span aria-hidden="true">↗</span>Đổi vai trò</a>
             </nav>
         </aside>
@@ -140,6 +137,46 @@
             </div>
         </main>
     </div>
+
+    <!-- ============================================================== -->
+    <!-- HỘP THOẠI PHẢN HỒI THỰC KHÁCH (REPLY FEEDBACK DIALOG)          -->
+    <!-- ============================================================== -->
+    <dialog id="reply-dialog" aria-labelledby="reply-dialog-title">
+        <div class="dialog-head">
+            <div>
+                <p class="kicker">Chăm sóc khách hàng</p>
+                <h2 id="reply-dialog-title">Phản hồi đánh giá thực khách</h2>
+            </div>
+            <button class="icon-button" data-close="reply-dialog" type="button" aria-label="Đóng hộp thoại">×</button>
+        </div>
+        <form id="reply-feedback-form" class="dialog-body" novalidate>
+            <input type="hidden" id="reply-feedback-id" name="id">
+
+            <div class="customer-quote-box">
+                <div class="quote-meta">
+                    <strong id="reply-customer-table">Bàn —</strong>
+                    <span id="reply-customer-stars" aria-label="Số sao">★★★★★</span>
+                </div>
+                <blockquote id="reply-customer-text">“...”</blockquote>
+            </div>
+
+            <div class="form-field">
+                <label for="reply-message">Nội dung phản hồi của Quản lý <span class="required" aria-hidden="true">*</span></label>
+                <p class="field-hint">Chọn câu trả lời mẫu gợi ý nhanh hoặc tự soạn nội dung:</p>
+                <div class="quick-reply-chips">
+                    <button type="button" class="chip-btn" data-reply-template="MenuMind xin chân thành cảm ơn quý khách! Rất mong được tiếp tục phục vụ quý khách trong những bữa ăn tới.">Mẫu: Cảm ơn hài lòng</button>
+                    <button type="button" class="chip-btn" data-reply-template="MenuMind thành thật xin lỗi quý khách vì sự chậm trễ này! Nhà hàng đã chấn chỉnh ca trực và sẽ phục vụ chu đáo hơn lần tới.">Mẫu: Xin lỗi chậm món</button>
+                    <button type="button" class="chip-btn" data-reply-template="MenuMind xin trân trọng ghi nhận góp ý của quý khách về hương vị để cải thiện món ăn ngày một hoàn hảo hơn.">Mẫu: Tiếp thu khẩu vị</button>
+                </div>
+                <textarea id="reply-message" name="reply" rows="4" required placeholder="Nhập câu trả lời gửi đến thực khách..."></textarea>
+            </div>
+
+            <div class="dialog-actions">
+                <button type="button" class="button quiet" data-close="reply-dialog">Đóng</button>
+                <button type="submit" class="button primary" id="btn-save-reply">Gửi phản hồi</button>
+            </div>
+        </form>
+    </dialog>
 
     <footer class="site-footer">
         <span>MenuMind · vận hành thông minh, phục vụ có nhịp</span>

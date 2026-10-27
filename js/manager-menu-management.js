@@ -84,6 +84,7 @@ function renderMenuTableRows(items) {
    ========================================================================== */
 function applyMenuFilters() {
   const query = (document.querySelector('#manager-menu-search')?.value || '').trim().toLowerCase();
+// Lấy từ khóa tìm kiếm, cắt khoảng trắng và đưa về chữ thường để so khớp không phân biệt hoa thường.
   const categoryFilter = document.querySelector('#manager-menu-category-filter')?.value || 'all';
   const statusFilter = document.querySelector('#manager-menu-status-filter')?.value || 'all';
 
