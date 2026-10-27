@@ -24,10 +24,10 @@
 const DEFAULT_FEEDBACK = [
   { id: 'f01', table: 'A02', rating: 5, text: 'Cá hồi áp chảo rất tươi và ngon, nhân viên phục vụ tận tình chu đáo.', theme: 'Hương vị món', status: 'new' },
   { id: 'f02', table: 'C01', rating: 3, text: 'Món ăn ngon vừa miệng nhưng khung giờ tối chờ món chính hơi lâu (khoảng 25 phút).', theme: 'Thời gian chờ', status: 'new' },
-  { id: 'f03', table: 'B02', rating: 5, text: 'Không gian sân vườn thoáng đãng, các món chay phong phú và thanh đạm.', theme: 'Không gian', status: 'replied' },
+  { id: 'f03', table: 'B02', rating: 5, text: 'Không gian sân vườn thoáng đãng, các món chay phong phú và thanh đạm.', theme: 'Không gian', status: 'replied', reply: 'MenuMind xin chân thành cảm ơn quý khách! Rất vui vì quý khách đã có trải nghiệm thư thái tại sân vườn nhà hàng.', repliedAt: '2026-10-26T20:15:00Z' },
   { id: 'f04', table: 'A06', rating: 4, text: 'Mì xào hải sản đậm đà, tôm tươi nhưng hơi cay so với khẩu vị trẻ nhỏ.', theme: 'Khẩu vị', status: 'new' },
   { id: 'f05', table: 'B04', rating: 2, text: 'Bàn ngoài vườn phải nhắc nhân viên 2 lần mới có thêm nước lọc và khăn lạnh.', theme: 'Thái độ phục vụ', status: 'new' },
-  { id: 'f06', table: 'A01', rating: 5, text: 'Salad vườn rất giòn và sốt chanh mật ong đặc biệt, chắc chắn sẽ quay lại!', theme: 'Hương vị món', status: 'replied' },
+  { id: 'f06', table: 'A01', rating: 5, text: 'Salad vườn rất giòn và sốt chanh mật ong đặc biệt, chắc chắn sẽ quay lại!', theme: 'Hương vị món', status: 'replied', reply: 'MenuMind cảm ơn quý khách rất nhiều! Hẹn gặp lại quý khách trong những bữa ăn sắp tới nhé!', repliedAt: '2026-10-26T21:00:00Z' },
   { id: 'f07', table: 'B03', rating: 3, text: 'Giờ cao điểm phục vụ lên món hơi chậm, mong quán cải thiện tốc độ ra món.', theme: 'Thời gian chờ', status: 'new' }
 ];
 
@@ -59,6 +59,19 @@ function feedbackPage() {
   const items = feedback.length
     ? feedback.map(item => {
       const rating = Math.max(1, Math.min(5, Number(item.rating) || 1));
+      const hasReplied = item.status === 'replied' || Boolean(item.reply);
+      const replyContent = item.reply || (hasReplied ? 'MenuMind xin chân thành cảm ơn quý khách đã gửi nhận xét đánh giá cho nhà hàng!' : '');
+
+      const replyHtml = hasReplied ? `
+        <div class="feedback-reply">
+          <div class="reply-header">
+            <strong>💬 Phản hồi của Quản lý:</strong>
+            <span class="reply-time">${item.repliedAt ? new Date(item.repliedAt).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' }) : 'Đã gửi'}</span>
+          </div>
+          <p class="reply-body">${escapeHtml(replyContent)}</p>
+        </div>
+      ` : '';
+
       return `
         <article class="feedback-item">
           <header>
@@ -69,10 +82,11 @@ function feedbackPage() {
             ${badge(item.status || 'new')}
           </header>
           <blockquote>“${escapeHtml(item.text || '')}”</blockquote>
+          ${replyHtml}
           <footer>
             <span class="tag">${escapeHtml(item.theme || 'Chưa phân loại')}</span>
-            <button type="button" class="link-button" data-reply-feedback="${escapeHtml(item.id)}">
-              ${item.status === 'replied' ? 'Xem phản hồi' : 'Phản hồi khách'}
+            <button type="button" class="button small ${hasReplied ? 'quiet' : 'primary'}" data-reply-feedback="${escapeHtml(item.id)}">
+              ${hasReplied ? '✏️ Xem & Sửa phản hồi' : '💬 Phản hồi khách'}
             </button>
           </footer>
         </article>
@@ -199,12 +213,21 @@ document.addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
 
-  // Chọn gợi ý nhanh từ Prompt Chips
+  // Chọn gợi ý nhanh từ Prompt Chips cho AI
   if (b.dataset.prompt) {
     const input = document.querySelector('#theme-form input[name="goal"]');
     if (input) {
       input.value = b.dataset.prompt;
       input.focus();
+    }
+  }
+
+  // Chọn mẫu phản hồi nhanh cho Quản lý
+  if (b.dataset.replyTemplate) {
+    const messageInput = document.querySelector('#reply-message');
+    if (messageInput) {
+      messageInput.value = b.dataset.replyTemplate;
+      messageInput.focus();
     }
   }
 
@@ -247,24 +270,63 @@ document.addEventListener('click', e => {
     toast('Đã từ chối gợi ý của AI', 'info');
   }
 
-  // Gửi phản hồi cảm ơn tới khách hàng
+  // Mở popup phản hồi hoặc xem & sửa phản hồi gửi thực khách
   if (b.dataset.replyFeedback) {
     const feedback = getFeedbackList();
     const item = feedback.find(f => f.id === b.dataset.replyFeedback);
-    if (item) {
-      item.status = 'replied';
-      setStore('feedback', feedback);
-      feedbackPage();
-      toast(`Đã gửi phản hồi cảm ơn tới Bàn ${item.table}`);
+    if (!item) return;
+
+    const dialog = document.querySelector('#reply-dialog');
+    const idInput = document.querySelector('#reply-feedback-id');
+    const tableEl = document.querySelector('#reply-customer-table');
+    const starsEl = document.querySelector('#reply-customer-stars');
+    const textEl = document.querySelector('#reply-customer-text');
+    const messageInput = document.querySelector('#reply-message');
+
+    if (dialog && idInput && messageInput) {
+      idInput.value = item.id;
+      if (tableEl) tableEl.textContent = `Bàn ${item.table || '—'}`;
+      const rating = Math.max(1, Math.min(5, Number(item.rating) || 5));
+      if (starsEl) starsEl.textContent = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+      if (textEl) textEl.textContent = `“${item.text || ''}”`;
+      messageInput.value = item.reply || '';
+      dialog.showModal();
     }
   }
 });
 
-// Bắt sự kiện gửi form phân tích AI
+// Bắt sự kiện gửi form phân tích AI & gửi form phản hồi khách hàng
 document.addEventListener('submit', e => {
   if (e.target.id === 'theme-form') {
     e.preventDefault();
     runThemeAI(e.target);
+  }
+
+  if (e.target.id === 'reply-feedback-form') {
+    e.preventDefault();
+    const form = e.target;
+    const id = form.querySelector('#reply-feedback-id')?.value;
+    const replyText = form.querySelector('#reply-message')?.value?.trim();
+
+    if (!id || !replyText) {
+      toast('Vui lòng nhập nội dung phản hồi', 'danger');
+      return;
+    }
+
+    const feedback = getFeedbackList();
+    const item = feedback.find(f => f.id === id);
+    if (item) {
+      item.status = 'replied';
+      item.reply = replyText;
+      item.repliedAt = new Date().toISOString();
+      setStore('feedback', feedback);
+      if (appData) appData.feedback = feedback;
+
+      feedbackPage();
+      const dialog = document.querySelector('#reply-dialog');
+      if (dialog) dialog.close();
+      toast(`Đã gửi phản hồi thành công tới Bàn ${item.table}!`);
+    }
   }
 });
 
