@@ -1,211 +1,211 @@
-﻿# Äá» Xuáº¥t Dá»± Ãn: MenuMind â€“ Thá»±c ÄÆ¡n ThÃ´ng Minh & Äiá»u Phá»‘i ÄÆ¡n HÃ ng
+# Đề Xuất Dự Án: MenuMind – Thực Đơn Thông Minh & Điều Phối Đơn Hàng
 
-> **Há»c pháº§n:** PhÃ¡t triá»ƒn á»©ng dá»¥ng Web cÆ¡ báº£n â€“ CSE122  
-> **Äá» tÃ i:** BTL-09 â€“ MenuMind (LÄ©nh vá»±c: F&B / NhÃ  hÃ ng - áº¨m thá»±c)  
-> **NhÃ³m thá»±c hiá»‡n:** NhÃ³m 09 (3 sinh viÃªn)  
-> **PhiÃªn báº£n tÃ i liá»‡u:** V2.0 â€“ Chuáº©n hÃ³a theo Barem Cháº¥m Ä‘iá»ƒm & Quy cháº¿ Váº¥n Ä‘Ã¡p BTL CSE122  
-
----
-
-## 1. Ngá»¯ Cáº£nh Thá»±c Táº¿ & CÃ¢u Chuyá»‡n LÄ©nh Vá»±c (Domain Context)
-
-Táº¡i cÃ¡c nhÃ  hÃ ng F&B táº§m trung vÃ  cao cáº¥p, giá» cao Ä‘iá»ƒm (trÆ°a 11:30 â€“ 13:30 vÃ  tá»‘i 18:30 â€“ 20:30) luÃ´n lÃ  thá»i Ä‘iá»ƒm cÄƒng tháº³ng nháº¥t trong chuá»—i váº­n hÃ nh:
-* **KhÃ¡ch hÃ ng** bÆ°á»›c vÃ o bÃ n pháº£i chá» phá»¥c vá»¥ mang menu giáº¥y ra; menu dÃ i hÃ ng chá»¥c mÃ³n khiáº¿n khÃ¡ch bÄƒn khoÄƒn máº¥t 10â€“15 phÃºt má»›i gá»i xong mÃ³n, nhÃ¢n viÃªn pháº£i Ä‘á»©ng Ä‘á»£i ghi chÃ©p thá»§ cÃ´ng.
-* **Báº¿p** nháº­n order giáº¥y viáº¿t tay dá»… nháº§m láº«n, khÃ´ng cÃ³ thá»© tá»± Æ°u tiÃªn chuáº©n xÃ¡c, khÃ´ng biáº¿t mÃ³n nÃ o cáº§n náº¥u gáº¥p, dáº«n Ä‘áº¿n tÃ¬nh tráº¡ng bÃ n Ä‘áº¿n trÆ°á»›c nháº­n mÃ³n sau.
-* **Phá»¥c vá»¥** liÃªn tá»¥c pháº£i cháº¡y vÃ o báº¿p giá»¥c mÃ³n khi khÃ¡ch phÃ n nÃ n, lÃ m Ä‘á»©t gÃ£y nhá»‹p phá»¥c vá»¥ táº¡i sáº£nh.
-* **Quáº£n lÃ½ & Chá»§ nhÃ  hÃ ng** Ä‘áº¿n cuá»‘i ngÃ y chá»‰ nhÃ¬n tháº¥y con sá»‘ tá»•ng tiá»n trÃªn pháº§n má»m thu ngÃ¢n, hoÃ n toÃ n mÃ¹ má» vá» cÃ¡c chá»‰ sá»‘ cá»‘t lÃµi: mÃ³n nÃ o áº¿ khÃ¡ch, bÃ n nÃ o pháº£i Ä‘á»£i quÃ¡ lÃ¢u, vÃ  khÃ¡ch hÃ ng bá»©c xÃºc Ä‘iá»u gÃ¬ vá» mÃ³n Äƒn.
-
-**MenuMind** ra Ä‘á»i nhÆ° má»™t giáº£i phÃ¡p sá»‘ hÃ³a toÃ n diá»‡n táº¡i bÃ n (QR Ordering & Dispatching Ecosystem): KhÃ¡ch tá»± khÃ¡m phÃ¡ thá»±c Ä‘Æ¡n vÃ  gá»i mÃ³n $\rightarrow$ ÄÆ¡n hÃ ng Ä‘á»“ng bá»™ tá»©c thÃ¬ vÃ o báº£ng Kanban cá»§a Báº¿p $\rightarrow$ Quáº£n lÃ½ theo dÃµi doanh sá»‘, Ä‘iá»u phá»‘i mÃ³n vÃ  tiáº¿p nháº­n pháº£n há»“i thá»i gian thá»±c qua sá»± há»— trá»£ cá»§a cÃ¡c tÃ­nh nÄƒng AI UX.
+> **Học phần:** Phát triển ứng dụng Web cơ bản – CSE122  
+> **Đề tài:** BTL-09 – MenuMind (Lĩnh vực: F&B / Nhà hàng - Ẩm thực)  
+> **Nhóm thực hiện:** Nhóm 09 (3 sinh viên)  
+> **Phiên bản tài liệu:** V2.0 – Chuẩn hóa theo Barem Chấm điểm & Quy chế Vấn đáp BTL CSE122  
 
 ---
 
-## 2. PhÃ¡t Biá»ƒu Váº¥n Äá» Cá»¥ Thá»ƒ (Problem Statements: P1 â€“ P4)
+## 1. Ngữ Cảnh Thực Tế & Câu Chuyện Lĩnh Vực (Domain Context)
 
-* **P1. KhÃ³ khÄƒn trong khÃ¡m phÃ¡ thá»±c Ä‘Æ¡n (Menu Discovery Friction):**
-  * *Äá»‘i tÆ°á»£ng chá»‹u áº£nh hÆ°á»Ÿng:* Thá»±c khÃ¡ch (KhÃ¡ch Äƒn).
-  * *Chi tiáº¿t:* KhÃ¡ch bá»‹ "ngá»£p" trÆ°á»›c danh sÃ¡ch mÃ³n dÃ i, khÃ´ng cÃ³ cÃ´ng cá»¥ tÃ¬m kiáº¿m nhanh theo tÃªn nguyÃªn liá»‡u, khÃ´ng lá»c Ä‘Æ°á»£c theo khoáº£ng giÃ¡ hay phÃ¢n loáº¡i mÃ³n Äƒn (Khai vá»‹, MÃ³n chÃ­nh, Äá»“ uá»‘ng, TrÃ¡ng miá»‡ng).
-* **P2. Thiáº¿u cÃ¡ nhÃ¢n hÃ³a theo sá»Ÿ thÃ­ch & dinh dÆ°á»¡ng (Dietary & Taste Uncertainty):**
-  * *Äá»‘i tÆ°á»£ng chá»‹u áº£nh hÆ°á»Ÿng:* Thá»±c khÃ¡ch.
-  * *Chi tiáº¿t:* KhÃ¡ch Äƒn cÃ³ cháº¿ Ä‘á»™ Äƒn riÃªng biá»‡t (kiÃªng cay, dá»‹ á»©ng háº£i sáº£n, Äƒn chay, thÃ­ch vá»‹ chua ngá»t, Äƒn kiÃªng low-carb) nhÆ°ng menu truyá»n thá»‘ng khÃ´ng thá»ƒ tÆ° váº¥n, dáº«n Ä‘áº¿n viá»‡c gá»i nháº§m mÃ³n khÃ´ng há»£p kháº©u vá»‹ vÃ  Ä‘á»ƒ láº¡i tráº£i nghiá»‡m tá»“i tá»‡.
-* **P3. Báº¥t Ä‘á»“ng bá»™ vÃ  Ä‘á»©t gÃ£y tráº¡ng thÃ¡i Ä‘Æ¡n hÃ ng (Order State Desynchronization):**
-  * *Äá»‘i tÆ°á»£ng chá»‹u áº£nh hÆ°á»Ÿng:* NhÃ¢n viÃªn Báº¿p vÃ  NhÃ¢n viÃªn Phá»¥c vá»¥.
-  * *Chi tiáº¿t:* ÄÆ¡n hÃ ng tá»« bÃ n Äƒn khÃ´ng Ä‘Æ°á»£c thÃ´ng tin minh báº¡ch; báº¿p náº¥u xong nhÆ°ng phá»¥c vá»¥ khÃ´ng biáº¿t Ä‘á»ƒ bÃª ra; bÃ n chá» quÃ¡ 20 phÃºt khÃ´ng cÃ³ cÆ¡ cháº¿ cáº£nh bÃ¡o tá»± Ä‘á»™ng khiáº¿n khÃ¡ch bá»©c xÃºc bá» vá».
-* **P4. Thiáº¿u dá»¯ liá»‡u phÃ¢n tÃ­ch váº­n hÃ nh & Bá» quÃªn pháº£n há»“i khÃ¡ch hÃ ng (Operational Blindspot & Feedback Silo):**
-  * *Äá»‘i tÆ°á»£ng chá»‹u áº£nh hÆ°á»Ÿng:* Quáº£n lÃ½ ca vÃ  Chá»§ nhÃ  hÃ ng (Admin).
-  * *Chi tiáº¿t:* Ã kiáº¿n Ä‘Ã³ng gÃ³p cá»§a khÃ¡ch hÃ ng bá»‹ trÃ´i máº¥t hoáº·c chá»‰ nháº­n Ä‘Æ°á»£c khi khÃ¡ch Ä‘Ã£ Ä‘Ã¡nh giÃ¡ 1 sao trÃªn máº¡ng xÃ£ há»™i; quáº£n lÃ½ khÃ´ng cÃ³ bÃ¡o cÃ¡o trá»±c quan vá» mÃ³n bÃ¡n cháº¡y/mÃ³n tá»“n, khÃ´ng ká»‹p thá»i cáº­p nháº­t thá»±c Ä‘Æ¡n khi háº¿t nguyÃªn liá»‡u.
+Tại các nhà hàng F&B tầm trung và cao cấp, giờ cao điểm (trưa 11:30 – 13:30 và tối 18:30 – 20:30) luôn là thời điểm căng thẳng nhất trong chuỗi vận hành:
+* **Khách hàng** bước vào bàn phải chờ phục vụ mang menu giấy ra; menu dài hàng chục món khiến khách băn khoăn mất 10–15 phút mới gọi xong món, nhân viên phải đứng đợi ghi chép thủ công.
+* **Bếp** nhận order giấy viết tay dễ nhầm lẫn, không có thứ tự ưu tiên chuẩn xác, không biết món nào cần nấu gấp, dẫn đến tình trạng bàn đến trước nhận món sau.
+* **Phục vụ** liên tục phải chạy vào bếp giục món khi khách phàn nàn, làm đứt gãy nhịp phục vụ tại sảnh.
+* **Quản lý & Chủ nhà hàng** đến cuối ngày chỉ nhìn thấy con số tổng tiền trên phần mềm thu ngân, hoàn toàn mù mờ về các chỉ số cốt lõi: món nào ế khách, bàn nào phải đợi quá lâu, và khách hàng bức xúc điều gì về món ăn.
+
+**MenuMind** ra đời như một giải pháp số hóa toàn diện tại bàn (QR Ordering & Dispatching Ecosystem): Khách tự khám phá thực đơn và gọi món $\rightarrow$ Đơn hàng đồng bộ tức thì vào bảng Kanban của Bếp $\rightarrow$ Quản lý theo dõi doanh số, điều phối món và tiếp nhận phản hồi thời gian thực qua sự hỗ trợ của các tính năng AI UX.
 
 ---
 
-## 3. Má»¥c TiÃªu Dá»± Ãn (Project Objectives: O1 â€“ O7)
+## 2. Phát Biểu Vấn Đề Cụ Thể (Problem Statements: P1 – P4)
 
-* **O1. XÃ¢y dá»±ng sáº£n pháº©m Web Frontend hoÃ n chá»‰nh:** Thiáº¿t káº¿ nguyÃªn máº«u Web á»©ng dá»¥ng Responsive Ä‘áº§y Ä‘á»§ tá»« Mobile (320px) Ä‘áº¿n Desktop ($\ge 1024$px), ngá»¯ nghÄ©a chuáº©n HTML5, CSS hiá»‡n Ä‘áº¡i vÃ  khÃ´ng cÃ³ lá»—i W3C.
-* **O2. PhÃ¢n rÃ£ 4 vai trÃ² rÃµ nÃ©t (Multi-Role):** XÃ¢y dá»±ng hÃ nh trÃ¬nh khÃ©p kÃ­n cho 4 nhÃ³m ngÆ°á»i dÃ¹ng thá»±c táº¿: *Thá»±c khÃ¡ch, NhÃ¢n viÃªn Báº¿p, Quáº£n lÃ½ nhÃ  hÃ ng, Quáº£n trá»‹ viÃªn (Chá»§ quÃ¡n)*, kÃ¨m cÃ¡c trang dÃ¹ng chung.
-* **O3. CRUD vÃ  Quáº£n lÃ½ vÃ²ng Ä‘á»i dá»¯ liá»‡u thá»±c cháº¥t:** Thá»±c hiá»‡n Ä‘áº§y Ä‘á»§ cÃ¡c thao tÃ¡c ThÃªm, Äá»c, Sá»­a, XÃ³a/Há»§y/áº¨n/VÃ´ hiá»‡u hÃ³a báº£n ghi gáº¯n liá»n vá»›i logic kinh doanh F&B (khÃ´ng lÃ m CRUD hÃ¬nh thá»©c).
-* **O4. DOM JavaScript & Kiá»ƒm tra há»£p lá»‡ sÃ¢u:** TÆ°Æ¡ng tÃ¡c DOM phong phÃº (TÃ¬m kiáº¿m thá»i gian thá»±c káº¿t há»£p bá»™ lá»c Ä‘a tiÃªu chÃ­, Modal xÃ¡c nháº­n, Toast thÃ´ng bÃ¡o, Form Validation chi tiáº¿t vá»›i thÃ´ng bÃ¡o lá»—i Ä‘á» dÆ°á»›i tá»«ng Ã´ nháº­p).
-* **O5. Quáº£n lÃ½ tráº¡ng thÃ¡i vÃ  lÆ°u trá»¯ bá»n vá»¯ng:** TÃ­ch há»£p mÃ´-Ä‘un lÆ°u trá»¯ `localStorage` vÃ  dá»¯ liá»‡u máº«u phong phÃº ($\ge 24$ mÃ³n Äƒn) Ä‘á»ƒ dá»¯ liá»‡u liÃªn thÃ´ng tá»©c thÃ¬ giá»¯a cÃ¡c vai trÃ² vÃ  khÃ´ng bá»‹ máº¥t sau khi táº£i láº¡i trang (F5).
-* **O6. Thiáº¿t káº¿ 3 tráº£i nghiá»‡m AI UX 6 bÆ°á»›c & Failure UX:** Hiá»‡n thá»±c hÃ³a 3 tÃ­nh nÄƒng AI Ä‘áº·c thÃ¹ cho 3 Ä‘á»‘i tÆ°á»£ng ngÆ°á»i dÃ¹ng, tuÃ¢n thá»§ nghiÃªm ngáº·t 6 bÆ°á»›c tÆ°Æ¡ng tÃ¡c UI vÃ  ká»‹ch báº£n xá»­ lÃ½ khi AI khÃ´ng cháº¯c cháº¯n.
-* **O7. Chuáº©n hÃ³a quy trÃ¬nh ká»¹ thuáº­t & LÃ m viá»‡c nhÃ³m:** Ãp dá»¥ng Git Flow chuyÃªn nghiá»‡p (`main`, `dev`, `feature/*`), quáº£n trá»‹ cÃ´ng viá»‡c trÃªn Trello/Jira, thá»±c hiá»‡n Peer Review vÃ  xÃ¢y dá»±ng bá»™ video OBS minh chá»©ng 1:1 cho tá»«ng mÃ n hÃ¬nh.
-
----
-
-## 4. Danh SÃ¡ch Thá»±c Thá»ƒ Dá»¯ Liá»‡u (Entities) & Ma Tráº­n VÃ²ng Äá»i Tráº¡ng ThÃ¡i (Lifecycle State Matrix)
-
-### 4.1. Danh sÃ¡ch thá»±c thá»ƒ dá»¯ liá»‡u cá»‘t lÃµi
-
-1. **`MenuItem` (MÃ³n Äƒn):**
-   * *Thuá»™c tÃ­nh:* `id`, `name`, `category` (MÃ³n chÃ­nh, Khai vá»‹, Äá»“ uá»‘ng...), `price`, `image`, `description`, `tasteProfile` (cay, ngá»t, chua, bÃ©o), `isVegetarian`, `status`.
-2. **`Table` (BÃ n Äƒn):**
-   * *Thuá»™c tÃ­nh:* `id`, `tableNumber`, `seats`, `floor`, `qrCode`, `currentOrderId`, `status`.
-3. **`Order` (ÄÆ¡n gá»i mÃ³n):**
-   * *Thuá»™c tÃ­nh:* `id`, `tableId`, `items` (máº£ng cÃ¡c mÃ³n + sá»‘ lÆ°á»£ng + ghi chÃº), `totalAmount`, `createdAt`, `updatedAt`, `priorityLevel`, `status`, `paymentStatus`.
-4. **`Feedback` (ÄÃ¡nh giÃ¡ cá»§a khÃ¡ch):**
-   * *Thuá»™c tÃ­nh:* `id`, `orderId`, `tableId`, `rating` (1â€“5 sao), `comment`, `aiSentiment`, `aiThemes` (máº£ng nhÃ£n chá»§ Ä‘á»), `status`, `createdAt`.
-5. **`Staff` (TÃ i khoáº£n nhÃ¢n sá»±):**
-   * *Thuá»™c tÃ­nh:* `id`, `fullName`, `email`, `role` (`kitchen`, `manager`, `admin`), `shift`, `status`.
+* **P1. Khó khăn trong khám phá thực đơn (Menu Discovery Friction):**
+  * *Đối tượng chịu ảnh hưởng:* Thực khách (Khách ăn).
+  * *Chi tiết:* Khách bị "ngợp" trước danh sách món dài, không có công cụ tìm kiếm nhanh theo tên nguyên liệu, không lọc được theo khoảng giá hay phân loại món ăn (Khai vị, Món chính, Đồ uống, Tráng miệng).
+* **P2. Thiếu cá nhân hóa theo sở thích & dinh dưỡng (Dietary & Taste Uncertainty):**
+  * *Đối tượng chịu ảnh hưởng:* Thực khách.
+  * *Chi tiết:* Khách ăn có chế độ ăn riêng biệt (kiêng cay, dị ứng hải sản, ăn chay, thích vị chua ngọt, ăn kiêng low-carb) nhưng menu truyền thống không thể tư vấn, dẫn đến việc gọi nhầm món không hợp khẩu vị và để lại trải nghiệm tồi tệ.
+* **P3. Bất đồng bộ và đứt gãy trạng thái đơn hàng (Order State Desynchronization):**
+  * *Đối tượng chịu ảnh hưởng:* Nhân viên Bếp và Nhân viên Phục vụ.
+  * *Chi tiết:* Đơn hàng từ bàn ăn không được thông tin minh bạch; bếp nấu xong nhưng phục vụ không biết để bê ra; bàn chờ quá 20 phút không có cơ chế cảnh báo tự động khiến khách bức xúc bỏ về.
+* **P4. Thiếu dữ liệu phân tích vận hành & Bỏ quên phản hồi khách hàng (Operational Blindspot & Feedback Silo):**
+  * *Đối tượng chịu ảnh hưởng:* Quản lý ca và Chủ nhà hàng (Admin).
+  * *Chi tiết:* Ý kiến đóng góp của khách hàng bị trôi mất hoặc chỉ nhận được khi khách đã đánh giá 1 sao trên mạng xã hội; quản lý không có báo cáo trực quan về món bán chạy/món tồn, không kịp thời cập nhật thực đơn khi hết nguyên liệu.
 
 ---
 
-### 4.2. Ma tráº­n vÃ²ng Ä‘á»i tráº¡ng thÃ¡i (State Lifecycle Matrix)
+## 3. Mục Tiêu Dự Án (Project Objectives: O1 – O7)
 
-| Thá»±c thá»ƒ | Tráº¡ng thÃ¡i khá»Ÿi táº¡o | CÃ¡c tráº¡ng thÃ¡i trung gian | Tráº¡ng thÃ¡i káº¿t thÃºc | HÃ nh Ä‘á»™ng kÃ­ch hoáº¡t & Vai trÃ² thá»±c hiá»‡n |
+* **O1. Xây dựng sản phẩm Web Frontend hoàn chỉnh:** Thiết kế nguyên mẫu Web ứng dụng Responsive đầy đủ từ Mobile (320px) đến Desktop ($\ge 1024$px), ngữ nghĩa chuẩn HTML5, CSS hiện đại và không có lỗi W3C.
+* **O2. Phân rã 4 vai trò rõ nét (Multi-Role):** Xây dựng hành trình khép kín cho 4 nhóm người dùng thực tế: *Thực khách, Nhân viên Bếp, Quản lý nhà hàng, Quản trị viên (Chủ quán)*, kèm các trang dùng chung.
+* **O3. CRUD và Quản lý vòng đời dữ liệu thực chất:** Thực hiện đầy đủ các thao tác Thêm, Đọc, Sửa, Xóa/Hủy/Ẩn/Vô hiệu hóa bản ghi gắn liền với logic kinh doanh F&B (không làm CRUD hình thức).
+* **O4. DOM JavaScript & Kiểm tra hợp lệ sâu:** Tương tác DOM phong phú (Tìm kiếm thời gian thực kết hợp bộ lọc đa tiêu chí, Modal xác nhận, Toast thông báo, Form Validation chi tiết với thông báo lỗi đỏ dưới từng ô nhập).
+* **O5. Quản lý trạng thái và lưu trữ bền vững:** Tích hợp mô-đun lưu trữ `localStorage` và dữ liệu mẫu phong phú ($\ge 24$ món ăn) để dữ liệu liên thông tức thì giữa các vai trò và không bị mất sau khi tải lại trang (F5).
+* **O6. Thiết kế 3 trải nghiệm AI UX 6 bước & Failure UX:** Hiện thực hóa 3 tính năng AI đặc thù cho 3 đối tượng người dùng, tuân thủ nghiêm ngặt 6 bước tương tác UI và kịch bản xử lý khi AI không chắc chắn.
+* **O7. Chuẩn hóa quy trình kỹ thuật & Làm việc nhóm:** Áp dụng Git Flow chuyên nghiệp (`main`, `dev`, `feature/*`), quản trị công việc trên Trello/Jira, thực hiện Peer Review và xây dựng bộ video OBS minh chứng 1:1 cho từng màn hình.
+
+---
+
+## 4. Danh Sách Thực Thể Dữ Liệu (Entities) & Ma Trận Vòng Đời Trạng Thái (Lifecycle State Matrix)
+
+### 4.1. Danh sách thực thể dữ liệu cốt lõi
+
+1. **`MenuItem` (Món ăn):**
+   * *Thuộc tính:* `id`, `name`, `category` (Món chính, Khai vị, Đồ uống...), `price`, `image`, `description`, `tasteProfile` (cay, ngọt, chua, béo), `isVegetarian`, `status`.
+2. **`Table` (Bàn ăn):**
+   * *Thuộc tính:* `id`, `tableNumber`, `seats`, `floor`, `qrCode`, `currentOrderId`, `status`.
+3. **`Order` (Đơn gọi món):**
+   * *Thuộc tính:* `id`, `tableId`, `items` (mảng các món + số lượng + ghi chú), `totalAmount`, `createdAt`, `updatedAt`, `priorityLevel`, `status`, `paymentStatus`.
+4. **`Feedback` (Đánh giá của khách):**
+   * *Thuộc tính:* `id`, `orderId`, `tableId`, `rating` (1–5 sao), `comment`, `aiSentiment`, `aiThemes` (mảng nhãn chủ đề), `status`, `createdAt`.
+5. **`Staff` (Tài khoản nhân sự):**
+   * *Thuộc tính:* `id`, `fullName`, `email`, `role` (`kitchen`, `manager`, `admin`), `shift`, `status`.
+
+---
+
+### 4.2. Ma trận vòng đời trạng thái (State Lifecycle Matrix)
+
+| Thực thể | Trạng thái khởi tạo | Các trạng thái trung gian | Trạng thái kết thúc | Hành động kích hoạt & Vai trò thực hiện |
 | :--- | :--- | :--- | :--- | :--- |
-| **`MenuItem`** | `draft` (NhÃ¡p) | `available` (Äang má»Ÿ bÃ¡n) $\leftrightarrow$ `out_of_stock` (Háº¿t hÃ ng táº¡m thá»i) | `archived` (Ngá»«ng kinh doanh) | Quáº£n lÃ½ thÃªm má»›i $\rightarrow$ Báº­t/Táº¯t tráº¡ng thÃ¡i bÃ¡n $\rightarrow$ XÃ³a/LÆ°u trá»¯ mÃ³n |
-| **`Table`** | `available` (BÃ n trá»‘ng) | `occupied` (Äang cÃ³ khÃ¡ch ngá»“i) $\rightarrow$ `waiting_payment` (Chá» tÃ­nh tiá»n) $\rightarrow$ `cleaning` (Äang dá»n bÃ n) | `available` (Quay vá» vÃ²ng láº·p) / `disabled` (Há»ng/KhÃ³a) | KhÃ¡ch quÃ©t QR $\rightarrow$ KhÃ¡ch gá»i tÃ­nh tiá»n $\rightarrow$ NhÃ¢n viÃªn dá»n bÃ n $\rightarrow$ Sáºµn sÃ ng Ä‘Ã³n khÃ¡ch má»›i |
-| **`Order`** | `pending` (Báº¿p vá»«a nháº­n) | `cooking` (Äáº§u báº¿p Ä‘ang náº¥u) $\rightarrow$ `ready` (MÃ³n Ä‘Ã£ náº¥u xong, chá» bÃª ra) | `served` (ÄÃ£ phá»¥c vá»¥ xong) OR `cancelled` (ÄÃ£ há»§y mÃ³n) | KhÃ¡ch gá»­i giá» hÃ ng $\rightarrow$ Báº¿p nháº­n náº¥u $\rightarrow$ Báº¿p bÃ¡o xong $\rightarrow$ Thu ngÃ¢n Ä‘Ã³ng bill |
-| **`Feedback`** | `new` (Má»›i gá»­i) | `analyzed` (AI Ä‘Ã£ phÃ¢n tÃ­ch cáº£m xÃºc & gom chá»§ Ä‘á») $\rightarrow$ `processing` (Äang xá»­ lÃ½) | `resolved` (ÄÃ£ ghi nháº­n & giáº£i quyáº¿t) | KhÃ¡ch gá»­i sao $\rightarrow$ Há»‡ thá»‘ng AI quÃ©t tá»« khÃ³a $\rightarrow$ Quáº£n lÃ½ pháº£n há»“i khÃ¡ch |
-| **`Staff`** | `active` (Äang lÃ m viá»‡c) | â€” | `inactive` (Táº¡m khÃ³a / VÃ´ hiá»‡u hÃ³a) | Quáº£n trá»‹ viÃªn cáº¥p tÃ i khoáº£n $\rightarrow$ VÃ´ hiá»‡u hÃ³a khi nghá»‰ viá»‡c |
+| **`MenuItem`** | `draft` (Nháp) | `available` (Đang mở bán) $\leftrightarrow$ `out_of_stock` (Hết hàng tạm thời) | `archived` (Ngừng kinh doanh) | Quản lý thêm mới $\rightarrow$ Bật/Tắt trạng thái bán $\rightarrow$ Xóa/Lưu trữ món |
+| **`Table`** | `available` (Bàn trống) | `occupied` (Đang có khách ngồi) $\rightarrow$ `waiting_payment` (Chờ tính tiền) $\rightarrow$ `cleaning` (Đang dọn bàn) | `available` (Quay về vòng lặp) / `disabled` (Hỏng/Khóa) | Khách quét QR $\rightarrow$ Khách gọi tính tiền $\rightarrow$ Nhân viên dọn bàn $\rightarrow$ Sẵn sàng đón khách mới |
+| **`Order`** | `pending` (Bếp vừa nhận) | `cooking` (Đầu bếp đang nấu) $\rightarrow$ `ready` (Món đã nấu xong, chờ bê ra) | `served` (Đã phục vụ xong) OR `cancelled` (Đã hủy món) | Khách gửi giỏ hàng $\rightarrow$ Bếp nhận nấu $\rightarrow$ Bếp báo xong $\rightarrow$ Thu ngân đóng bill |
+| **`Feedback`** | `new` (Mới gửi) | `analyzed` (AI đã phân tích cảm xúc & gom chủ đề) $\rightarrow$ `processing` (Đang xử lý) | `resolved` (Đã ghi nhận & giải quyết) | Khách gửi sao $\rightarrow$ Hệ thống AI quét từ khóa $\rightarrow$ Quản lý phản hồi khách |
+| **`Staff`** | `active` (Đang làm việc) | — | `inactive` (Tạm khóa / Vô hiệu hóa) | Quản trị viên cấp tài khoản $\rightarrow$ Vô hiệu hóa khi nghỉ việc |
 
 ---
 
-## 5. Ba Tráº£i Nghiá»‡m AI Äáº·c ThÃ¹ (Chuáº©n AI Product UX 6 BÆ°á»›c & Failure UX)
+## 5. Ba Trải Nghiệm AI Đặc Thù (Chuẩn AI Product UX 6 Bước & Failure UX)
 
-Dá»± Ã¡n tuyá»‡t Ä‘á»‘i khÃ´ng sá»­ dá»¥ng khung chat há»i Ä‘Ã¡p generic, mÃ  xÃ¢y dá»±ng 3 tÃ­nh nÄƒng AI nhÃºng trá»±c tiáº¿p vÃ o tÃ¡c vá»¥ cá»§a tá»«ng vai trÃ²:
+Dự án tuyệt đối không sử dụng khung chat hỏi đáp generic, mà xây dựng 3 tính năng AI nhúng trực tiếp vào tác vụ của từng vai trò:
 
-### 5.1. AI-1: Taste Recommender â€“ Gá»£i Ã MÃ³n Ä‚n Theo Kháº©u Vá»‹ (Vai trÃ²: Thá»±c khÃ¡ch)
-* **Giáº£i quyáº¿t váº¥n Ä‘á»:** P1 & P2 (KhÃ¡ch bÄƒn khoÄƒn khi xem menu dÃ i, muá»‘n Äƒn theo sá»Ÿ thÃ­ch dinh dÆ°á»¡ng).
-* **Giao diá»‡n tÃ­ch há»£p:** `pages/diner-menu.html`
-* **Chuáº©n 6 bÆ°á»›c AI UX:**
-  1. *Input:* KhÃ¡ch chá»n tiÃªu chÃ­ nhanh qua cÃ¡c chip gá»£i Ã½: Má»©c cay (KhÃ´ng cay / Cay vá»«a / Cay ná»“ng), Cháº¿ Ä‘á»™ Äƒn (Ä‚n chay / KhÃ´ng gluten / Äáº­m Ä‘Ã  / Thanh Ä‘áº¡m), NgÃ¢n sÃ¡ch tá»‘i Ä‘a.
-  2. *Processing:* Hiá»ƒn thá»‹ thanh tiáº¿n trÃ¬nh / Skeleton Card phÃ¢n tÃ­ch kháº©u vá»‹ khÃ¡ch hÃ ng vá»›i dá»¯ liá»‡u thá»±c Ä‘Æ¡n hiá»‡n táº¡i.
-  3. *Output:* Hiá»ƒn thá»‹ Combo 2â€“3 mÃ³n Äƒn kÃ¨m tháº» tÃ³m táº¯t trá»±c quan (TÃªn mÃ³n, giÃ¡, Ä‘á»™ phÃ¹ há»£p kháº©u vá»‹).
-  4. *Explainability (Giáº£i thÃ­ch lÃ½ do):* Khá»‘i *"VÃ¬ sao AI gá»£i Ã½ combo nÃ y?"* (VÃ­ dá»¥: *"Khá»›p 95% vá»›i yÃªu cáº§u KhÃ´ng cay + Ä‚n chay; cÃ³ Ä‘áº¡m tá»« náº¥m vÃ  Ä‘áº­u hÅ©"*).
-  5. *User Control (Quyá»n kiá»ƒm soÃ¡t):* NÃºt *"Äá»•i mÃ³n khÃ¡c trong combo"*, *"Táº¡o láº¡i gá»£i Ã½"* hoáº·c *"Bá» qua"*.
-  6. *Save / Apply:* Báº¥m *"ThÃªm cáº£ combo vÃ o giá» hÃ ng"* $\rightarrow$ ToÃ n bá»™ mÃ³n Äƒn Ä‘Æ°á»£c thÃªm ngay vÃ o giá» mÃ³n cá»§a bÃ n Äƒn.
-* **Ká»‹ch báº£n AI Failure / Uncertainty UX:**
-  * *TÃ¬nh huá»‘ng:* KhÃ¡ch chá»n Ä‘iá»u kiá»‡n mÃ¢u thuáº«n (VÃ­ dá»¥: *"Ä‚n chay"* nhÆ°ng láº¡i tÃ­ch *"Thá»‹t bÃ² háº§m"* hoáº·c ngÃ¢n sÃ¡ch quÃ¡ tháº¥p dÆ°á»›i giÃ¡ mÃ³n ráº» nháº¥t).
-  * *Xá»­ lÃ½ UI:* KhÃ´ng bÃ¡o lá»—i há»‡ thá»‘ng 500, mÃ  hiá»ƒn thá»‹ thÃ´ng bÃ¡o nhÃ£ nháº·n: *"AI chÆ°a tÃ¬m tháº¥y mÃ³n khá»›p 100% vá»›i cÃ¡c Ä‘iá»u kiá»‡n trÃªn (Äá»™ tin cáº­y 35%)"* kÃ¨m nÃºt báº¥m: *"Gá»£i Ã½ Ä‘iá»u chá»‰nh ngÃ¢n sÃ¡ch"* hoáº·c *"Xem cÃ¡c mÃ³n chay phá»• biáº¿n nháº¥t"*.
-
----
-
-### 5.2. AI-2: Kitchen Load Predictor â€“ Dá»± BÃ¡o Táº£i Báº¿p & Cáº£nh BÃ¡o Chá» LÃ¢u (Vai trÃ²: NhÃ¢n viÃªn Báº¿p)
-* **Giáº£i quyáº¿t váº¥n Ä‘á»:** P3 (Báº¿p quÃ¡ táº£i dá»“n Ä‘Æ¡n, khÃ¡ch chá» lÃ¢u cÃ¡u gáº¯t).
-* **Giao diá»‡n tÃ­ch há»£p:** `pages/kitchen-wait-time-alerts.html`
-* **Chuáº©n 6 bÆ°á»›c AI UX:**
-  1. *Input:* Há»‡ thá»‘ng tá»± Ä‘á»™ng Ä‘á»c sá»‘ lÆ°á»£ng Ä‘Æ¡n Ä‘ang chá» trong hÃ ng Ä‘á»£i (`queue`), sá»‘ mÃ³n nÆ°á»›ng/xÃ o/háº¥p Ä‘ang náº¥u cÃ¹ng lÃºc.
-  2. *Processing:* Biá»ƒu tÆ°á»£ng sÃ³ng nhá»‹p báº¿p phÃ¢n tÃ­ch thá»i gian cháº¿ biáº¿n tiÃªu chuáº©n cá»§a tá»«ng mÃ³n.
-  3. *Output:* Tháº» dá»± bÃ¡o thá»i gian chá» Æ°á»›c tÃ­nh cho tá»«ng bÃ n (VÃ­ dá»¥: BÃ n 04: dá»± kiáº¿n xong sau 8 phÃºt; BÃ n 09: cÃ³ nguy cÆ¡ trá»… 22 phÃºt).
-  4. *Explainability:* Giáº£i thÃ­ch: *"BÃ n 09 gá»i 3 mÃ³n nÆ°á»›ng phá»©c táº¡p; lÃ² nÆ°á»›ng hiá»‡n Ä‘ang full 100% cÃ´ng suáº¥t"*.
-  5. *User Control:* Äáº§u báº¿p cÃ³ cÃ¡c nÃºt quyáº¿t Ä‘á»‹nh: *"TÄƒng Æ°u tiÃªn Ä‘Æ¡n"*, *"Chuyá»ƒn tráº¡m báº¿p há»— trá»£"*, *"ThÃ´ng bÃ¡o phá»¥c vá»¥ xin lá»—i khÃ¡ch"*.
-  6. *Save / Apply:* Khi báº¿p báº¥m *"TÄƒng Æ°u tiÃªn"*, Ä‘Æ¡n hÃ ng Ä‘Æ°á»£c gáº¯n cá» tháº» Ä‘á» trÃªn báº£ng Kanban vÃ  Ä‘áº©y lÃªn Ä‘áº§u hÃ ng Ä‘á»£i.
-* **Ká»‹ch báº£n AI Failure / Uncertainty UX:**
-  * *TÃ¬nh huá»‘ng:* Dá»¯ liá»‡u Ä‘Æ¡n hÃ ng thiáº¿u thá»i gian báº¯t Ä‘áº§u hoáº·c cÃ³ mÃ³n khÃ¡ch gá»i ngoÃ i menu chÆ°a Ä‘Æ°á»£c Ä‘o chuáº©n thá»i gian.
-  * *Xá»­ lÃ½ UI:* Hiá»ƒn thá»‹ há»™p cáº£nh bÃ¡o mÃ u vÃ ng: *"AI chÆ°a Ä‘á»§ dá»¯ liá»‡u Ä‘o lÆ°á»ng cho mÃ³n Ä‘áº·c biá»‡t nÃ y â€“ Vui lÃ²ng cÄƒn thá»i gian thá»§ cÃ´ng theo kinh nghiá»‡m báº¿p trÆ°á»Ÿng"*.
+### 5.1. AI-1: Taste Recommender – Gợi Ý Món Ăn Theo Khẩu Vị (Vai trò: Thực khách)
+* **Giải quyết vấn đề:** P1 & P2 (Khách băn khoăn khi xem menu dài, muốn ăn theo sở thích dinh dưỡng).
+* **Giao diện tích hợp:** `pages/diner-menu.html`
+* **Chuẩn 6 bước AI UX:**
+  1. *Input:* Khách chọn tiêu chí nhanh qua các chip gợi ý: Mức cay (Không cay / Cay vừa / Cay nồng), Chế độ ăn (Ăn chay / Không gluten / Đậm đà / Thanh đạm), Ngân sách tối đa.
+  2. *Processing:* Hiển thị thanh tiến trình / Skeleton Card phân tích khẩu vị khách hàng với dữ liệu thực đơn hiện tại.
+  3. *Output:* Hiển thị Combo 2–3 món ăn kèm thẻ tóm tắt trực quan (Tên món, giá, độ phù hợp khẩu vị).
+  4. *Explainability (Giải thích lý do):* Khối *"Vì sao AI gợi ý combo này?"* (Ví dụ: *"Khớp 95% với yêu cầu Không cay + Ăn chay; có đạm từ nấm và đậu hũ"*).
+  5. *User Control (Quyền kiểm soát):* Nút *"Đổi món khác trong combo"*, *"Tạo lại gợi ý"* hoặc *"Bỏ qua"*.
+  6. *Save / Apply:* Bấm *"Thêm cả combo vào giỏ hàng"* $\rightarrow$ Toàn bộ món ăn được thêm ngay vào giỏ món của bàn ăn.
+* **Kịch bản AI Failure / Uncertainty UX:**
+  * *Tình huống:* Khách chọn điều kiện mâu thuẫn (Ví dụ: *"Ăn chay"* nhưng lại tích *"Thịt bò hầm"* hoặc ngân sách quá thấp dưới giá món rẻ nhất).
+  * *Xử lý UI:* Không báo lỗi hệ thống 500, mà hiển thị thông báo nhã nhặn: *"AI chưa tìm thấy món khớp 100% với các điều kiện trên (Độ tin cậy 35%)"* kèm nút bấm: *"Gợi ý điều chỉnh ngân sách"* hoặc *"Xem các món chay phổ biến nhất"*.
 
 ---
 
-### 5.3. AI-3: Feedback Theme Extractor â€“ Trá»£ LÃ½ Gom NhÃ³m & PhÃ¢n TÃ­ch Chá»§ Äá» ÄÃ¡nh GiÃ¡ (Vai trÃ²: Quáº£n lÃ½)
-* **Giáº£i quyáº¿t váº¥n Ä‘á»:** P4 (Quáº£n lÃ½ báº­n rá»™n khÃ´ng Ä‘á»c xuá»ƒ hÃ ng trÄƒm pháº£n há»“i cá»§a khÃ¡ch).
-* **Giao diá»‡n tÃ­ch há»£p:** `pages/manager-feedback-center.html`
-* **Chuáº©n 6 bÆ°á»›c AI UX:**
-  1. *Input:* Quáº£n lÃ½ chá»n bá»™ lá»c pháº£n há»“i trong tuáº§n/thÃ¡ng (vÃ­ dá»¥: cÃ¡c Ä‘Ã¡nh giÃ¡ tá»« 1 Ä‘áº¿n 3 sao).
-  2. *Processing:* Hiá»ƒn thá»‹ hiá»‡u á»©ng quÃ©t ngÃ´n ngá»¯ (NLP Loading State).
-  3. *Output:* Hiá»ƒn thá»‹ tháº» tÃ³m táº¯t 3 chá»§ Ä‘á» nÃ³ng nháº¥t: *#NÆ°á»›c_dÃ¹ng_hÆ¡i_máº·n (42%)*, *#MÃ³n_ra_cháº­m_giá»_trÆ°a (35%)*, *#ThÃ¡i_Ä‘á»™_phá»¥c_vá»¥_tá»‘t (88%)*.
-  4. *Explainability:* Liá»‡t kÃª trÃ­ch dáº«n báº±ng chá»©ng cá»¥ thá»ƒ: *"TrÃ­ch tá»« 8 Ã½ kiáº¿n khÃ¡ch hÃ ng táº¡i BÃ n 02, BÃ n 07 nháº¯c Ä‘áº¿n tá»« 'máº·n', 'gáº¯t cá»•' trong 3 ngÃ y qua"*.
-  5. *User Control:* NÃºt *"Chá»‰nh sá»­a nháº­n xÃ©t cá»§a AI"*, *"Gá»­i chá»‰ Ä‘áº¡o xuá»‘ng Báº¿p trÆ°á»Ÿng"*, *"LÆ°u vÃ o bÃ¡o cÃ¡o tuáº§n"*.
-  6. *Save / Apply:* Báº¥m *"LÆ°u chá»‰ Ä‘áº¡o"* $\rightarrow$ Cáº­p nháº­t trá»±c tiáº¿p ghi chÃº nháº¯c nhá»Ÿ vÃ o báº£ng Ä‘iá»u khiá»ƒn cá»§a Báº¿p.
-* **Ká»‹ch báº£n AI Failure / Uncertainty UX:**
-  * *TÃ¬nh huá»‘ng:* KhÃ¡ch chá»‰ Ä‘Ã¡nh giÃ¡ 1 sao nhÆ°ng khÃ´ng gÃµ chá»¯ nháº­n xÃ©t nÃ o, hoáº·c chá»‰ nháº­p cÃ¡c kÃ½ tá»± vÃ´ nghÄ©a (*"asdfgh"*).
-  * *Xá»­ lÃ½ UI:* Tháº» hiá»ƒn thá»‹: *"ÄÃ¡nh giÃ¡ khÃ´ng chá»©a vÄƒn báº£n mÃ´ táº£ cá»¥ thá»ƒ. AI xáº¿p vÃ o nhÃ³m 'Ã kiáº¿n chÆ°a phÃ¢n loáº¡i' â€“ Khuyáº¿n nghá»‹ gá»i Ä‘iá»‡n chÄƒm sÃ³c khÃ¡ch hÃ ng"*.
+### 5.2. AI-2: Kitchen Load Predictor – Dự Báo Tải Bếp & Cảnh Báo Chờ Lâu (Vai trò: Nhân viên Bếp)
+* **Giải quyết vấn đề:** P3 (Bếp quá tải dồn đơn, khách chờ lâu cáu gắt).
+* **Giao diện tích hợp:** `pages/kitchen-wait-time-alerts.html`
+* **Chuẩn 6 bước AI UX:**
+  1. *Input:* Hệ thống tự động đọc số lượng đơn đang chờ trong hàng đợi (`queue`), số món nướng/xào/hấp đang nấu cùng lúc.
+  2. *Processing:* Biểu tượng sóng nhịp bếp phân tích thời gian chế biến tiêu chuẩn của từng món.
+  3. *Output:* Thẻ dự báo thời gian chờ ước tính cho từng bàn (Ví dụ: Bàn 04: dự kiến xong sau 8 phút; Bàn 09: có nguy cơ trễ 22 phút).
+  4. *Explainability:* Giải thích: *"Bàn 09 gọi 3 món nướng phức tạp; lò nướng hiện đang full 100% công suất"*.
+  5. *User Control:* Đầu bếp có các nút quyết định: *"Tăng ưu tiên đơn"*, *"Chuyển trạm bếp hỗ trợ"*, *"Thông báo phục vụ xin lỗi khách"*.
+  6. *Save / Apply:* Khi bếp bấm *"Tăng ưu tiên"*, đơn hàng được gắn cờ thẻ đỏ trên bảng Kanban và đẩy lên đầu hàng đợi.
+* **Kịch bản AI Failure / Uncertainty UX:**
+  * *Tình huống:* Dữ liệu đơn hàng thiếu thời gian bắt đầu hoặc có món khách gọi ngoài menu chưa được đo chuẩn thời gian.
+  * *Xử lý UI:* Hiển thị hộp cảnh báo màu vàng: *"AI chưa đủ dữ liệu đo lường cho món đặc biệt này – Vui lòng căn thời gian thủ công theo kinh nghiệm bếp trưởng"*.
 
 ---
 
-## 6. SÆ¡ Äá»“ Cáº¥u TrÃºc Trang & Luá»“ng Nghiá»‡p Vá»¥ Äáº§u - Cuá»‘i
+### 5.3. AI-3: Feedback Theme Extractor – Trợ Lý Gom Nhóm & Phân Tích Chủ Đề Đánh Giá (Vai trò: Quản lý)
+* **Giải quyết vấn đề:** P4 (Quản lý bận rộn không đọc xuể hàng trăm phản hồi của khách).
+* **Giao diện tích hợp:** `pages/manager-feedback-center.html`
+* **Chuẩn 6 bước AI UX:**
+  1. *Input:* Quản lý chọn bộ lọc phản hồi trong tuần/tháng (ví dụ: các đánh giá từ 1 đến 3 sao).
+  2. *Processing:* Hiển thị hiệu ứng quét ngôn ngữ (NLP Loading State).
+  3. *Output:* Hiển thị thẻ tóm tắt 3 chủ đề nóng nhất: *#Nước_dùng_hơi_mặn (42%)*, *#Món_ra_chậm_giờ_trưa (35%)*, *#Thái_độ_phục_vụ_tốt (88%)*.
+  4. *Explainability:* Liệt kê trích dẫn bằng chứng cụ thể: *"Trích từ 8 ý kiến khách hàng tại Bàn 02, Bàn 07 nhắc đến từ 'mặn', 'gắt cổ' trong 3 ngày qua"*.
+  5. *User Control:* Nút *"Chỉnh sửa nhận xét của AI"*, *"Gửi chỉ đạo xuống Bếp trưởng"*, *"Lưu vào báo cáo tuần"*.
+  6. *Save / Apply:* Bấm *"Lưu chỉ đạo"* $\rightarrow$ Cập nhật trực tiếp ghi chú nhắc nhở vào bảng điều khiển của Bếp.
+* **Kịch bản AI Failure / Uncertainty UX:**
+  * *Tình huống:* Khách chỉ đánh giá 1 sao nhưng không gõ chữ nhận xét nào, hoặc chỉ nhập các ký tự vô nghĩa (*"asdfgh"*).
+  * *Xử lý UI:* Thẻ hiển thị: *"Đánh giá không chứa văn bản mô tả cụ thể. AI xếp vào nhóm 'Ý kiến chưa phân loại' – Khuyến nghị gọi điện chăm sóc khách hàng"*.
 
-### 6.1. SÆ¡ Ä‘á»“ trang web (Sitemap)
+---
+
+## 6. Sơ Đồ Cấu Trúc Trang & Luồng Nghiệp Vụ Đầu - Cuối
+
+### 6.1. Sơ đồ trang web (Sitemap)
 
 ```text
-[Trang chá»§ / Chá»n bÃ n (index.html)]
-  â”‚
-  â”œâ”€â”€â–º [KHÃCH HÃ€NG]
-  â”‚      â”œâ”€â”€ Thá»±c Ä‘Æ¡n & AI Gá»£i Ã½ (pages/diner-menu.html)
-  â”‚      â”œâ”€â”€ Chi tiáº¿t mÃ³n Äƒn (pages/diner-dish-detail.html)
-  â”‚      â”œâ”€â”€ Giá» mÃ³n bÃ n Äƒn & Gá»­i Ä‘Æ¡n (pages/diner-table-order.html)
-  â”‚      â””â”€â”€ Theo dÃµi tiáº¿n Ä‘á»™ & ÄÃ¡nh giÃ¡ (pages/diner-order-status.html)
-  â”‚
-  â””â”€â”€â–º [Cá»”NG NHÃ‚N VIÃŠN] (pages/login.html)
-         â”‚
-         â”œâ”€â”€â–º [NHÃ‚N VIÃŠN Báº¾P]
-         â”‚      â”œâ”€â”€ Báº£ng Kanban Ä‘iá»u phá»‘i (pages/kitchen-board.html)
-         â”‚      â”œâ”€â”€ Chi tiáº¿t Ä‘Æ¡n cháº¿ biáº¿n (pages/kitchen-order-detail.html)
-         â”‚      â””â”€â”€ Cáº£nh bÃ¡o Ä‘Æ¡n trá»… & AI Táº£i báº¿p (pages/kitchen-wait-time-alerts.html)
-         â”‚
-         â”œâ”€â”€â–º [QUáº¢N LÃ NHÃ€ HÃ€NG]
-         â”‚      â”œâ”€â”€ Quáº£n lÃ½ thá»±c Ä‘Æ¡n & giÃ¡ (pages/manager-menu-management.html)
-         â”‚      â”œâ”€â”€ YÃªu cáº§u thanh toÃ¡n bÃ n (pages/manager-payment-requests.html)
-         â”‚      â”œâ”€â”€ BÃ¡o cÃ¡o doanh sá»‘ & Xuáº¥t CSV (pages/admin-sales-insights.html)
-         â”‚      â””â”€â”€ Pháº£n há»“i khÃ¡ch & AI Chá»§ Ä‘á» (pages/manager-feedback-center.html)
-         â”‚
-         â””â”€â”€â–º [QUáº¢N TRá»Š VIÃŠN / CHá»¦ QUÃN]
-                â”œâ”€â”€ SÆ¡ Ä‘á»“ bÃ n & MÃ£ QR bÃ n (pages/manager-table-management.html)
-                â”œâ”€â”€ Quáº£n lÃ½ tÃ i khoáº£n nhÃ¢n viÃªn (pages/admin-user-management.html)
-                â””â”€â”€ CÃ i Ä‘áº·t há»‡ thá»‘ng nhÃ  hÃ ng (pages/admin-settings.html)
+[Trang chủ / Chọn bàn (index.html)]
+  │
+  ├──► [KHÁCH HÀNG]
+  │      ├── Thực đơn & AI Gợi ý (pages/diner-menu.html)
+  │      ├── Chi tiết món ăn (pages/diner-dish-detail.html)
+  │      ├── Giỏ món bàn ăn & Gửi đơn (pages/diner-table-order.html)
+  │      └── Theo dõi tiến độ & Đánh giá (pages/diner-order-status.html)
+  │
+  └──► [CỔNG NHÂN VIÊN] (pages/login.html)
+         │
+         ├──► [NHÂN VIÊN BẾP]
+         │      ├── Bảng Kanban điều phối (pages/kitchen-board.html)
+         │      ├── Chi tiết đơn chế biến (pages/kitchen-order-detail.html)
+         │      └── Cảnh báo đơn trễ & AI Tải bếp (pages/kitchen-wait-time-alerts.html)
+         │
+         ├──► [QUẢN LÝ NHÀ HÀNG]
+         │      ├── Quản lý thực đơn & giá (pages/manager-menu-management.html)
+         │      ├── Yêu cầu thanh toán bàn (pages/manager-payment-requests.html)
+         │      ├── Báo cáo doanh số & Xuất CSV (pages/admin-sales-insights.html)
+         │      └── Phản hồi khách & AI Chủ đề (pages/manager-feedback-center.html)
+         │
+         └──► [QUẢN TRỊ VIÊN / CHỦ QUÁN]
+                ├── Sơ đồ bàn & Mã QR bàn (pages/manager-table-management.html)
+                ├── Quản lý tài khoản nhân viên (pages/admin-user-management.html)
+                └── Cài đặt hệ thống nhà hàng (pages/admin-settings.html)
 ```
 
-### 6.2. Luá»“ng nghiá»‡p vá»¥ liÃªn thÃ´ng Ä‘a vai trÃ² (End-to-End User Flow)
+### 6.2. Luồng nghiệp vụ liên thông đa vai trò (End-to-End User Flow)
 
 ```text
-[Thá»±c khÃ¡ch táº¡i BÃ n 03]
-   â”‚ QuÃ©t QR bÃ n trÃªn index.html
-   â–¼
-Chá»n mÃ³n trÃªn diner-menu.html (DÃ¹ng AI Taste Recommender)
-   â”‚ ThÃªm mÃ³n vÃ o giá» trÃªn diner-dish-detail.html
-   â–¼
-Kiá»ƒm tra giá» vÃ  Báº¥m "Gá»­i Báº¿p" trÃªn diner-table-order.html
-   â”‚
-   â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-   â–¼                              â–¼
-[MÃ n hÃ¬nh Thá»±c khÃ¡ch]          [MÃ n hÃ¬nh Báº¿p - kitchen-board.html]
-KhÃ¡ch xem tráº¡ng thÃ¡i Ä‘Æ¡n:       ÄÆ¡n bÃ n 03 láº­p tá»©c xuáº¥t hiá»‡n á»Ÿ cá»™t "Má»›i nháº­n"
-"Äang chá» báº¿p nháº­n..."          Báº¿p báº¥m chuyá»ƒn "Äang náº¥u"
-   â”‚                              â”‚
-   â”‚ (Äá»“ng bá»™ thá»i gian thá»±c)      â”‚ (Náº¿u náº¥u quÃ¡ 15 phÃºt)
-   â–¼                              â–¼
-KhÃ¡ch tháº¥y Ä‘á»•i sang:           MÃ n hÃ¬nh kitchen-wait-time-alerts.html
-"Báº¿p Ä‘ang náº¥u mÃ³n cá»§a báº¡n"      báº­t cáº£nh bÃ¡o Ä‘á» + AI dá»± bÃ¡o táº£i
-   â”‚                              â”‚
-   â”‚                              â–¼
-   â”‚                           Báº¿p tick xong mÃ³n â†’ Chuyá»ƒn sang "ÄÃ£ xong"
-   â–¼                              â”‚
-MÃ³n Ä‘Æ°á»£c bÃª ra bÃ n                â–¼
-KhÃ¡ch Äƒn xong, báº¥m:            [MÃ n hÃ¬nh Quáº£n lÃ½ - manager-payment-requests.html]
-1. ÄÃ¡nh giÃ¡ cháº¥t lÆ°á»£ng sao     Xuáº¥t hiá»‡n yÃªu cáº§u thanh toÃ¡n BÃ n 03
-2. YÃªu cáº§u tÃ­nh tiá»n           Quáº£n lÃ½ xÃ¡c nháº­n Ä‘Ã£ thu tiá»n â†’ BÃ n Ä‘á»•i vá» "Äang dá»n"
-   â”‚                              â”‚
-   â–¼                              â–¼
-Gá»­i feedback lÃªn há»‡ thá»‘ng      Doanh sá»‘ cáº­p nháº­t vÃ o admin-sales-insights.html
-AI Theme Extractor gom nhÃ³m    Quáº£n lÃ½ xem bÃ¡o cÃ¡o & xuáº¥t CSV
-trÃªn feedback-center.html
+[Thực khách tại Bàn 03]
+   │ Quét QR bàn trên index.html
+   ▼
+Chọn món trên diner-menu.html (Dùng AI Taste Recommender)
+   │ Thêm món vào giỏ trên diner-dish-detail.html
+   ▼
+Kiểm tra giỏ và Bấm "Gửi Bếp" trên diner-table-order.html
+   │
+   ├──────────────────────────────┐
+   ▼                              ▼
+[Màn hình Thực khách]          [Màn hình Bếp - kitchen-board.html]
+Khách xem trạng thái đơn:       Đơn bàn 03 lập tức xuất hiện ở cột "Mới nhận"
+"Đang chờ bếp nhận..."          Bếp bấm chuyển "Đang nấu"
+   │                              │
+   │ (Đồng bộ thời gian thực)      │ (Nếu nấu quá 15 phút)
+   ▼                              ▼
+Khách thấy đổi sang:           Màn hình kitchen-wait-time-alerts.html
+"Bếp đang nấu món của bạn"      bật cảnh báo đỏ + AI dự báo tải
+   │                              │
+   │                              ▼
+   │                           Bếp tick xong món → Chuyển sang "Đã xong"
+   ▼                              │
+Món được bê ra bàn                ▼
+Khách ăn xong, bấm:            [Màn hình Quản lý - manager-payment-requests.html]
+1. Đánh giá chất lượng sao     Xuất hiện yêu cầu thanh toán Bàn 03
+2. Yêu cầu tính tiền           Quản lý xác nhận đã thu tiền → Bàn đổi về "Đang dọn"
+   │                              │
+   ▼                              ▼
+Gửi feedback lên hệ thống      Doanh số cập nhật vào admin-sales-insights.html
+AI Theme Extractor gom nhóm    Quản lý xem báo cáo & xuất CSV
+trên feedback-center.html
 ```
 
 ---
 
-## 7. Há»‡ Thá»‘ng Thiáº¿t Káº¿ (Design System & Tokens)
+## 7. Hệ Thống Thiết Kế (Design System & Tokens)
 
-Há»‡ thá»‘ng giao diá»‡n Ä‘Æ°á»£c Ä‘á»‹nh nghÄ©a nháº¥t quÃ¡n táº¡i `css/common.css` vÃ  Ã¡p dá»¥ng cho toÃ n bá»™ 17 mÃ n hÃ¬nh:
+Hệ thống giao diện được định nghĩa nhất quán tại `css/common.css` và áp dụng cho toàn bộ 17 màn hình:
 
-* **MÃ u má»±c chá»§ Ä‘áº¡o (`#102A2B`):** Thá»ƒ hiá»‡n sá»± sang trá»ng, tÆ°Æ¡ng pháº£n cao trÃªn ná»n sÃ¡ng, dÃ¹ng cho vÄƒn báº£n vÃ  typography.
-* **Xanh ngá»c thÆ°Æ¡ng hiá»‡u (`#176B5B`):** Äiá»ƒm nháº¥n nháº­n diá»‡n MenuMind, dÃ¹ng cho cÃ¡c nÃºt hÃ nh Ä‘á»™ng chÃ­nh (Primary CTA), tráº¡ng thÃ¡i hoáº¡t Ä‘á»™ng (Active) vÃ  huy hiá»‡u thÃ nh cÃ´ng (Success).
-* **VÃ ng chanh / Xanh máº¡ (`#D9E7A6`):** MÃ u nháº­n diá»‡n vÃ¹ng tÃ­nh nÄƒng thÃ´ng minh AI vÃ  nhá»‹p thá»Ÿ váº­n hÃ nh (Service Pulse).
-* **Cam áº¥m F&B (`#F1A33A`):** TÃ´ng mÃ u kÃ­ch thÃ­ch vá»‹ giÃ¡c, dÃ¹ng cho hÃ¬nh áº£nh mÃ³n Äƒn, cáº£nh bÃ¡o nháº¹ (Warning) vÃ  Ä‘á»™ Æ°u tiÃªn Ä‘Æ¡n hÃ ng.
-* **Äá» gáº¡ch (`#B94A3D`):** DÃ¹ng cho tráº¡ng thÃ¡i lá»—i (Error State), nÃºt há»§y Ä‘Æ¡n (Danger Action) vÃ  cáº£nh bÃ¡o Ä‘Æ¡n trá»… háº¡n.
-* **Typography:** TiÃªu Ä‘á» dÃ¹ng font *Manrope* (hiá»‡n Ä‘áº¡i, dá»©t khoÃ¡t), ná»™i dung hiá»ƒn thá»‹ dÃ¹ng font *Be Vietnam Pro* (tá»‘i Æ°u hiá»ƒn thá»‹ tiáº¿ng Viá»‡t cÃ³ dáº¥u, sáº¯c nÃ©t trÃªn má»i kÃ­ch thÆ°á»›c mÃ n hÃ¬nh).
+* **Màu mực chủ đạo (`#102A2B`):** Thể hiện sự sang trọng, tương phản cao trên nền sáng, dùng cho văn bản và typography.
+* **Xanh ngọc thương hiệu (`#176B5B`):** Điểm nhấn nhận diện MenuMind, dùng cho các nút hành động chính (Primary CTA), trạng thái hoạt động (Active) và huy hiệu thành công (Success).
+* **Vàng chanh / Xanh mạ (`#D9E7A6`):** Màu nhận diện vùng tính năng thông minh AI và nhịp thở vận hành (Service Pulse).
+* **Cam ấm F&B (`#F1A33A`):** Tông màu kích thích vị giác, dùng cho hình ảnh món ăn, cảnh báo nhẹ (Warning) và độ ưu tiên đơn hàng.
+* **Đỏ gạch (`#B94A3D`):** Dùng cho trạng thái lỗi (Error State), nút hủy đơn (Danger Action) và cảnh báo đơn trễ hạn.
+* **Typography:** Tiêu đề dùng font *Manrope* (hiện đại, dứt khoát), nội dung hiển thị dùng font *Be Vietnam Pro* (tối ưu hiển thị tiếng Việt có dấu, sắc nét trên mọi kích thước màn hình).

@@ -1,25 +1,25 @@
-﻿# MenuMind â€” 17 mÃ n giao diá»‡n
+# MenuMind — 17 màn giao diện
 
-| Chá»‰ má»¥c | Role | Chá»©c nÄƒng | Tá»‡p giao diá»‡n | Vai trÃ² giao diá»‡n |
+| Chỉ mục | Role | Chức năng | Tệp giao diện | Vai trò giao diện |
 |---|---|---|---|---|
-| S01 | DÃ¹ng chung | Giá»›i thiá»‡u & chá»n bÃ n | `index.html` | Giá»›i thiá»‡u MenuMind vÃ  báº¯t Ä‘áº§u Ä‘áº·t mÃ³n |
-| S02 | DÃ¹ng chung | ÄÄƒng nháº­p nhÃ¢n viÃªn | `pages/login.html` | Chá»n tÃ i khoáº£n vÃ  vÃ o Ä‘Ãºng khu vá»±c |
-| S03 | KhÃ¡ch hÃ ng | Thá»±c Ä‘Æ¡n | `pages/diner-menu.html` | TÃ¬m, lá»c vÃ  chá»n mÃ³n |
-| S04 | KhÃ¡ch hÃ ng | Chi tiáº¿t mÃ³n | `pages/diner-dish-detail.html` | Xem thÃ´ng tin, sá»‘ lÆ°á»£ng vÃ  ghi chÃº |
-| S05 | KhÃ¡ch hÃ ng | Giá» mÃ³n & gá»­i Ä‘Æ¡n | `pages/diner-table-order.html` | Kiá»ƒm tra mÃ³n vÃ  tá»•ng tiá»n trÆ°á»›c khi gá»­i |
-| S06 | KhÃ¡ch hÃ ng | Theo dÃµi Ä‘Æ¡n & pháº£n há»“i | `pages/diner-order-status.html` | Xem tiáº¿n Ä‘á»™ vÃ  Ä‘Ã¡nh giÃ¡ phá»¥c vá»¥ |
-| S07 | NhÃ¢n viÃªn báº¿p | Báº£ng Ä‘Æ¡n báº¿p | `pages/kitchen-board.html` | Theo dÃµi vÃ  Ä‘iá»u phá»‘i Ä‘Æ¡n |
-| S08 | NhÃ¢n viÃªn báº¿p | Chi tiáº¿t Ä‘Æ¡n báº¿p | `pages/kitchen-order-detail.html` | Xem mÃ³n vÃ  cáº­p nháº­t tiáº¿n Ä‘á»™ |
-| S09 | NhÃ¢n viÃªn báº¿p | Cáº£nh bÃ¡o chá» lÃ¢u | `pages/kitchen-wait-time-alerts.html` | Theo dÃµi cÃ¡c Ä‘Æ¡n cáº§n Æ°u tiÃªn |
-| S10 | Quáº£n lÃ½ | Quáº£n lÃ½ thá»±c Ä‘Æ¡n | `pages/manager-menu-management.html` | Quáº£n lÃ½ mÃ³n, giÃ¡ vÃ  tÃ¬nh tráº¡ng bÃ¡n |
-| S11 | Quáº£n trá»‹ viÃªn | Thá»‘ng kÃª bÃ¡n hÃ ng | `pages/admin-sales-insights.html` | Xem káº¿t quáº£ bÃ¡n hÃ ng |
-| S12 | Quáº£n lÃ½ & Quáº£n trá»‹ viÃªn | Trung tÃ¢m pháº£n há»“i | `pages/manager-feedback-center.html` | Xem vÃ  xá»­ lÃ½ Ã½ kiáº¿n khÃ¡ch hÃ ng |
-| S13 | Quáº£n lÃ½ | YÃªu cáº§u thanh toÃ¡n | `pages/manager-payment-requests.html` | Xem bÃ n Ä‘ang chá» vÃ  xÃ¡c nháº­n Ä‘Ã£ thu tiá»n |
-| S14 | Quáº£n lÃ½ & NhÃ¢n viÃªn phá»¥c vá»¥ | Quáº£n lÃ½ bÃ n | `pages/manager-table-management.html` | Quáº£n lÃ½ bÃ n vÃ  tráº¡ng thÃ¡i sá»­ dá»¥ng |
-| S15 | Quáº£n trá»‹ viÃªn | Quáº£n lÃ½ tÃ i khoáº£n | `pages/admin-user-management.html` | Quáº£n lÃ½ nhÃ¢n viÃªn vÃ  vai trÃ² |
-| S16 | Quáº£n trá»‹ viÃªn | CÃ i Ä‘áº·t há»‡ thá»‘ng | `pages/admin-settings.html` | Thiáº¿t láº­p thÃ´ng tin vÃ  cáº¥u hÃ¬nh chung |
-| S17 | DÃ¹ng chung | KhÃ´ng tÃ¬m tháº¥y trang | `pages/404.html` | Äiá»u hÆ°á»›ng khi Ä‘Æ°á»ng dáº«n khÃ´ng tá»“n táº¡i |
+| S01 | Dùng chung | Giới thiệu & chọn bàn | `index.html` | Giới thiệu MenuMind và bắt đầu đặt món |
+| S02 | Dùng chung | Đăng nhập nhân viên | `pages/login.html` | Chọn tài khoản và vào đúng khu vực |
+| S03 | Khách hàng | Thực đơn | `pages/diner-menu.html` | Tìm, lọc và chọn món |
+| S04 | Khách hàng | Chi tiết món | `pages/diner-dish-detail.html` | Xem thông tin, số lượng và ghi chú |
+| S05 | Khách hàng | Giỏ món & gửi đơn | `pages/diner-table-order.html` | Kiểm tra món và tổng tiền trước khi gửi |
+| S06 | Khách hàng | Theo dõi đơn & phản hồi | `pages/diner-order-status.html` | Xem tiến độ và đánh giá phục vụ |
+| S07 | Nhân viên bếp | Bảng đơn bếp | `pages/kitchen-board.html` | Theo dõi và điều phối đơn |
+| S08 | Nhân viên bếp | Chi tiết đơn bếp | `pages/kitchen-order-detail.html` | Xem món và cập nhật tiến độ |
+| S09 | Nhân viên bếp | Cảnh báo chờ lâu | `pages/kitchen-wait-time-alerts.html` | Theo dõi các đơn cần ưu tiên |
+| S10 | Quản lý | Quản lý thực đơn | `pages/manager-menu-management.html` | Quản lý món, giá và tình trạng bán |
+| S11 | Quản trị viên | Thống kê bán hàng | `pages/admin-sales-insights.html` | Xem kết quả bán hàng |
+| S12 | Quản lý & Quản trị viên | Trung tâm phản hồi | `pages/manager-feedback-center.html` | Xem và xử lý ý kiến khách hàng |
+| S13 | Quản lý | Yêu cầu thanh toán | `pages/manager-payment-requests.html` | Xem bàn đang chờ và xác nhận đã thu tiền |
+| S14 | Quản lý & Nhân viên phục vụ | Quản lý bàn | `pages/manager-table-management.html` | Quản lý bàn và trạng thái sử dụng |
+| S15 | Quản trị viên | Quản lý tài khoản | `pages/admin-user-management.html` | Quản lý nhân viên và vai trò |
+| S16 | Quản trị viên | Cài đặt hệ thống | `pages/admin-settings.html` | Thiết lập thông tin và cấu hình chung |
+| S17 | Dùng chung | Không tìm thấy trang | `pages/404.html` | Điều hướng khi đường dẫn không tồn tại |
 
-[Thiáº¿t káº¿ Figma](https://www.figma.com/design/N8wER6qISetc5Gf4pANqka/MenuMind)
+[Thiết kế Figma](https://www.figma.com/design/N8wER6qISetc5Gf4pANqka/MenuMind)
 
-[Thiáº¿t káº¿ Figma cÃ³ mÃ u ( dá»± kiáº¿n ban Ä‘áº§u nhÆ°ng vá» sau Ä‘á»ƒ style mÃ u khÃ¡c )](https://www.figma.com/design/N8wER6qISetc5Gf4pANqka/MenuMind?node-id=6-2)
+[Thiết kế Figma có màu ( dự kiến ban đầu nhưng về sau để style màu khác )](https://www.figma.com/design/N8wER6qISetc5Gf4pANqka/MenuMind?node-id=6-2)

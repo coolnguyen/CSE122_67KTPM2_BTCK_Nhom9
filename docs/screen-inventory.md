@@ -1,54 +1,54 @@
-﻿# Báº£ng Kiá»ƒm KÃª MÃ n HÃ¬nh MenuMind (Screen Inventory)
+# Bảng Kiểm Kê Màn Hình MenuMind (Screen Inventory)
 
-> **Há»c pháº§n:** PhÃ¡t triá»ƒn á»©ng dá»¥ng Web cÆ¡ báº£n â€“ CSE122  
-> **Dá»± Ã¡n:** BTL-09 â€“ MenuMind (Thá»±c Ä‘Æ¡n thÃ´ng minh & Äiá»u phá»‘i Ä‘Æ¡n hÃ ng F&B)  
-> **PhiÃªn báº£n:** V2.0 â€“ Chuáº©n hÃ³a theo Barem Cháº¥m Ä‘iá»ƒm & Quy cháº¿ Váº¥n Ä‘Ã¡p BTL (Äá»§ 12 cá»™t báº¯t buá»™c)  
-> **NguyÃªn táº¯c:** Liá»‡t kÃª Ä‘áº§y Ä‘á»§ 100% mÃ n hÃ¬nh thá»±c táº¿ trong há»‡ thá»‘ng, khá»›p 1:1 vá»›i thÆ° má»¥c `pages/` vÃ  tÃªn nhÃ¡nh Git.  
+> **Học phần:** Phát triển ứng dụng Web cơ bản – CSE122  
+> **Dự án:** BTL-09 – MenuMind (Thực đơn thông minh & Điều phối đơn hàng F&B)  
+> **Phiên bản:** V2.0 – Chuẩn hóa theo Barem Chấm điểm & Quy chế Vấn đáp BTL (Đủ 12 cột bắt buộc)  
+> **Nguyên tắc:** Liệt kê đầy đủ 100% màn hình thực tế trong hệ thống, khớp 1:1 với thư mục `pages/` và tên nhánh Git.  
 
 ---
 
-## 1. Báº£ng Kiá»ƒm KÃª Chi Tiáº¿t 17 MÃ n HÃ¬nh (Äá»§ 12 Cá»™t Chuáº©n Barem)
+## 1. Bảng Kiểm Kê Chi Tiết 17 Màn Hình (Đủ 12 Cột Chuẩn Barem)
 
-| ID | Role | User Goal (Má»¥c tiÃªu) | User Task (Nhiá»‡m vá»¥) | Screen (TÃªn mÃ n hÃ¬nh) | File (Tá»‡p HTML) | CRUD | States (Bao phá»§ tráº¡ng thÃ¡i) | AI (Tráº£i nghiá»‡m AI) | Assignee (Phá»¥ trÃ¡ch) | Task / Branch (Tháº» & NhÃ¡nh) | OBS (Video minh chá»©ng) |
+| ID | Role | User Goal (Mục tiêu) | User Task (Nhiệm vụ) | Screen (Tên màn hình) | File (Tệp HTML) | CRUD | States (Bao phủ trạng thái) | AI (Trải nghiệm AI) | Assignee (Phụ trách) | Task / Branch (Thẻ & Nhánh) | OBS (Video minh chứng) |
 | :---: | :--- | :--- | :--- | :--- | :--- | :---: | :--- | :---: | :---: | :--- | :---: |
-| **S01** | DÃ¹ng chung | Báº¯t Ä‘áº§u Ä‘Ãºng vá»‹ trÃ­ bÃ n | QuÃ©t QR / Chá»n sá»‘ bÃ n Äƒn | Giá»›i thiá»‡u & Chá»n bÃ n | `index.html` | R/U | normal, disabled, selected | KhÃ´ng | **TrÆ°Æ¡ng Viá»‡t HoÃ ng (SV1)** | `TASK-01` / `feature/index` | PENDING |
-| **S02** | DÃ¹ng chung | VÃ o Ä‘Ãºng khu vá»±c lÃ m viá»‡c | ÄÄƒng nháº­p tÃ i khoáº£n nhÃ¢n viÃªn | ÄÄƒng nháº­p vai trÃ² | `pages/login.html` | R | normal, validation, error | KhÃ´ng | **TrÆ°Æ¡ng Viá»‡t HoÃ ng (SV1)** | `TASK-02` / `feature/login` | PENDING |
-| **S03** | KhÃ¡ch hÃ ng | KhÃ¡m phÃ¡ thá»±c Ä‘Æ¡n & nháº­n gá»£i Ã½ | TÃ¬m kiáº¿m / Lá»c mÃ³n / Chá»n AI | Thá»±c Ä‘Æ¡n thÃ´ng minh | `pages/diner-menu.html` | R/C cart | loading, normal, empty, AI failure | **AI-1: Taste Recommender** | **TrÆ°Æ¡ng Viá»‡t HoÃ ng (SV1)** | `TASK-03` / `feature/diner-menu` | PENDING |
-| **S04** | KhÃ¡ch hÃ ng | Hiá»ƒu rÃµ thÃ nh pháº§n & tÃ¹y biáº¿n | Chá»n sá»‘ lÆ°á»£ng / Ghi chÃº mÃ³n | Chi tiáº¿t mÃ³n Äƒn | `pages/diner-dish-detail.html` | C/R/U cart | normal, validation, success | KhÃ´ng | **TrÆ°Æ¡ng Viá»‡t HoÃ ng (SV1)** | `TASK-04` / `feature/diner-dish-detail` | PENDING |
-| **S05** | KhÃ¡ch hÃ ng | Kiá»ƒm tra giá» hÃ ng trÆ°á»›c khi gá»­i | Sá»­a sá»‘ lÆ°á»£ng / XÃ³a / Gá»­i Ä‘Æ¡n | Giá» mÃ³n bÃ n Äƒn | `pages/diner-table-order.html` | C/R/U/D | normal, empty, disabled, success | KhÃ´ng | **TrÆ°Æ¡ng Viá»‡t HoÃ ng (SV1)** | `TASK-05` / `feature/diner-table-order` | PENDING |
-| **S06** | KhÃ¡ch hÃ ng | Náº¯m báº¯t tiáº¿n Ä‘á»™ & pháº£n há»“i | Theo dÃµi mÃ³n / ÄÃ¡nh giÃ¡ / TÃ­nh tiá»n | Theo dÃµi Ä‘Æ¡n hÃ ng | `pages/diner-order-status.html` | R/C feedback | loading, pending, served, success | KhÃ´ng | **TrÆ°Æ¡ng Viá»‡t HoÃ ng (SV1)** | `TASK-06` / `feature/diner-order-status` | PENDING |
-| **S07** | NhÃ¢n viÃªn báº¿p | Äiá»u phá»‘i cháº¿ biáº¿n liÃªn tá»¥c | Nháº­n Ä‘Æ¡n / Äá»•i tráº¡ng thÃ¡i náº¥u | Báº£ng Kanban báº¿p | `pages/kitchen-board.html` | R/U order | loading, normal, empty, error, success | KhÃ´ng | **Äáº·ng XuÃ¢n DÆ°Æ¡ng (SV2)** | `TASK-07` / `feature/kitchen-board` | PENDING |
-| **S08** | NhÃ¢n viÃªn báº¿p | Kiá»ƒm tra chi tiáº¿t Ä‘Æ¡n hÃ ng | Tick mÃ³n xong / Æ¯u tiÃªn Ä‘Æ¡n | Chi tiáº¿t Ä‘Æ¡n cháº¿ biáº¿n | `pages/kitchen-order-detail.html` | C/R/U | normal, pending, completed, cancelled | KhÃ´ng | **Äáº·ng XuÃ¢n DÆ°Æ¡ng (SV2)** | `TASK-08` / `feature/kitchen-order-detail` | PENDING |
-| **S09** | NhÃ¢n viÃªn báº¿p | Kiá»ƒm soÃ¡t rá»§i ro trá»… mÃ³n | Lá»c Ä‘Æ¡n trá»… / Dá»± bÃ¡o táº£i báº¿p | Cáº£nh bÃ¡o thá»i gian chá» | `pages/kitchen-wait-time-alerts.html` | C/R/U | normal, empty, loading, AI failure | **AI-2: Kitchen Load Predictor** | **Äáº·ng XuÃ¢n DÆ°Æ¡ng (SV2)** | `TASK-09` / `feature/kitchen-wait-time-alerts` | PENDING |
-| **S10** | Váº­n hÃ nh sáº£nh | Quáº£n lÃ½ sÆ¡ Ä‘á»“ bÃ n tiá»‡c | Táº¡o bÃ n má»›i / In mÃ£ QR bÃ n | Quáº£n lÃ½ bÃ n Äƒn & QR | `pages/manager-table-management.html` | C/R/U | normal, validation, success | KhÃ´ng | **Äáº·ng XuÃ¢n DÆ°Æ¡ng (SV2)** | `TASK-10` / `feature/manager-table-management` | PENDING |
-| **S11** | Váº­n hÃ nh sáº£nh | Thu ngÃ¢n & XÃ¡c nháº­n hÃ³a Ä‘Æ¡n | Xem bÃ n chá» tÃ­nh tiá»n / Thu tiá»n | YÃªu cáº§u thanh toÃ¡n táº¡i bÃ n | `pages/manager-payment-requests.html` | R/U | normal, empty, success | KhÃ´ng | **Äáº·ng XuÃ¢n DÆ°Æ¡ng (SV2)** | `TASK-11` / `feature/manager-payment-requests` | PENDING |
-| **S12** | Quáº£n lÃ½ | Kiá»ƒm soÃ¡t thá»±c Ä‘Æ¡n nhÃ  hÃ ng | ThÃªm mÃ³n / Äá»•i giÃ¡ / Báº­t táº¯t háº¿t | Quáº£n lÃ½ thá»±c Ä‘Æ¡n | `pages/manager-menu-management.html` | C/R/U/Archive | normal, empty, validation, success | KhÃ´ng | **Nguyá»…n HoÃ ng Háº£i (SV3 - Leader)** | `TASK-12` / `feature/manager-menu-management` | PENDING |
-| **S13** | Quáº£n lÃ½ | Äo lÆ°á»ng hiá»‡u quáº£ kinh doanh | Lá»c thá»i gian / Doanh sá»‘ / CSV | BÃ¡o cÃ¡o doanh sá»‘ & Thá»‘ng kÃª | `pages/admin-sales-insights.html` | R/Export | normal, success, empty | KhÃ´ng | **Nguyá»…n HoÃ ng Háº£i (SV3 - Leader)** | `TASK-13` / `feature/admin-sales-insights` | PENDING |
-| **S14** | Quáº£n lÃ½ | Cáº£i thiá»‡n cháº¥t lÆ°á»£ng dá»‹ch vá»¥ | Äá»c nháº­n xÃ©t / AI phÃ¢n nhÃ³m chá»§ Ä‘á» | Trung tÃ¢m pháº£n há»“i khÃ¡ch | `pages/manager-feedback-center.html` | R/U | normal, loading, success, AI failure | **AI-3: Feedback Theme Extractor** | **Nguyá»…n HoÃ ng Háº£i (SV3 - Leader)** | `TASK-14` / `feature/manager-feedback-center` | PENDING |
-| **S15** | Quáº£n trá»‹ viÃªn | Kiá»ƒm soÃ¡t phÃ¢n quyá»n nhÃ¢n sá»± | Táº¡o tÃ i khoáº£n / KhÃ³a tÃ i khoáº£n | Quáº£n lÃ½ tÃ i khoáº£n nhÃ¢n viÃªn | `pages/admin-user-management.html` | C/R/U/Disable | normal, validation, success | KhÃ´ng | **Nguyá»…n HoÃ ng Háº£i (SV3 - Leader)** | `TASK-15` / `feature/admin-user-management` | PENDING |
-| **S16** | Quáº£n trá»‹ viÃªn | Cáº¥u hÃ¬nh tham sá»‘ toÃ n há»‡ thá»‘ng | Äá»•i thÃ´ng tin quÃ¡n / Giá» trá»… / Theme | CÃ i Ä‘áº·t há»‡ thá»‘ng nhÃ  hÃ ng | `pages/admin-settings.html` | R/U/D reset | normal, validation, success, danger | KhÃ´ng | **Nguyá»…n HoÃ ng Háº£i (SV3 - Leader)** | `TASK-16` / `feature/admin-settings` | PENDING |
-| **S17** | DÃ¹ng chung | Phá»¥c há»“i tráº£i nghiá»‡m khi sai URL | TÃ¬m kiáº¿m mÃ³n / Quay vá» trang chá»§ | Trang 404 & Phá»¥c há»“i | `pages/404.html` | R | error, recovery | KhÃ´ng | **Nguyá»…n HoÃ ng Háº£i (SV3 - Leader)** | `TASK-17` / `feature/404` | PENDING |
+| **S01** | Dùng chung | Bắt đầu đúng vị trí bàn | Quét QR / Chọn số bàn ăn | Giới thiệu & Chọn bàn | `index.html` | R/U | normal, disabled, selected | Không | **Trương Việt Hoàng (SV1)** | `TASK-01` / `feature/index` | PENDING |
+| **S02** | Dùng chung | Vào đúng khu vực làm việc | Đăng nhập tài khoản nhân viên | Đăng nhập vai trò | `pages/login.html` | R | normal, validation, error | Không | **Trương Việt Hoàng (SV1)** | `TASK-02` / `feature/login` | PENDING |
+| **S03** | Khách hàng | Khám phá thực đơn & nhận gợi ý | Tìm kiếm / Lọc món / Chọn AI | Thực đơn thông minh | `pages/diner-menu.html` | R/C cart | loading, normal, empty, AI failure | **AI-1: Taste Recommender** | **Trương Việt Hoàng (SV1)** | `TASK-03` / `feature/diner-menu` | PENDING |
+| **S04** | Khách hàng | Hiểu rõ thành phần & tùy biến | Chọn số lượng / Ghi chú món | Chi tiết món ăn | `pages/diner-dish-detail.html` | C/R/U cart | normal, validation, success | Không | **Trương Việt Hoàng (SV1)** | `TASK-04` / `feature/diner-dish-detail` | PENDING |
+| **S05** | Khách hàng | Kiểm tra giỏ hàng trước khi gửi | Sửa số lượng / Xóa / Gửi đơn | Giỏ món bàn ăn | `pages/diner-table-order.html` | C/R/U/D | normal, empty, disabled, success | Không | **Trương Việt Hoàng (SV1)** | `TASK-05` / `feature/diner-table-order` | PENDING |
+| **S06** | Khách hàng | Nắm bắt tiến độ & phản hồi | Theo dõi món / Đánh giá / Tính tiền | Theo dõi đơn hàng | `pages/diner-order-status.html` | R/C feedback | loading, pending, served, success | Không | **Trương Việt Hoàng (SV1)** | `TASK-06` / `feature/diner-order-status` | PENDING |
+| **S07** | Nhân viên bếp | Điều phối chế biến liên tục | Nhận đơn / Đổi trạng thái nấu | Bảng Kanban bếp | `pages/kitchen-board.html` | R/U order | loading, normal, empty, error, success | Không | **Đặng Xuân Dương (SV2)** | `TASK-07` / `feature/kitchen-board` | PENDING |
+| **S08** | Nhân viên bếp | Kiểm tra chi tiết đơn hàng | Tick món xong / Ưu tiên đơn | Chi tiết đơn chế biến | `pages/kitchen-order-detail.html` | C/R/U | normal, pending, completed, cancelled | Không | **Đặng Xuân Dương (SV2)** | `TASK-08` / `feature/kitchen-order-detail` | PENDING |
+| **S09** | Nhân viên bếp | Kiểm soát rủi ro trễ món | Lọc đơn trễ / Dự báo tải bếp | Cảnh báo thời gian chờ | `pages/kitchen-wait-time-alerts.html` | C/R/U | normal, empty, loading, AI failure | **AI-2: Kitchen Load Predictor** | **Đặng Xuân Dương (SV2)** | `TASK-09` / `feature/kitchen-wait-time-alerts` | PENDING |
+| **S10** | Vận hành sảnh | Quản lý sơ đồ bàn tiệc | Tạo bàn mới / In mã QR bàn | Quản lý bàn ăn & QR | `pages/manager-table-management.html` | C/R/U | normal, validation, success | Không | **Đặng Xuân Dương (SV2)** | `TASK-10` / `feature/manager-table-management` | PENDING |
+| **S11** | Vận hành sảnh | Thu ngân & Xác nhận hóa đơn | Xem bàn chờ tính tiền / Thu tiền | Yêu cầu thanh toán tại bàn | `pages/manager-payment-requests.html` | R/U | normal, empty, success | Không | **Đặng Xuân Dương (SV2)** | `TASK-11` / `feature/manager-payment-requests` | PENDING |
+| **S12** | Quản lý | Kiểm soát thực đơn nhà hàng | Thêm món / Đổi giá / Bật tắt hết | Quản lý thực đơn | `pages/manager-menu-management.html` | C/R/U/Archive | normal, empty, validation, success | Không | **Nguyễn Hoàng Hải (SV3 - Leader)** | `TASK-12` / `feature/manager-menu-management` | PENDING |
+| **S13** | Quản lý | Đo lường hiệu quả kinh doanh | Lọc thời gian / Doanh số / CSV | Báo cáo doanh số & Thống kê | `pages/admin-sales-insights.html` | R/Export | normal, success, empty | Không | **Nguyễn Hoàng Hải (SV3 - Leader)** | `TASK-13` / `feature/admin-sales-insights` | PENDING |
+| **S14** | Quản lý | Cải thiện chất lượng dịch vụ | Đọc nhận xét / AI phân nhóm chủ đề | Trung tâm phản hồi khách | `pages/manager-feedback-center.html` | R/U | normal, loading, success, AI failure | **AI-3: Feedback Theme Extractor** | **Nguyễn Hoàng Hải (SV3 - Leader)** | `TASK-14` / `feature/manager-feedback-center` | PENDING |
+| **S15** | Quản trị viên | Kiểm soát phân quyền nhân sự | Tạo tài khoản / Khóa tài khoản | Quản lý tài khoản nhân viên | `pages/admin-user-management.html` | C/R/U/Disable | normal, validation, success | Không | **Nguyễn Hoàng Hải (SV3 - Leader)** | `TASK-15` / `feature/admin-user-management` | PENDING |
+| **S16** | Quản trị viên | Cấu hình tham số toàn hệ thống | Đổi thông tin quán / Giờ trễ / Theme | Cài đặt hệ thống nhà hàng | `pages/admin-settings.html` | R/U/D reset | normal, validation, success, danger | Không | **Nguyễn Hoàng Hải (SV3 - Leader)** | `TASK-16` / `feature/admin-settings` | PENDING |
+| **S17** | Dùng chung | Phục hồi trải nghiệm khi sai URL | Tìm kiếm món / Quay về trang chủ | Trang 404 & Phục hồi | `pages/404.html` | R | error, recovery | Không | **Nguyễn Hoàng Hải (SV3 - Leader)** | `TASK-17` / `feature/404` | PENDING |
 
 ---
 
-## 2. Quy Chuáº©n Äáº·t TÃªn Tá»‡p HTML & TÃ­nh Nháº¥t QuÃ¡n (TiÃªu chÃ­ 2.4 Barem)
+## 2. Quy Chuẩn Đặt Tên Tệp HTML & Tính Nhất Quán (Tiêu chí 2.4 Barem)
 
-* **100% tuÃ¢n thá»§ quy táº¯c:** Viáº¿t thÆ°á»ng, tiáº¿ng Anh, ná»‘i nhau báº±ng dáº¥u gáº¡ch ngang (`kebab-case`), khÃ´ng cÃ³ dáº¥u tiáº¿ng Viá»‡t, khÃ´ng viáº¿t táº¯t vÃ´ nghÄ©a kiá»ƒu `trang1.html`, `quanly.html`.
-* **Cáº¥u trÃºc Ä‘áº·t tÃªn chuáº©n:** `role-function-action.html`
-  * `diner-*`: Phá»¥c vá»¥ vai trÃ² Thá»±c khÃ¡ch (Menu, Chi tiáº¿t mÃ³n, Giá» hÃ ng, Theo dÃµi Ä‘Æ¡n).
-  * `kitchen-*`: Phá»¥c vá»¥ vai trÃ² NhÃ¢n viÃªn Báº¿p (Báº£ng Kanban, Chi tiáº¿t Ä‘Æ¡n, Cáº£nh bÃ¡o táº£i).
-  * `manager-*`: Phá»¥c vá»¥ vai trÃ² Quáº£n lÃ½ ca & Thu ngÃ¢n (Thá»±c Ä‘Æ¡n, BÃ¡n hÃ ng, Pháº£n há»“i, Thanh toÃ¡n).
-  * `admin-*`: Phá»¥c vá»¥ vai trÃ² Quáº£n trá»‹ viÃªn cáº¥p cao (SÆ¡ Ä‘á»“ bÃ n, TÃ i khoáº£n, CÃ i Ä‘áº·t).
-* **TÃ­nh liÃªn thÃ´ng 0 liÃªn káº¿t cháº¿t (Dead Link):** ToÃ n bá»™ cÃ¡c tháº» Ä‘iá»u hÆ°á»›ng, Role Switcher vÃ  nÃºt chuyá»ƒn trang Ä‘á»u liÃªn káº¿t chÃ­nh xÃ¡c tuyá»‡t Ä‘á»‘i Ä‘áº¿n 17 tá»‡p HTML trÃªn.
+* **100% tuân thủ quy tắc:** Viết thường, tiếng Anh, nối nhau bằng dấu gạch ngang (`kebab-case`), không có dấu tiếng Việt, không viết tắt vô nghĩa kiểu `trang1.html`, `quanly.html`.
+* **Cấu trúc đặt tên chuẩn:** `role-function-action.html`
+  * `diner-*`: Phục vụ vai trò Thực khách (Menu, Chi tiết món, Giỏ hàng, Theo dõi đơn).
+  * `kitchen-*`: Phục vụ vai trò Nhân viên Bếp (Bảng Kanban, Chi tiết đơn, Cảnh báo tải).
+  * `manager-*`: Phục vụ vai trò Quản lý ca & Thu ngân (Thực đơn, Bán hàng, Phản hồi, Thanh toán).
+  * `admin-*`: Phục vụ vai trò Quản trị viên cấp cao (Sơ đồ bàn, Tài khoản, Cài đặt).
+* **Tính liên thông 0 liên kết chết (Dead Link):** Toàn bộ các thẻ điều hướng, Role Switcher và nút chuyển trang đều liên kết chính xác tuyệt đối đến 17 tệp HTML trên.
 
 ---
 
-## 3. Thá»‘ng KÃª PhÃ¢n Bá»• CÃ´ng Viá»‡c CÃ¢n Báº±ng (Tá»· Lá»‡ VÃ ng 6 â€“ 5 â€“ 6)
+## 3. Thống Kê Phân Bổ Công Việc Cân Bằng (Tỷ Lệ Vàng 6 – 5 – 6)
 
-| ThÃ nh viÃªn | Khá»‘i nghiá»‡p vá»¥ phá»¥ trÃ¡ch (LÃ¡t cáº¯t dá»c) | Sá»‘ mÃ n hÃ¬nh | TÃ­nh nÄƒng AI sá»Ÿ há»¯u | TrÃ¡ch nhiá»‡m chÃ©o toÃ n há»‡ thá»‘ng (Cross-Responsibility) |
+| Thành viên | Khối nghiệp vụ phụ trách (Lát cắt dọc) | Số màn hình | Tính năng AI sở hữu | Trách nhiệm chéo toàn hệ thống (Cross-Responsibility) |
 | :---: | :--- | :---: | :---: | :--- |
-| **TrÆ°Æ¡ng Viá»‡t HoÃ ng (SV1)** | **Khá»‘i máº·t tiá»n (HÃ nh trÃ¬nh Thá»±c khÃ¡ch)** | **6 mÃ n** (S01 â€“ S06) | **AI-1: Taste Recommender** | **Trá»¥c chÃ©o 1**: Kiá»ƒm thá»­ Responsive Ä‘a thiáº¿t bá»‹ (320px, 768px, 1024px+), Thanh Ä‘iá»u hÆ°á»›ng chung (Navigation / Role Switcher), Kháº£ nÄƒng tiáº¿p cáº­n (A11y) |
-| **Äáº·ng XuÃ¢n DÆ°Æ¡ng (SV2)** | **Khá»‘i váº­n hÃ nh (Äiá»u phá»‘i Báº¿p & Sáº£nh bÃ n)** | **5 mÃ n** (S07 â€“ S11) | **AI-2: Kitchen Load Predictor** | **Trá»¥c chÃ©o 2**: Xá»­ lÃ½ dá»¯ liá»‡u (backend / localStorage / API), Dá»¯ liá»‡u máº«u JSON (15â€“25 báº£n ghi), Triá»ƒn khai (Deploy) & QA |
-| **Nguyá»…n HoÃ ng Háº£i (Leader - SV3)** | **Khá»‘i quáº£n trá»‹ (Quáº£n lÃ½ kinh doanh & Admin)** | **6 mÃ n** (S12 â€“ S17) | **AI-3: Feedback Theme Extractor** | **Trá»¥c chÃ©o 3**: Há»‡ thá»‘ng thiáº¿t káº¿ (`css/common.css`, biáº¿n `:root`), Quáº£n lÃ½ há»£p nháº¥t nhÃ¡nh Git (`dev` $\rightarrow$ `main`) |
+| **Trương Việt Hoàng (SV1)** | **Khối mặt tiền (Hành trình Thực khách)** | **6 màn** (S01 – S06) | **AI-1: Taste Recommender** | **Trục chéo 1**: Kiểm thử Responsive đa thiết bị (320px, 768px, 1024px+), Thanh điều hướng chung (Navigation / Role Switcher), Khả năng tiếp cận (A11y) |
+| **Đặng Xuân Dương (SV2)** | **Khối vận hành (Điều phối Bếp & Sảnh bàn)** | **5 màn** (S07 – S11) | **AI-2: Kitchen Load Predictor** | **Trục chéo 2**: Xử lý dữ liệu (backend / localStorage / API), Dữ liệu mẫu JSON (15–25 bản ghi), Triển khai (Deploy) & QA |
+| **Nguyễn Hoàng Hải (Leader - SV3)** | **Khối quản trị (Quản lý kinh doanh & Admin)** | **6 màn** (S12 – S17) | **AI-3: Feedback Theme Extractor** | **Trục chéo 3**: Hệ thống thiết kế (`css/common.css`, biến `:root`), Quản lý hợp nhất nhánh Git (`dev` $\rightarrow$ `main`) |
 
-> ðŸ“Œ **LÆ°u Ã½ trÆ°á»›c giá» báº£o vá»‡:** Cá»™t **OBS** sáº½ Ä‘Æ°á»£c cáº­p nháº­t link video thá»±c táº¿ sau khi tá»«ng thÃ nh viÃªn hoÃ n thÃ nh video quay mÃ n hÃ¬nh Ä‘á»™c láº­p cÃ³ webcam rÃµ khuÃ´n máº·t theo Ä‘Ãºng quy cháº¿.
+> 📌 **Lưu ý trước giờ bảo vệ:** Cột **OBS** sẽ được cập nhật link video thực tế sau khi từng thành viên hoàn thành video quay màn hình độc lập có webcam rõ khuôn mặt theo đúng quy chế.
