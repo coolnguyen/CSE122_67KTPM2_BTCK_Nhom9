@@ -14,6 +14,17 @@
 </head>
 
 <body data-root=".." data-page="not-found" data-title="Lạc bàn">
+<!-- ==========================================================================
+     PHÂN VÙNG GIAO DIỆN - TRANG BÁO LỖI 404 & CỨU HỘ ĐIỀU HƯỚNG (S17)
+     • VÙNG 1: Header hệ thống & Điều hướng chung
+     • VÙNG 2: Thông điệp báo lỗi & Minh họa trực quan (Lost Plate)
+     • VÙNG 3: Biểu mẫu tìm kiếm cứu hộ nhanh (Quick Recovery Search)
+     • VÙNG 4: Nhóm nút điều hướng khôi phục (Về trang chủ / Mở thực đơn)
+========================================================================== -->
+
+    <!-- ====================================================================== -->
+    <!-- VÙNG 1: HEADER HỆ THỐNG & ĐIỀU HƯỚNG TỔNG QUAN                         -->
+    <!-- ====================================================================== -->
     <header class="site-header">
         <a class="skip-link" href="#main-content">Bỏ qua điều hướng</a>
         <div class="brand"><span class="brand-mark" aria-hidden="true">M</span><span>MenuMind</span></div>
@@ -30,11 +41,18 @@
     </header>
 
     <main id="main-content" class="site-main">
+        <!-- ================================================================== -->
+        <!-- VÙNG 2: THÔNG ĐIỆP BÁO LỖI 404 & HÌNH ẢNH MINH HỌA TRỰC QUAN      -->
+        <!-- ================================================================== -->
         <section class="not-found">
             <div class="lost-plate"><span>4</span><i>🍽️</i><span>4</span></div>
             <p class="kicker">Lạc bàn rồi</p>
             <h1>Trang này không có trong thực đơn.</h1>
             <p>Đường dẫn có thể đã được thay đổi hoặc món bạn tìm đã rời menu.</p>
+
+            <!-- ============================================================== -->
+            <!-- VÙNG 3: THANH TÌM KIẾM CỨU HỘ NHANH (QUICK SEARCH RECOVERY)    -->
+            <!-- ============================================================== -->
             <form id="quick-search" action="diner-menu.html" method="get">
                 <label class="search-field">
                     <span class="sr-only">Tìm món</span>
@@ -43,6 +61,10 @@
                 </label>
                 <button class="button primary" type="submit">Tìm món</button>
             </form>
+
+            <!-- ============================================================== -->
+            <!-- VÙNG 4: HÀNH ĐỘNG ĐIỀU HƯỚNG CỨU HỘ VỀ TRANG CHỦ / THỰC ĐƠN    -->
+            <!-- ============================================================== -->
             <div class="hero-actions">
                 <a class="button quiet" href="../index.html">Về trang chủ</a>
                 <a class="link-button" href="diner-menu.html">Mở thực đơn</a>

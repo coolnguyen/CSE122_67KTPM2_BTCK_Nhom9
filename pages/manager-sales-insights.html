@@ -16,6 +16,18 @@
 </head>
 
 <body data-root=".." data-page="manager-sales" data-title="Bán hàng">
+<!-- ==========================================================================
+     PHÂN VÙNG GIAO DIỆN - BÁO CÁO DOANH SỐ & THỐNG KÊ (S13)
+     • VÙNG 1: Header hệ thống & Điều hướng bên (Sidebar Navigation)
+     • VÙNG 2: Tiêu đề báo cáo & Nút xuất file dữ liệu (Export CSV)
+     • VÙNG 3: Dải chỉ số tổng quan (KPI Metrics Strip)
+     • VÙNG 4: Biểu đồ doanh thu theo chu kỳ (Sales Bar Chart)
+     • VÙNG 5: Bảng xếp hạng món bán chạy nhất (Top Dishes Ranking)
+========================================================================== -->
+
+    <!-- ====================================================================== -->
+    <!-- VÙNG 1: HEADER HỆ THỐNG & ĐIỀU HƯỚNG TỔNG QUAN                         -->
+    <!-- ====================================================================== -->
     <header class="site-header">
         <a class="skip-link" href="#main-content">Bỏ qua điều hướng</a>
         <div class="brand"><span class="brand-mark" aria-hidden="true">M</span><span>MenuMind</span></div>
@@ -47,6 +59,9 @@
         </aside>
 
         <main id="main-content" class="site-main">
+            <!-- ============================================================== -->
+            <!-- VÙNG 2: TIÊU ĐỀ TRANG BÁO CÁO & XUẤT DỮ LIỆU NGOÀI (EXPORT)   -->
+            <!-- ============================================================== -->
             <header class="page-head">
                 <div>
                     <p class="kicker">Tổng quan kinh doanh</p>
@@ -58,6 +73,10 @@
                 </div>
             </header>
 
+            <!-- ============================================================== -->
+            <!-- VÙNG 3: DẢI CHỈ SỐ KPI TỔNG QUAN (METRIC STRIP)               -->
+            <!-- Chức năng: Thể hiện Doanh thu, Số đơn, Giá trị TB, Chờ TB      -->
+            <!-- ============================================================== -->
             <section class="metric-strip manager" aria-label="Các chỉ số bán hàng then chốt">
                 <div>
                     <span>Doanh thu</span>
@@ -82,6 +101,10 @@
             </section>
 
             <div class="content-grid">
+                <!-- ========================================================== -->
+                <!-- VÙNG 4: BIỂU ĐỒ CỘT DOANH THU & CHỌN CHU KỲ THỜI GIAN      -->
+                <!-- Chức năng: Lọc dữ liệu theo Tuần này / Tuần trước / Tháng  -->
+                <!-- ========================================================== -->
                 <section class="surface chart-card">
                     <div class="section-title compact">
                         <div>
@@ -97,16 +120,25 @@
                             </select>
                         </label>
                     </div>
+                    <!-- Khu vực vẽ biểu đồ cột tương quan -->
                     <div id="sales-chart" class="chart" role="img" aria-label="Biểu đồ cột doanh thu theo ngày">
-                        <!-- Biểu đồ cột render bởi JS -->
+                        <!-- Render động qua JavaScript -->
                     </div>
                 </section>
 
-                <section class="surface" id="sales-ranking-section">
-                    <p class="kicker">Món dẫn đầu</p>
-                    <h2>Top món theo doanh thu</h2>
-                    <div id="top-dish-ranks" aria-live="polite">
-                        <!-- Danh sách top món bán chạy render bởi JS -->
+                <!-- ========================================================== -->
+                <!-- VÙNG 5: BẢNG XẾP HẠNG TOP MÓN ĂN ĐƯỢC GỌI NHIỀU NHẤT       -->
+                <!-- Chức năng: Sắp xếp theo số lượng bán và tính tổng thu      -->
+                <!-- ========================================================== -->
+                <section class="surface">
+                    <div class="section-title compact">
+                        <div>
+                            <p class="kicker">Món được gọi nhiều nhất</p>
+                            <h2>Top món bán chạy</h2>
+                        </div>
+                    </div>
+                    <div class="rank-list" id="top-dish-ranks" aria-live="polite">
+                        <!-- Render danh sách top món qua JavaScript -->
                     </div>
                 </section>
             </div>
@@ -120,4 +152,3 @@
 </body>
 
 </html>
-

@@ -1,9 +1,21 @@
 /**
- * MenuMind - Quản lý tài khoản nhân sự (TASK-15 / S15)
+ * ============================================================================
+ * MENUMIND - MODULE QUẢN LÝ TÀI KHOẢN NHÂN SỰ & PHÂN QUYỀN (S15)
  * Nguyễn Hoàng Hải (SV3 - Leader)
- * Tuân thủ tiêu chuẩn: Debounce 300ms, Lọc đa tiêu chí, 4 Trạng thái giao diện, Form validation & A11y
+ * 
+ * 🗺️ CẤU TRÚC PHÂN ĐOẠN LOGIC (JS ARCHITECTURE):
+ * ----------------------------------------------------------------------------
+ * 1. QUẢN LÝ DỮ LIỆU NHÂN SỰ: staffDirectory(), roleDisplayName()
+ * 2. RENDER BẢNG TÀI KHOẢN: renderUserTableRows()
+ * 3. BỘ LỌC ĐA TIÊU CHÍ & SỐ ĐẾM: applyFilters()
+ * 4. LẮNG NGHE SỰ KIỆN: Debounce tìm kiếm, Kích hoạt / Vô hiệu hóa tài khoản
+ * 5. XỬ LÝ FORM TẠO MỚI & KIỂM TRA CHỐNG TRÙNG LẶP: #add-user-form
+ * ============================================================================
  */
 
+/* ==========================================================================
+   PHẦN 1: TIỆN ÍCH & TRUY XUẤT DANH SÁCH NHÂN SỰ TỪ LOCALSTORAGE
+   ========================================================================== */
 function debounce(fn, delay = 300) {
   let timer;
   return function (...args) {
@@ -32,6 +44,11 @@ function roleDisplayName(role) {
   return roles[role] || role || 'Chưa gán';
 }
 
+
+/* ==========================================================================
+   PHẦN 2: RENDER CÁC HÀNG CỦA BẢNG TÀI KHOẢN (TABLE ROWS TEMPLATE)
+   Logic: Sinh avatar viết tắt, tên, email, nhãn vai trò, ca làm, trạng thái
+   ========================================================================== */
 function renderUserTableRows(staffList) {
   const currentEmail = String(getAuthSession()?.staff?.email || '').toLowerCase();
 
@@ -69,6 +86,14 @@ function renderUserTableRows(staffList) {
   }).join('');
 }
 
+
+/* ==========================================================================
+   PHẦN 3: BỘ LỌC ĐA TIÊU CHÍ, SỐ ĐẾM KẾT QUẢ & XỬ LÝ TRẠNG THÁI RỖNG
+   Logic:
+   - Lọc kết hợp: Từ khóa (Tên / Email) + Phân quyền vai trò + Trạng thái hoạt động
+   - Cập nhật số lượng nhân sự hiển thị
+   - Hiển thị Empty State khi không tìm thấy ai phù hợp
+   ========================================================================== */
 function applyFilters() {
   const query = (document.querySelector('#user-search')?.value || '').trim().toLowerCase();
   const roleFilter = document.querySelector('#user-role-filter')?.value || 'all';
@@ -76,6 +101,7 @@ function applyFilters() {
 
   const allStaff = staffDirectory();
 
+  // Lọc kết hợp 3 điều kiện đồng thời
   const filtered = allStaff.filter(user => {
     const name = String(user.name || '').toLowerCase();
     const email = String(user.email || '').toLowerCase();
@@ -88,31 +114,31 @@ function applyFilters() {
   const tableEl = document.querySelector('#user-table');
   const countBadge = document.querySelector('#user-count-badge');
 
+  // Cập nhật bộ đếm hiển thị
   if (countBadge) {
     countBadge.textContent = `Hiển thị ${filtered.length}/${allStaff.length} nhân sự`;
   }
 
   if (!tableEl) return;
 
+  // Xử lý Empty State khi mảng rỗng
   if (filtered.length === 0) {
-    // 3. Empty State (Bao phủ trạng thái rỗng có nút CTA)
     tableEl.innerHTML = `
       <div class="table-empty-state">
-        <span class="empty-icon" aria-hidden="true">🔍</span>
+        <span class="empty-icon" aria-hidden="true">👥</span>
         <h3>Không tìm thấy nhân viên phù hợp</h3>
-        <p>Không có nhân sự nào khớp với từ khóa tìm kiếm và bộ lọc hiện tại.</p>
-        <button type="button" class="button quiet" id="btn-reset-filters">Đặt lại bộ lọc</button>
+        <p>Thử điều chỉnh lại từ khóa tìm kiếm hoặc đặt lại các bộ lọc vai trò, trạng thái.</p>
+        <button type="button" class="button quiet" id="btn-reset-filters">Xóa bộ lọc</button>
       </div>
     `;
   } else {
-    // 1. Normal State (Bao phủ trạng thái bình thường có bảng dữ liệu)
     tableEl.innerHTML = `
       <table>
         <thead>
           <tr>
             <th scope="col">Nhân viên</th>
             <th scope="col">Vai trò</th>
-            <th scope="col">Ca làm</th>
+            <th scope="col">Ca làm việc</th>
             <th scope="col">Trạng thái</th>
             <th scope="col">Thao tác</th>
           </tr>
@@ -126,24 +152,17 @@ function applyFilters() {
 }
 
 function adminUsersPage() {
-  const remoteStaff = getStore('staff', appData.staff || []);
-  const warningEl = document.querySelector('#directory-warning-slot');
-
-  // 4. Error State handling for remote connection
-  if (warningEl) {
-    warningEl.innerHTML = !remoteStaff.length
-      ? `<div class="account-directory-warning" role="status">
-          <strong>Supabase chưa đồng bộ danh sách nhân viên.</strong>
-          <span>Đang sử dụng dữ liệu cục bộ. Bạn có thể nhấn thử lại hoặc tiếp tục thao tác offline.</span>
-          <div><button type="button" class="button quiet small" onclick="location.reload()">Thử lại</button></div>
-        </div>`
-      : '';
-  }
-
   applyFilters();
 }
 
-// Bắt sự kiện tìm kiếm với Debounce 300ms (Tiêu chí 4.4)
+
+/* ==========================================================================
+   PHẦN 4: LẮNG NGHE SỰ KIỆN TƯƠNG TÁC (DEBOUNCE SEARCH & ĐỔI TRẠNG THÁI)
+   Logic:
+   - Debounce tìm kiếm khi nhập liệu
+   - Reset toàn bộ bộ lọc
+   - Đổi trạng thái tài khoản giữa Hoạt động <-> Vô hiệu hóa
+   ========================================================================== */
 const debouncedSearch = debounce(() => {
   applyFilters();
 }, 300);
@@ -153,7 +172,7 @@ document.addEventListener('input', e => {
     debouncedSearch();
   }
 
-  // Clear inline error khi người dùng gõ sửa trong form
+  // Xóa cảnh báo lỗi khi người dùng gõ sửa
   if (e.target.id === 'add-user-name') {
     const err = document.querySelector('#err-name');
     if (err) { err.textContent = ''; err.classList.remove('active'); }
@@ -164,19 +183,17 @@ document.addEventListener('input', e => {
   }
 });
 
-// Bắt sự kiện thay đổi bộ lọc đồng thời (Tiêu chí 4.4)
 document.addEventListener('change', e => {
   if (e.target.id === 'user-role-filter' || e.target.id === 'user-status-filter') {
     applyFilters();
   }
 });
 
-// Bắt sự kiện click (CTA đặt lại bộ lọc, toggle user, close dialog)
-document.addEventListener('click', async e => {
+document.addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
 
-  // Nút CTA trong Empty State
+  // Nút đặt lại tất cả bộ lọc về mặc định
   if (b.id === 'btn-reset-filters') {
     const searchInput = document.querySelector('#user-search');
     const roleSelect = document.querySelector('#user-role-filter');
@@ -189,28 +206,28 @@ document.addEventListener('click', async e => {
     return;
   }
 
-  // Bật / Tắt trạng thái nhân viên
+  // Vô hiệu hóa hoặc Kích hoạt tài khoản nhân sự
   if (b.dataset.toggleUser) {
-    const users = getStore('staff', appData.staff);
-    const user = users.find(item => item.id === b.dataset.toggleUser);
+    const allStaff = staffDirectory();
+    const user = allStaff.find(u => u.id === b.dataset.toggleUser);
     if (!user) return;
-    const nextStatus = user.status === 'active' ? 'inactive' : 'active';
-    b.disabled = true;
-    try {
-      const saved = typeof setStaffStatusRemote === 'function' ? await setStaffStatusRemote(user.id, nextStatus) : null;
-      Object.assign(user, saved || { status: nextStatus });
-      appData.staff = users;
-      setStore('staff', users);
-      applyFilters();
-      toast(`Đã ${nextStatus === 'active' ? 'kích hoạt' : 'vô hiệu hóa'} tài khoản ${user.name || user.email}`);
-    } catch (error) {
-      b.disabled = false;
-      toast(`Không thể cập nhật tài khoản: ${error.message}`, 'error');
-    }
+
+    user.status = user.status === 'active' ? 'inactive' : 'active';
+    setStore('staff', allStaff);
+    applyFilters();
+    toast(`Đã ${user.status === 'active' ? 'kích hoạt' : 'vô hiệu hóa'} tài khoản ${user.name}`);
   }
 });
 
-// Biểu mẫu (Form) Validation & Submit (Tiêu chí 4.4)
+
+/* ==========================================================================
+   PHẦN 5: XỬ LÝ BIỂU MẪU TẠO TÀI KHOẢN & KIỂM TRA CHỐNG TRÙNG LẶP
+   Logic:
+   - Validate Họ tên: Bắt buộc, tối thiểu 3 ký tự
+   - Validate Email: Bắt buộc, đúng định dạng Regex
+   - Kiểm tra chống trùng lặp: Duyệt mảng đảm bảo email chưa từng tồn tại
+   - Lưu tài khoản mới vào LocalStorage
+   ========================================================================== */
 document.addEventListener('submit', async e => {
   const f = e.target;
   if (f.id !== 'add-user-form') return;
@@ -219,14 +236,15 @@ document.addEventListener('submit', async e => {
   const fd = new FormData(f);
   const name = String(fd.get('name') || '').trim();
   const email = String(fd.get('email') || '').trim().toLowerCase();
-  const role = String(fd.get('role') || 'kitchen');
-  const shift = String(fd.get('shift') || 'Sáng');
+  const role = String(fd.get('role') || 'service');
+  const shift = String(fd.get('shift') || 'Linh hoạt');
 
   const errName = document.querySelector('#err-name');
   const errEmail = document.querySelector('#err-email');
+
   let isValid = true;
 
-  // Validate họ tên
+  // 1. Kiểm tra Họ và tên
   if (!name || name.length < 3) {
     if (errName) {
       errName.textContent = 'Họ và tên phải có ít nhất 3 ký tự.';
@@ -235,64 +253,61 @@ document.addEventListener('submit', async e => {
     isValid = false;
   }
 
-  // Validate định dạng email
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!email || !emailRegex.test(email)) {
+  // 2. Kiểm tra định dạng Email chuẩn
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email || !emailPattern.test(email)) {
     if (errEmail) {
-      errEmail.textContent = 'Vui lòng nhập địa chỉ email hợp lệ.';
+      errEmail.textContent = 'Vui lòng nhập định dạng email hợp lệ (ví dụ: user@menumind.vn).';
       errEmail.classList.add('active');
     }
     isValid = false;
-  } else {
-    // Validate trùng lặp email
-    const allStaff = staffDirectory();
-    if (allStaff.some(u => String(u.email).toLowerCase() === email)) {
-      if (errEmail) {
-        errEmail.textContent = 'Email này đã tồn tại trong danh sách nhân sự.';
-        errEmail.classList.add('active');
-      }
-      isValid = false;
+  }
+
+  // 3. Cơ chế kiểm tra chống trùng lặp dữ liệu Email
+  const allStaff = staffDirectory();
+  const isDuplicate = allStaff.some(u => String(u.email || '').toLowerCase() === email);
+  if (isDuplicate) {
+    if (errEmail) {
+      errEmail.textContent = 'Email này đã tồn tại trong hệ thống. Vui lòng chọn email khác!';
+      errEmail.classList.add('active');
     }
+    isValid = false;
   }
 
   if (!isValid) return;
 
-  const profile = {
-    id: uid('u'),
-    name,
-    email,
-    role,
-    shift,
-    status: 'active'
-  };
-
-  const button = document.querySelector('#btn-submit-user');
-  if (button) {
-    button.disabled = true;
-    button.textContent = 'Đang tạo hồ sơ...';
+  const submitButton = document.querySelector('#btn-save-user');
+  if (submitButton) {
+    submitButton.disabled = true;
+    submitButton.textContent = 'Đang tạo tài khoản...';
   }
 
   try {
-    const users = getStore('staff', appData.staff || []);
-    const saved = typeof createStaffProfileRemote === 'function' ? await createStaffProfileRemote(profile) : profile;
-    users.push(saved || profile);
-    appData.staff = users;
-    setStore('staff', users);
+    const newUser = {
+      id: uid('u'),
+      name,
+      email,
+      role,
+      shift,
+      status: 'active'
+    };
+
+    allStaff.unshift(newUser);
+    setStore('staff', allStaff);
 
     document.querySelector('#user-dialog')?.close();
     f.reset();
     applyFilters();
-    toast(`Đã thêm nhân viên ${name} thành công`);
+    toast(`Đã thêm nhân viên ${name} (${roleDisplayName(role)})`);
   } catch (error) {
-    toast(`Không thể tạo hồ sơ: ${error.message}`, 'error');
+    toast(`Không thể tạo tài khoản: ${error.message}`, 'error');
   } finally {
-    if (button) {
-      button.disabled = false;
-      button.textContent = 'Tạo hồ sơ';
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Lưu tài khoản';
     }
   }
 });
 
-// Khởi tạo trang
+// Khởi chạy nạp dữ liệu ban đầu
 bootPage(adminUsersPage);
-

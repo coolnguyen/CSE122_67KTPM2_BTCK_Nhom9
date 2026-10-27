@@ -1,8 +1,26 @@
 /**
- * MenuMind - Trung tâm phản hồi khách & AI-3 Feedback Theme Extractor (TASK-14 / S14)
+ * ============================================================================
+ * MENUMIND - MODULE TRUNG TÂM PHẢN HỒI & AI-3 FEEDBACK THEME EXTRACTOR (S14)
  * Nguyễn Hoàng Hải (SV3 - Leader)
- * Tiêu chí: Đầy đủ 6 bước AI trên UI, AI Failure/Uncertainty UX, Lưu localStorage thật
+ * 
+ * 🗺️ CẤU TRÚC PHÂN ĐOẠN LOGIC (JS ARCHITECTURE):
+ * ----------------------------------------------------------------------------
+ * 1. BỘ DỮ LIỆU ĐÁNH GIÁ MẪU: DEFAULT_FEEDBACK & getFeedbackList()
+ * 2. RENDER DANH SÁCH & TÍNH TOÁN ĐIỂM SAO: feedbackPage()
+ * 3. LOGIC XỬ LÝ AI-3 (FEEDBACK THEME EXTRACTOR): runThemeAI()
+ *    - Xử lý trường hợp độ tin cậy thấp / dữ liệu không đủ (AI Uncertainty UX)
+ *    - Hiển thị tiến trình phân tích (Processing State)
+ *    - Xuất kết quả kèm chỉ số tin cậy và giải trình mô hình (Explainability)
+ * 4. TƯƠNG TÁC NGƯỜI DÙNG & LƯU TRỮ (USER CONTROL & STORAGE):
+ *    - Chỉnh sửa trực tiếp nội dung đề xuất (Inline Edit)
+ *    - Tạo lại phương án khác (Regenerate)
+ *    - Lưu kết quả phân tích vào LocalStorage hệ thống
+ * ============================================================================
  */
+
+/* ==========================================================================
+   PHẦN 1: MÔ HÌNH DỮ LIỆU ĐÁNH GIÁ MẪU & TRUY XUẤT TỪ BỘ NHỚ CỤC BỘ
+   ========================================================================== */
 const DEFAULT_FEEDBACK = [
   { id: 'f01', table: 'A02', rating: 5, text: 'Cá hồi áp chảo rất tươi và ngon, nhân viên phục vụ tận tình chu đáo.', theme: 'Hương vị món', status: 'new' },
   { id: 'f02', table: 'C01', rating: 3, text: 'Món ăn ngon vừa miệng nhưng khung giờ tối chờ món chính hơi lâu (khoảng 25 phút).', theme: 'Thời gian chờ', status: 'new' },
@@ -23,6 +41,14 @@ function getFeedbackList() {
   return feedback;
 }
 
+
+/* ==========================================================================
+   PHẦN 2: TÍNH TOÁN THỐNG KÊ ĐIỂM SAO & RENDER DANH SÁCH PHẢN HỒI
+   Logic:
+   - Tính điểm đánh giá trung bình (1-5 sao)
+   - Tính tỷ lệ phần trăm tích cực (≥ 4 sao) và cần cải thiện (≤ 3 sao)
+   - Sinh danh sách thẻ nhận xét có gắn tag chủ đề và nút phản hồi
+   ========================================================================== */
 function feedbackPage() {
   const feedback = getFeedbackList();
   const ratings = feedback.map(item => Number(item.rating)).filter(value => value >= 1 && value <= 5);
@@ -73,7 +99,16 @@ function feedbackPage() {
   if (listEl) listEl.innerHTML = items;
 }
 
-// Hàm AI-3: Feedback Theme Extractor (Bao phủ đủ 6 bước và Kịch bản Failure UX)
+
+/* ==========================================================================
+   PHẦN 3: THUẬT TOÁN AI-3 KHAI PHÁ CHỦ ĐỀ (FEEDBACK THEME EXTRACTOR)
+   Logic:
+   - Kiểm tra dữ liệu đầu vào: nếu chưa đủ dữ liệu hoặc chuỗi tìm kiếm quá ngắn (< 10 ký tự),
+     kích hoạt trạng thái cảnh báo không chắc chắn (Uncertainty) và cung cấp gợi ý mẫu (Prompt Chips)
+   - Mô phỏng quá trình xử lý NLP qua độ trễ 800ms
+   - Sinh kết quả với chỉ số độ tin cậy (Confidence Score 88%), 3 chủ đề trọng yếu,
+     đoạn kiến nghị hành động và khối giải trình lý do (Explainability)
+   ========================================================================== */
 function runThemeAI(form) {
   const feedback = getFeedbackList();
   const goal = (new FormData(form).get('goal') || '').trim();
@@ -90,7 +125,7 @@ function runThemeAI(form) {
     return;
   }
 
-  // Kịch bản AI Failure / Uncertainty UX (Barem: khi nhập quá ngắn dưới 10 ký tự)
+  // Xử lý trường hợp đầu vào quá ngắn hoặc mập mờ (AI Uncertainty / Failure UX)
   if (goal.length < 10) {
     el.innerHTML = `
       <div class="ai-warning" role="alert">
@@ -107,7 +142,7 @@ function runThemeAI(form) {
     return;
   }
 
-  // Bước 2 trên UI: Processing (Hiển thị Loading Spinner)
+  // Trạng thái đang xử lý (Processing State)
   el.innerHTML = `
     <div class="ai-loading">
       <span></span>
@@ -115,9 +150,9 @@ function runThemeAI(form) {
     </div>
   `;
 
-  // Giả lập xử lý mô hình AI NLP trong 800ms
+  // Mô phỏng độ trễ xử lý mô hình trong 800ms
   setTimeout(() => {
-    // Bước 3, 4, 5 trên UI: Output + Explainability + User Control
+    // Trạng thái kết quả đầu ra: Chỉ số tin cậy + 3 chủ đề + Giải trình + Quyền kiểm soát
     el.innerHTML = `
       <article class="ai-answer">
         <span class="confidence">Độ tin cậy: <strong>88%</strong> (Rất cao)</span>
@@ -128,14 +163,17 @@ function runThemeAI(form) {
           <li><span>3. Thái độ phục vụ tại bàn</span><b>28%</b></li>
         </ol>
 
+        <!-- Cho phép người dùng chỉnh sửa trực tiếp nội dung kiến nghị trước khi áp dụng -->
         <label for="ai-theme-copy" class="sr-only">Đề xuất hành động của AI</label>
         <textarea id="ai-theme-copy" rows="3" aria-label="Đề xuất hành động từ AI">Ưu tiên tăng cường 1 nhân sự phụ bếp khung giờ cao điểm 18:30–19:30 để giảm độ trễ món chính.</textarea>
 
+        <!-- Tính minh bạch: Giải thích cơ sở phân tích của AI (Explainability) -->
         <details>
           <summary>Vì sao AI đề xuất kết quả này?</summary>
           <p>Thuật toán trích xuất các từ khóa xuất hiện lặp lại nhiều lần: "chờ lâu", "chậm", "nhắc nước", tập trung 80% vào các bàn khu vực vườn và sảnh ngoài.</p>
         </details>
 
+        <!-- Các thao tác can thiệp của người dùng (User Control) -->
         <div class="ai-actions">
           <button type="button" class="button small primary" data-action="save-theme">Lưu insight</button>
           <button type="button" class="button small quiet" data-action="edit-ai">Chỉnh sửa</button>
@@ -147,12 +185,21 @@ function runThemeAI(form) {
   }, 800);
 }
 
-// Bắt các sự kiện tương tác AI và Phản hồi khách
+
+/* ==========================================================================
+   PHẦN 4: LẮNG NGHE SỰ KIỆN TƯƠNG TÁC NGƯỜI DÙNG & LƯU DỮ LIỆU
+   Logic:
+   - Xử lý click chọn Prompt Chips gợi ý
+   - Chỉnh sửa trực tiếp nội dung gợi ý (focus và select văn bản)
+   - Tạo lại phân tích (Regenerate / Rerun)
+   - Lưu insight phân tích vào LocalStorage
+   - Cập nhật trạng thái phản hồi khách hàng (status: replied)
+   ========================================================================== */
 document.addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
 
-  // Bấm chip gợi ý trong Failure UX
+  // Chọn gợi ý nhanh từ Prompt Chips
   if (b.dataset.prompt) {
     const input = document.querySelector('#theme-form input[name="goal"]');
     if (input) {
@@ -163,7 +210,7 @@ document.addEventListener('click', e => {
 
   const action = b.dataset.action;
 
-  // Bước 6 trên UI: Save / Apply vào localStorage thật
+  // Lưu đề xuất AI vào LocalStorage
   if (action === 'save-theme') {
     const textProposal = document.querySelector('#ai-theme-copy')?.value || '';
     const decision = {
@@ -176,7 +223,7 @@ document.addEventListener('click', e => {
     toast('Đã lưu kết quả phân tích AI vào hệ thống');
   }
 
-  // User Control: Chỉnh sửa trực tiếp
+  // Cho phép người dùng chỉnh sửa nội dung văn bản trực tiếp
   if (action === 'edit-ai') {
     const textarea = document.querySelector('#ai-theme-copy');
     if (textarea) {
@@ -186,12 +233,12 @@ document.addEventListener('click', e => {
     }
   }
 
-  // User Control: Chạy lại
+  // Chạy lại phân tích để lấy phương án khác (Regenerate)
   if (action === 'rerun-theme') {
     document.querySelector('#theme-form')?.requestSubmit();
   }
 
-  // User Control: Từ chối kết quả
+  // Từ chối và hủy bỏ đề xuất
   if (action === 'reject-ai') {
     const res = document.querySelector('#theme-result');
     if (res) {
@@ -200,7 +247,7 @@ document.addEventListener('click', e => {
     toast('Đã từ chối gợi ý của AI', 'info');
   }
 
-  // Modal phản hồi khách
+  // Gửi phản hồi cảm ơn tới khách hàng
   if (b.dataset.replyFeedback) {
     const feedback = getFeedbackList();
     const item = feedback.find(f => f.id === b.dataset.replyFeedback);
@@ -213,7 +260,7 @@ document.addEventListener('click', e => {
   }
 });
 
-// Bắt sự kiện submit form AI
+// Bắt sự kiện gửi form phân tích AI
 document.addEventListener('submit', e => {
   if (e.target.id === 'theme-form') {
     e.preventDefault();
@@ -221,5 +268,5 @@ document.addEventListener('submit', e => {
   }
 });
 
-// Khởi chạy trang
+// Khởi chạy nạp dữ liệu ban đầu
 bootPage(feedbackPage);

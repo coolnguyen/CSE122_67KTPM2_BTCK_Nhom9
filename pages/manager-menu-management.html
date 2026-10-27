@@ -16,6 +16,18 @@
 </head>
 
 <body data-root=".." data-page="manager-menu" data-title="Quản lý thực đơn">
+<!-- ==========================================================================
+     PHÂN VÙNG GIAO DIỆN - QUẢN LÝ THỰC ĐƠN (S12)
+     • VÙNG 1: Header hệ thống & Điều hướng bên (Sidebar Navigation)
+     • VÙNG 2: Tiêu đề trang & Nút hành động chính (+ Thêm món mới)
+     • VÙNG 3: Thanh công cụ lọc dữ liệu & Bộ đếm kết quả động
+     • VÙNG 4: Danh sách thực đơn dạng bảng & Khối thông báo rỗng (Empty State)
+     • VÙNG 5: Hộp thoại Modal & Form nhập liệu món ăn (Validation)
+========================================================================== -->
+
+    <!-- ====================================================================== -->
+    <!-- VÙNG 1: HEADER HỆ THỐNG & ĐIỀU HƯỚNG TỔNG QUAN                         -->
+    <!-- ====================================================================== -->
     <header class="site-header">
         <a class="skip-link" href="#main-content">Bỏ qua điều hướng</a>
         <div class="brand"><span class="brand-mark" aria-hidden="true">M</span><span>MenuMind</span></div>
@@ -32,6 +44,7 @@
     </header>
 
     <div class="page-frame">
+        <!-- Sidebar: Điều hướng không gian làm việc của Quản lý -->
         <aside>
             <nav class="side-nav" aria-label="Điều hướng manager">
                 <p>Không gian làm việc</p>
@@ -44,6 +57,9 @@
         </aside>
 
         <main id="main-content" class="site-main">
+            <!-- ============================================================== -->
+            <!-- VÙNG 2: TIÊU ĐỀ TRANG & HÀNH ĐỘNG CHÍNH                        -->
+            <!-- ============================================================== -->
             <header class="page-head">
                 <div>
                     <p class="kicker">Danh mục món</p>
@@ -55,13 +71,20 @@
                 </div>
             </header>
 
+            <!-- ============================================================== -->
+            <!-- VÙNG 3: THANH CÔNG CỤ TÌM KIẾM, BỘ LỌC ĐA TIÊU CHÍ & SỐ ĐẾM    -->
+            <!-- Chức năng: Tìm kiếm từ khóa + Lọc theo danh mục + Lọc bán/ẩn   -->
+            <!-- ============================================================== -->
             <section class="surface">
                 <div class="table-tools">
+                    <!-- Ô tìm kiếm từ khóa món ăn -->
                     <label class="search-field" for="manager-menu-search">
                         <span class="sr-only">Tìm kiếm món ăn</span>
                         <span aria-hidden="true">⌕</span>
                         <input id="manager-menu-search" type="search" placeholder="Tìm theo tên hoặc danh mục..." aria-label="Tìm kiếm theo tên hoặc danh mục món ăn">
                     </label>
+
+                    <!-- Lọc theo danh mục món ăn -->
                     <label class="compact-field" for="manager-menu-category-filter">
                         <span>Danh mục</span>
                         <select id="manager-menu-category-filter" aria-label="Lọc theo danh mục món ăn">
@@ -73,6 +96,8 @@
                             <option value="Đồ uống">Đồ uống</option>
                         </select>
                     </label>
+
+                    <!-- Lọc theo trạng thái Đang bán / Tạm ẩn -->
                     <label class="compact-field" for="manager-menu-status-filter">
                         <span>Trạng thái</span>
                         <select id="manager-menu-status-filter" aria-label="Lọc theo trạng thái bán">
@@ -83,27 +108,38 @@
                     </label>
                 </div>
 
+                <!-- Bộ đếm động cập nhật số lượng kết quả hiển thị -->
                 <div class="table-meta">
                     <span id="menu-count-badge" class="result-count" aria-live="polite">Đang nạp thực đơn...</span>
                 </div>
 
+                <!-- ========================================================== -->
+                <!-- VÙNG 4: KHU VỰC BẢNG DỮ LIỆU & EMPTY STATE (JS RENDER)     -->
+                <!-- Chức năng: Render bảng món ăn, badge trạng thái, bật/tắt   -->
+                <!-- ========================================================== -->
                 <div id="manager-menu-table" class="responsive-table" aria-live="polite">
-                    <!-- Bảng danh sách các món ăn render bởi JS -->
+                    <!-- Nội dung bảng hoặc khối Empty State được JS sinh động tại đây -->
                 </div>
             </section>
 
+            <!-- ============================================================== -->
+            <!-- VÙNG 5: HỘP THOẠI MODAL & FORM THÊM MỚI MÓN ĂN                 -->
+            <!-- Chức năng: Form nhập liệu, xem trước ảnh, kiểm tra hợp lệ      -->
+            <!-- ============================================================== -->
             <dialog id="dish-dialog" aria-labelledby="dialog-title">
                 <div class="dialog-head">
                     <h2 id="dialog-title">Thêm món mới</h2>
                     <button class="icon-button" data-close="dish-dialog" type="button" aria-label="Đóng hộp thoại">×</button>
                 </div>
                 <form id="add-dish-form" class="dialog-body" novalidate>
+                    <!-- Trường Tên món ăn -->
                     <div class="form-field">
                         <label for="dish-name">Tên món <span class="required" aria-hidden="true">*</span></label>
                         <input id="dish-name" name="name" required minlength="3" placeholder="Ví dụ: Cá hồi áp chảo sốt bơ" aria-describedby="err-dish-name">
                         <span class="field-error" id="err-dish-name" role="alert"></span>
                     </div>
 
+                    <!-- Nhóm trường Danh mục & Giá bán -->
                     <div class="form-grid">
                         <div class="form-field">
                             <label for="dish-category">Danh mục</label>
@@ -122,6 +158,7 @@
                         </div>
                     </div>
 
+                    <!-- Trường Tải ảnh & Khối xem trước (Image Preview) -->
                     <div class="form-field dish-image-field">
                         <label for="dish-image">Ảnh món ăn</label>
                         <input id="dish-image" name="image" type="file" accept="image/jpeg,image/png,image/webp">
@@ -133,12 +170,14 @@
                         <figcaption>Ảnh xem trước</figcaption>
                     </figure>
 
+                    <!-- Trường Mô tả chi tiết món ăn -->
                     <div class="form-field">
                         <label for="dish-description">Mô tả món ăn <span class="required" aria-hidden="true">*</span></label>
                         <textarea id="dish-description" name="description" rows="3" minlength="10" placeholder="Thành phần, hương vị và lưu ý món..." required aria-describedby="err-dish-desc"></textarea>
                         <span class="field-error" id="err-dish-desc" role="alert"></span>
                     </div>
 
+                    <!-- Các nút hành động của Form -->
                     <div class="dialog-actions">
                         <button class="button quiet" type="button" data-close="dish-dialog">Hủy</button>
                         <button class="button primary" id="btn-save-dish" type="submit">Lưu món</button>
@@ -155,4 +194,3 @@
 </body>
 
 </html>
-

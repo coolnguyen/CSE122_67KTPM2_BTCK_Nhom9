@@ -1,9 +1,21 @@
 /**
- * MenuMind - Cài đặt hệ thống nhà hàng (TASK-16 / S16)
+ * ============================================================================
+ * MENUMIND - MODULE CÀI ĐẶT HỆ THỐNG NHÀ HÀNG (S16)
  * Nguyễn Hoàng Hải (SV3 - Leader)
- * Tiêu chí: CRUD (R/U/D reset), 4 Trạng thái (normal, validation, success, danger), A11y & Form Validation
+ * 
+ * 🗺️ CẤU TRÚC PHÂN ĐOẠN LOGIC (JS ARCHITECTURE):
+ * ----------------------------------------------------------------------------
+ * 1. CẤU HÌNH MẶC ĐỊNH: DEFAULT_SETTINGS, getSystemSettings()
+ * 2. ĐỔ DỮ LIỆU LÊN FORM: populateSettingsForm() (Đồng bộ CSS class theme)
+ * 3. XỬ LÝ LỖI FORM & XEM TRƯỚC GIAO DIỆN: Event input, change #setting-dark
+ * 4. LƯU CẤU HÌNH & KIỂM TRA HỢP LỆ: Submit #settings-form
+ * 5. KHÔI PHỤC MẶC ĐỊNH (DANGER RESET): Click #btn-reset-defaults kèm xác nhận
+ * ============================================================================
  */
 
+/* ==========================================================================
+   PHẦN 1: CẤU HÌNH MẶC ĐỊNH & TRUY XUẤT TỪ LOCALSTORAGE
+   ========================================================================== */
 const DEFAULT_SETTINGS = {
   name: 'MenuMind Bistro',
   phone: '024 7300 1220',
@@ -18,6 +30,11 @@ function getSystemSettings() {
   return getStore('settings', DEFAULT_SETTINGS);
 }
 
+
+/* ==========================================================================
+   PHẦN 2: ĐIỀN DỮ LIỆU VÀO CÁC Ô NHẬP & KÍCH HOẠT CHẾ ĐỘ HIỂN THỊ
+   Logic: Lấy cấu hình đã lưu và điền vào form, đồng thời áp dụng class giao diện
+   ========================================================================== */
 function populateSettingsForm(cfg) {
   const nameInput = document.querySelector('#setting-name');
   const phoneInput = document.querySelector('#setting-phone');
@@ -35,7 +52,7 @@ function populateSettingsForm(cfg) {
   if (darkInput) darkInput.checked = Boolean(cfg.dark);
   if (langSelect) langSelect.value = cfg.language || DEFAULT_SETTINGS.language;
 
-  // Cập nhật chế độ hiển thị tương phản
+  // Cập nhật chế độ hiển thị tương phản cao
   document.documentElement.classList.toggle('high-contrast', Boolean(cfg.dark));
 }
 
@@ -44,7 +61,13 @@ function settingsPage() {
   populateSettingsForm(cfg);
 }
 
-// Xóa thông báo lỗi khi người dùng gõ sửa (Tiêu chí 4.4)
+
+/* ==========================================================================
+   PHẦN 3: LẮNG NGHE SỰ KIỆN GÕ PHÍM & XEM TRƯỚC TƯƠNG PHẢN (LIVE PREVIEW)
+   Logic:
+   - Xóa cảnh báo lỗi khi người dùng gõ sửa lại vào ô nhập
+   - Xem trước thay đổi màu nền tương phản cao ngay lập tức khi tích chọn
+   ========================================================================== */
 document.addEventListener('input', e => {
   const target = e.target;
   if (target.id === 'setting-name') {
@@ -68,7 +91,15 @@ document.addEventListener('change', e => {
   }
 });
 
-// Lưu cài đặt (Update - U) với Form Validation & Anti-Double-Submit
+
+/* ==========================================================================
+   PHẦN 4: BIỂU MẪU (FORM) VALIDATION & LƯU CẤU HÌNH VÀO LOCALSTORAGE
+   Logic:
+   - Kiểm tra Tên nhà hàng: Bắt buộc, tối thiểu 3 ký tự
+   - Kiểm tra Số điện thoại: Bắt buộc, đúng chuẩn regex từ 9 đến 15 số
+   - Kiểm tra Thời gian chờ cảnh báo: Bắt buộc từ 5 đến 60 phút
+   - Lưu đối tượng cấu hình mới vào LocalStorage và cập nhật trạng thái theme
+   ========================================================================== */
 document.addEventListener('submit', async e => {
   const f = e.target;
   if (f.id !== 'settings-form') return;
@@ -139,7 +170,7 @@ document.addEventListener('submit', async e => {
 
     setStore('settings', updatedSettings);
 
-    // Kích hoạt theme
+    // Kích hoạt theme tương phản cao nếu được chọn
     document.documentElement.classList.toggle('high-contrast', dark);
 
     toast('Đã lưu cấu hình hệ thống thành công');
@@ -153,12 +184,20 @@ document.addEventListener('submit', async e => {
   }
 });
 
-// Khôi phục mặc định (Danger Reset - D reset)
+
+/* ==========================================================================
+   PHẦN 5: VÙNG NGUY HIỂM (DANGER ZONE) - KHÔI PHỤC CẤU HÌNH VỀ MẶC ĐỊNH
+   Logic:
+   - Hiển thị hộp thoại xác nhận window.confirm() để phòng tránh bấm nhầm
+   - Ghi đè LocalStorage bằng cấu hình mặc định DEFAULT_SETTINGS
+   - Xóa bỏ toàn bộ thông báo lỗi đang hiển thị
+   ========================================================================== */
 document.addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
 
   if (b.id === 'btn-reset-defaults') {
+    // Bước xác nhận trước khi thực hiện hành động nguy hiểm
     const confirmed = window.confirm('Bạn có chắc chắn muốn khôi phục toàn bộ cấu hình về mặc định ban đầu không?');
     if (!confirmed) return;
 
@@ -175,6 +214,5 @@ document.addEventListener('click', e => {
   }
 });
 
-// Khởi chạy trang
+// Khởi chạy nạp dữ liệu ban đầu
 bootPage(settingsPage);
-

@@ -1,9 +1,20 @@
 /**
- * MenuMind - Báo cáo doanh số & Thống kê (TASK-13 / S13)
+ * ============================================================================
+ * MENUMIND - MODULE BÁO CÁO DOANH SỐ & THỐNG KÊ (S13)
  * Nguyễn Hoàng Hải (SV3 - Leader)
- * Tiêu chí: Lọc động theo kỳ, Biểu đồ trực quan, Xuất CSV, Responsive & A11y
+ * 
+ * 🗺️ CẤU TRÚC PHÂN ĐOẠN LOGIC (JS ARCHITECTURE):
+ * ----------------------------------------------------------------------------
+ * 1. DỮ LIỆU BÁO CÁO THEO KỲ: SALES_DATA (Tuần này, Tuần trước, Tháng này)
+ * 2. CẬP NHẬT CHỈ SỐ KPI & BIỂU ĐỒ CỘT: renderSalesDashboard()
+ * 3. TÍNH TOÁN & XẾP HẠNG TOP MÓN BÁN CHẠY: renderTopDishes()
+ * 4. LẮNG NGHE SỰ KIỆN: Đổi chu kỳ xem & Xuất file CSV định dạng UTF-8
+ * ============================================================================
  */
 
+/* ==========================================================================
+   PHẦN 1: MÔ HÌNH DỮ LIỆU BÁO CÁO THEO TỪNG CHU KỲ KINH DOANH
+   ========================================================================== */
 const SALES_DATA = {
   'this-week': {
     label: 'Tuần này',
@@ -102,11 +113,18 @@ const SALES_DATA = {
 
 let currentPeriod = 'this-week';
 
+/* ==========================================================================
+   PHẦN 2: ĐỒNG BỘ DỮ LIỆU CHỈ SỐ KPI & RENDER BIỂU ĐỒ CỘT
+   Logic:
+   - Cập nhật số liệu 4 thẻ KPI (Doanh thu, Đơn hàng, AOV, Thời gian chờ)
+   - Vẽ các cột của biểu đồ theo tỷ lệ chiều cao (%)
+   - Tự động gọi lại hàm tính toán Top món bán chạy
+   ========================================================================== */
 function renderSalesDashboard(periodKey) {
   const data = SALES_DATA[periodKey] || SALES_DATA['this-week'];
   currentPeriod = periodKey;
 
-  // 1. Cập nhật các thẻ chỉ số (Metric Cards)
+  // 1. Cập nhật các thẻ chỉ số KPI
   const revEl = document.querySelector('#metric-revenue');
   const revTrend = document.querySelector('#metric-revenue-trend');
   const ordersEl = document.querySelector('#metric-orders');
@@ -143,7 +161,7 @@ function renderSalesDashboard(periodKey) {
 
   if (kickerEl) kickerEl.textContent = data.kicker;
 
-  // 2. Cập nhật biểu đồ cột (Bar Chart)
+  // 2. Cập nhật Biểu đồ cột doanh thu theo ngày
   const chartEl = document.querySelector('#sales-chart');
   if (chartEl) {
     chartEl.innerHTML = data.days.map(d => `
@@ -156,15 +174,25 @@ function renderSalesDashboard(periodKey) {
     `).join('');
   }
 
-  // 3. Cập nhật Top món bán chạy
+  // 3. Cập nhật danh sách Top món bán chạy
   renderTopDishes();
 }
 
+
+/* ==========================================================================
+   PHẦN 3: LOGIC TÍNH TOÁN VÀ SẮP XẾP MÓN BÁN CHẠY (TOP DISHES)
+   Logic:
+   - Đọc danh sách món ăn từ LocalStorage
+   - Sắp xếp giảm dần theo thuộc tính `orders` (lượt gọi món)
+   - Lấy top 5 món dẫn đầu và sinh giao diện xếp hạng
+   ========================================================================== */
 function renderTopDishes() {
   const ranksEl = document.querySelector('#top-dish-ranks');
   if (!ranksEl) return;
 
   const menuItems = getStore('menuItems', appData.menuItems || []);
+  
+  // Thuật toán sắp xếp giảm dần theo số lượt gọi món
   const sorted = [...menuItems].sort((a, b) => (b.orders || 0) - (a.orders || 0)).slice(0, 5);
 
   if (sorted.length === 0) {
@@ -188,7 +216,16 @@ function salesPage() {
   renderSalesDashboard('this-week');
 }
 
-// Bắt sự kiện thay đổi kỳ báo cáo (Dropdown Select)
+
+/* ==========================================================================
+   PHẦN 4: LẮNG NGHE SỰ KIỆN ĐỔI KỲ BÁO CÁO & XUẤT TẬP TIN CSV
+   Logic:
+   - Bắt sự kiện change trên dropdown chọn chu kỳ -> render lại dashboard
+   - Bắt sự kiện click nút xuất CSV -> sinh Blob UTF-8 kèm ký tự BOM (\uFEFF)
+     để hỗ trợ hiển thị tiếng Việt trọn vẹn trên MS Excel
+   ========================================================================== */
+
+// 1. Thay đổi chu kỳ báo cáo
 document.addEventListener('change', e => {
   if (e.target.id === 'period-select') {
     const period = e.target.value;
@@ -197,14 +234,15 @@ document.addEventListener('change', e => {
   }
 });
 
-// Bắt sự kiện xuất file CSV
+// 2. Xuất dữ liệu báo cáo ra file CSV
 document.addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
 
   if (b.dataset.action === 'export-csv' || b.id === 'btn-export-csv') {
     const data = SALES_DATA[currentPeriod] || SALES_DATA['this-week'];
-    const csvContent = '\uFEFF' + data.csv; // Thêm BOM để hiển thị tiếng Việt UTF-8 chuẩn trong Excel
+    // Thêm ký tự BOM (\uFEFF) để Excel hiển thị tiếng Việt có dấu chuẩn 100%
+    const csvContent = '\uFEFF' + data.csv;
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -214,10 +252,9 @@ document.addEventListener('click', e => {
     link.click();
     URL.revokeObjectURL(url);
 
-    toast(`Thành công (${data.label})`);
+    toast(`Xuất báo cáo thành công (${data.label})`);
   }
 });
 
-// Khởi chạy trang
+// Khởi chạy nạp dữ liệu ban đầu
 bootPage(salesPage);
-

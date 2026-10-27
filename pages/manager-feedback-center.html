@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="vi">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +16,18 @@
 </head>
 
 <body data-root=".." data-page="manager-feedback" data-title="Phản hồi">
+<!-- ==========================================================================
+     PHÂN VÙNG GIAO DIỆN - TRUNG TÂM PHẢN HỒI & AI-3 (S14)
+     • VÙNG 1: Header hệ thống & Điều hướng bên (Sidebar Navigation)
+     • VÙNG 2: Tiêu đề trang Trung tâm phản hồi
+     • VÙNG 3: Bảng chỉ số tổng quan đánh giá (Stars & Satisfaction Bar)
+     • VÙNG 4: Danh sách phản hồi của thực khách kèm trạng thái
+     • VÙNG 5: Bảng điều khiển phân tích AI (Feedback Theme Extractor)
+========================================================================== -->
+
+    <!-- ====================================================================== -->
+    <!-- VÙNG 1: HEADER HỆ THỐNG & ĐIỀU HƯỚNG TỔNG QUAN                         -->
+    <!-- ====================================================================== -->
     <header class="site-header">
         <a class="skip-link" href="#main-content">Bỏ qua điều hướng</a>
         <div class="brand"><span class="brand-mark" aria-hidden="true">M</span><span>MenuMind</span></div>
@@ -46,6 +59,9 @@
         </aside>
 
         <main id="main-content" class="site-main">
+            <!-- ============================================================== -->
+            <!-- VÙNG 2: TIÊU ĐỀ TRANG TRUNG TÂM PHẢN HỒI                      -->
+            <!-- ============================================================== -->
             <header class="page-head">
                 <div>
                     <p class="kicker">Tiếng nói thực khách</p>
@@ -56,6 +72,10 @@
 
             <div class="content-grid wide-right">
                 <section>
+                    <!-- ========================================================== -->
+                    <!-- VÙNG 3: BỘ CHỈ SỐ THỐNG KÊ ĐÁNH GIÁ (FEEDBACK SUMMARY)     -->
+                    <!-- Chức năng: Thể hiện điểm sao TB, tỷ lệ tích cực, cần cải thiện -->
+                    <!-- ========================================================== -->
                     <div class="feedback-summary">
                         <div>
                             <strong id="avg-rating">4,8</strong>
@@ -73,11 +93,20 @@
                             <i><span id="negative-bar" style="width:10%"></span></i>
                         </div>
                     </div>
+
+                    <!-- ========================================================== -->
+                    <!-- VÙNG 4: DANH SÁCH NHẬN XÉT CỦA KHÁCH HÀNG (FEEDBACK LIST)  -->
+                    <!-- Chức năng: Đọc phản hồi bàn, số sao, chủ đề và gửi lời cảm ơn -->
+                    <!-- ========================================================== -->
                     <div id="feedback-list" aria-live="polite">
-                        <!-- Danh sách các nhận xét từ khách render bởi JS -->
+                        <!-- Danh sách nhận xét render bởi JavaScript -->
                     </div>
                 </section>
 
+                <!-- ============================================================== -->
+                <!-- VÙNG 5: KHU VỰC TÍNH NĂNG TRÍ TUỆ NHÂN TẠO (AI-3 THEME PANEL) -->
+                <!-- Chức năng: Phân tích NLP, độ tin cậy, giải trình và kiểm soát  -->
+                <!-- ============================================================== -->
                 <aside class="ai-panel" aria-labelledby="ai-panel-title">
                     <div class="ai-head">
                         <span aria-hidden="true">✦</span>
@@ -86,6 +115,8 @@
                             <h2 id="ai-panel-title">Khai phá chủ đề bằng AI</h2>
                         </div>
                     </div>
+
+                    <!-- Biểu mẫu nhập mục tiêu phân tích AI -->
                     <form id="theme-form" novalidate>
                         <div class="form-field">
                             <label for="theme-source">Nguồn dữ liệu phân tích</label>
@@ -100,8 +131,10 @@
                         </div>
                         <button class="button ai" id="btn-run-ai" type="submit">✦ Phân tích chủ đề</button>
                     </form>
+
+                    <!-- Khung kết quả phân tích AI (Loading / Failure UX / Output + Explainability) -->
                     <div id="theme-result" class="ai-result" aria-live="polite">
-                        <!-- Kết quả AI phân tích đủ 6 bước render bởi JS -->
+                        <!-- Kết quả AI phân tích đủ các bước render tự động bởi JavaScript -->
                     </div>
                 </aside>
             </div>
@@ -115,4 +148,3 @@
 </body>
 
 </html>
-

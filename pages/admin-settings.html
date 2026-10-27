@@ -16,6 +16,18 @@
 </head>
 
 <body data-root=".." data-page="admin-settings" data-title="Cài đặt">
+<!-- ==========================================================================
+     PHÂN VÙNG GIAO DIỆN - CÀI ĐẶT HỆ THỐNG NHÀ HÀNG (S16)
+     • VÙNG 1: Header hệ thống & Điều hướng bên (Sidebar Navigation)
+     • VÙNG 2: Tiêu đề trang Cài đặt hệ thống
+     • VÙNG 3: Cấu hình thông tin nhà hàng (Tên, Số điện thoại, Tiền tệ)
+     • VÙNG 4: Tùy chọn vận hành & Giao diện (Cảnh báo trễ món, Tương phản cao)
+     • VÙNG 5: Hành động lưu & Vùng nguy hiểm (Danger Zone - Khôi phục mặc định)
+========================================================================== -->
+
+    <!-- ====================================================================== -->
+    <!-- VÙNG 1: HEADER HỆ THỐNG & ĐIỀU HƯỚNG TỔNG QUAN                         -->
+    <!-- ====================================================================== -->
     <header class="site-header">
         <a class="skip-link" href="#main-content">Bỏ qua điều hướng</a>
         <div class="brand"><span class="brand-mark" aria-hidden="true">M</span><span>MenuMind</span></div>
@@ -45,6 +57,9 @@
         </aside>
 
         <main id="main-content" class="site-main">
+            <!-- ============================================================== -->
+            <!-- VÙNG 2: TIÊU ĐỀ TRANG CÀI ĐẶT                                  -->
+            <!-- ============================================================== -->
             <header class="page-head">
                 <div>
                     <p class="kicker">Cấu hình dùng chung</p>
@@ -54,6 +69,10 @@
             </header>
 
             <form id="settings-form" class="settings-layout" novalidate>
+                <!-- ========================================================== -->
+                <!-- VÙNG 3: HỒ SƠ THÔNG TIN NHÀ HÀNG (RESTAURANT PROFILE)      -->
+                <!-- Chức năng: Nhập tên quán, hotline hỗ trợ, đơn vị tiền tệ   -->
+                <!-- ========================================================== -->
                 <section class="surface">
                     <p class="kicker">Thông tin nhà hàng</p>
                     <h2>Hồ sơ hiển thị</h2>
@@ -76,6 +95,10 @@
                     </div>
                 </section>
 
+                <!-- ========================================================== -->
+                <!-- VÙNG 4: TÙY CHỌN VẬN HÀNH & GIAO DIỆN (SYSTEM PREFERENCES) -->
+                <!-- Chức năng: Bật cảnh báo trễ, đặt phút, xem trước tương phản-->
+                <!-- ========================================================== -->
                 <section class="surface">
                     <p class="kicker">Vận hành & Hiển thị</p>
                     <h2>Thông báo và giao diện</h2>
@@ -110,20 +133,23 @@
                     </div>
                 </section>
 
-                <section class="surface settings-actions">
-                    <div>
-                        <h2>Lưu thay đổi</h2>
-                        <p>Kiểm tra lại thông tin trước khi áp dụng cho hệ thống.</p>
-                    </div>
+                <!-- ========================================================== -->
+                <!-- VÙNG 5: HÀNH ĐỘNG LƯU & VÙNG NGUY HIỂM (DANGER ZONE)        -->
+                <!-- Chức năng: Lưu cấu hình & Khôi phục mặc định với xác nhận   -->
+                <!-- ========================================================== -->
+                <div class="settings-actions">
                     <button class="button primary" id="btn-save-settings" type="submit">Lưu cài đặt</button>
-                </section>
+                </div>
 
                 <section class="surface danger-zone">
-                    <div>
-                        <h2>Vùng nguy hiểm</h2>
-                        <p>Khôi phục toàn bộ cài đặt hệ thống về cấu hình xuất xưởng ban đầu.</p>
+                    <div class="section-title compact">
+                        <div>
+                            <p class="kicker">Vùng nguy hiểm</p>
+                            <h2>Khôi phục mặc định ban đầu</h2>
+                            <p class="fine-print">Thao tác này sẽ đặt lại tên nhà hàng, số điện thoại và toàn bộ tùy chọn hiển thị về giá trị ban đầu của hệ thống.</p>
+                        </div>
+                        <button type="button" class="button quiet danger-text" id="btn-reset-defaults">Đặt lại toàn bộ</button>
                     </div>
-                    <button class="button quiet danger-button" id="btn-reset-defaults" type="button">Khôi phục mặc định</button>
                 </section>
             </form>
         </main>
@@ -136,4 +162,3 @@
 </body>
 
 </html>
-
