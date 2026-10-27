@@ -1,41 +1,50 @@
 function updateCartCount() {
   const cart = getStore('cart', []);
-  const count = Array.isArray(cart)
-    ? cart.reduce((total, item) => total + Math.max(0, Number(item.qty) || 0), 0)
-    : 0;
-  const countEl = document.querySelector('#cart-count');
+  const count = (Array.isArray(cart) ? cart : []).reduce(
+    (total, item) => total + Math.max(1, Number.parseInt(item?.qty, 10) || 1),
+    0
+  );
 
-  if (countEl) countEl.textContent = count;
+  document.querySelectorAll('#cart-count').forEach(element => {
+    element.textContent = count;
+  });
   return count;
 }
 
-function addToCart(menuId, quantity = 1, note = '') {
+function addToCart(id, quantity = 1, note = '') {
   if (paymentLocksOrdering()) {
     toast(orderingLockMessage(), 'error');
     return false;
   }
 
-  const item = appData.menuItems.find(menuItem => menuItem.id === menuId && menuItem.available);
-  if (!item) {
+  const menuId = String(id || '');
+  const qty = Math.min(10, Math.max(1, Number.parseInt(quantity, 10) || 1));
+  const normalizedNote = String(note || '').trim();
+  const menuItem = appData.menuItems.find(item => String(item.id) === menuId && item.available);
+
+  if (!menuItem) {
     toast('Món này hiện không thể thêm vào giỏ', 'error');
     return false;
   }
 
-  const qty = Math.min(10, Math.max(1, Math.trunc(Number(quantity) || 1)));
-  const normalizedNote = String(note || '').trim();
   const storedCart = getStore('cart', []);
   const cart = Array.isArray(storedCart) ? storedCart : [];
-  const existingItem = cart.find(cartItem => cartItem.menuId === menuId && String(cartItem.note || '').trim() === normalizedNote);
+  const existingItem = cart.find(item =>
+    String(item.menuId ?? item.id ?? '') === menuId
+    && String(item.note || '').trim() === normalizedNote
+  );
 
   if (existingItem) {
-    existingItem.qty = Math.min(10, Math.max(1, (Number(existingItem.qty) || 0) + qty));
+    existingItem.menuId = menuId;
+    delete existingItem.id;
+    existingItem.qty = Math.min(10, Math.max(1, Number.parseInt(existingItem.qty, 10) || 1) + qty);
   } else {
     cart.push({ menuId, qty, note: normalizedNote });
   }
 
   setStore('cart', cart);
   updateCartCount();
-  toast(`Đã thêm ${item.name} vào giỏ`);
+  toast(`Đã thêm ${menuItem.name} vào giỏ`);
   return true;
 }
 
