@@ -129,10 +129,7 @@ document.addEventListener('click', e => {
     if (typeof addToCart === 'function') addToCart(b.dataset.add);
   }
   if (b.dataset.aiAccept) {
-    if (typeof addToCart === 'function') {
-      addToCart(b.dataset.aiAccept);
-      toast('Đã áp dụng gợi ý AI vào giỏ');
-    }
+    if (typeof addToCart === 'function') addToCart(b.dataset.aiAccept);
   }
   if (b.dataset.action === 'clear-filter') {
     menuFilters = { q: '', category: 'Tất cả', sort: 'popular' };
