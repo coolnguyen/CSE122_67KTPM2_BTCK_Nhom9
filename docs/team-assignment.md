@@ -1,61 +1,61 @@
-# Bảng Phân Công Nhiệm Vụ 2 Chiều (Team Assignment)
+﻿# Báº£ng PhÃ¢n CÃ´ng Nhiá»‡m Vá»¥ 2 Chiá»u (Team Assignment)
 
-> **Học phần:** Phát triển ứng dụng Web cơ bản – CSE122  
-> **Dự án:** BTL-09 – MenuMind (Thực đơn thông minh & Điều phối đơn hàng F&B)  
-> **Nhóm thực hiện:** Nhóm 09 (Lớp 67KTPM2 – Khoa CNTT, Trường Đại học Thủy Lợi)  
-> **Giảng viên hướng dẫn & chấm điểm:** ThS. Kiều Tuấn Dũng – ThS. Tạ Chí Hiếu  
+> **Há»c pháº§n:** PhÃ¡t triá»ƒn á»©ng dá»¥ng Web cÆ¡ báº£n â€“ CSE122  
+> **Dá»± Ã¡n:** BTL-09 â€“ MenuMind (Thá»±c Ä‘Æ¡n thÃ´ng minh & Äiá»u phá»‘i Ä‘Æ¡n hÃ ng F&B)  
+> **NhÃ³m thá»±c hiá»‡n:** NhÃ³m 09 (Lá»›p 67KTPM2 â€“ Khoa CNTT, TrÆ°á»ng Äáº¡i há»c Thá»§y Lá»£i)  
+> **Giáº£ng viÃªn hÆ°á»›ng dáº«n & cháº¥m Ä‘iá»ƒm:** ThS. Kiá»u Tuáº¥n DÅ©ng â€“ ThS. Táº¡ ChÃ­ Hiáº¿u  
 
 ---
 
-## 1. Phân Công 2 Chiều (Vertical Slice + Trục Chéo) Cho 3 Thành Viên
+## 1. PhÃ¢n CÃ´ng 2 Chiá»u (Vertical Slice + Trá»¥c ChÃ©o) Cho 3 ThÃ nh ViÃªn
 
-Nhóm áp dụng mô hình phân chia công việc cân bằng theo tỷ lệ vàng **6 – 5 – 6**, kết hợp giữa Lát cắt dọc (Vertical Slice - phụ trách 100% UI & Logic theo Role) và Trục trách nhiệm chéo toàn hệ thống (Cross-Responsibility):
+NhÃ³m Ã¡p dá»¥ng mÃ´ hÃ¬nh phÃ¢n chia cÃ´ng viá»‡c cÃ¢n báº±ng theo tá»· lá»‡ vÃ ng **6 â€“ 5 â€“ 6**, káº¿t há»£p giá»¯a LÃ¡t cáº¯t dá»c (Vertical Slice - phá»¥ trÃ¡ch 100% UI & Logic theo Role) vÃ  Trá»¥c trÃ¡ch nhiá»‡m chÃ©o toÃ n há»‡ thá»‘ng (Cross-Responsibility):
 
-| Thành viên | Trách nhiệm dọc (Vertical Slice - Theo Role) | Trách nhiệm chéo (Cross-Responsibility - Toàn hệ thống) |
+| ThÃ nh viÃªn | TrÃ¡ch nhiá»‡m dá»c (Vertical Slice - Theo Role) | TrÃ¡ch nhiá»‡m chÃ©o (Cross-Responsibility - ToÃ n há»‡ thá»‘ng) |
 | :--- | :--- | :--- |
-| **Trương Việt Hoàng (SV1)** | **Khối mặt tiền (6 màn):** S01 $\rightarrow$ S06<br>⭐ Phụ trách **AI-1: Taste Recommender** | **Trục chéo 1**: Kiểm thử Responsive đa thiết bị (320px, 768px, 1024px+), Thanh điều hướng chung (Navigation / Role Switcher), Khả năng tiếp cận (A11y) |
-| **Đặng Xuân Dương (SV2)** | **Khối vận hành (5 màn):** S07 $\rightarrow$ S11<br>⭐ Phụ trách **AI-2: Kitchen Load Predictor** | **Trục chéo 2**: Xử lý dữ liệu (backend / localStorage / API), Dữ liệu mẫu JSON (15–25 bản ghi), Triển khai (Deploy) & QA |
-| **Nguyễn Hoàng Hải (Leader - SV3)** | **Khối quản trị (6 màn):** S12 $\rightarrow$ S17<br>⭐ Phụ trách **AI-3: Feedback Theme Extractor** | **Trục chéo 3**: Hệ thống thiết kế (`css/common.css`, `css/style.css`, biến `:root`), Quản lý hợp nhất nhánh Git (`dev` $\rightarrow$ `main`) |
+| **TrÆ°Æ¡ng Viá»‡t HoÃ ng (SV1)** | **Khá»‘i máº·t tiá»n (6 mÃ n):** S01 $\rightarrow$ S06<br>â­ Phá»¥ trÃ¡ch **AI-1: Taste Recommender** | **Trá»¥c chÃ©o 1**: Kiá»ƒm thá»­ Responsive Ä‘a thiáº¿t bá»‹ (320px, 768px, 1024px+), Thanh Ä‘iá»u hÆ°á»›ng chung (Navigation / Role Switcher), Kháº£ nÄƒng tiáº¿p cáº­n (A11y) |
+| **Äáº·ng XuÃ¢n DÆ°Æ¡ng (SV2)** | **Khá»‘i váº­n hÃ nh (5 mÃ n):** S07 $\rightarrow$ S11<br>â­ Phá»¥ trÃ¡ch **AI-2: Kitchen Load Predictor** | **Trá»¥c chÃ©o 2**: Xá»­ lÃ½ dá»¯ liá»‡u (backend / localStorage / API), Dá»¯ liá»‡u máº«u JSON (15â€“25 báº£n ghi), Triá»ƒn khai (Deploy) & QA |
+| **Nguyá»…n HoÃ ng Háº£i (Leader - SV3)** | **Khá»‘i quáº£n trá»‹ (6 mÃ n):** S12 $\rightarrow$ S17<br>â­ Phá»¥ trÃ¡ch **AI-3: Feedback Theme Extractor** | **Trá»¥c chÃ©o 3**: Há»‡ thá»‘ng thiáº¿t káº¿ (`css/common.css`, `css/style.css`, biáº¿n `:root`), Quáº£n lÃ½ há»£p nháº¥t nhÃ¡nh Git (`dev` $\rightarrow$ `main`) |
 
 ---
 
-## 2. Chi Tiết Lát Cắt Dọc & Phân Bổ Màn Hình Từng Thành Viên
+## 2. Chi Tiáº¿t LÃ¡t Cáº¯t Dá»c & PhÃ¢n Bá»• MÃ n HÃ¬nh Tá»«ng ThÃ nh ViÃªn
 
-### 👤 SV1 — Trương Việt Hoàng: Khối Mặt tiền — Hành trình Thực khách (6 màn)
-* **Logic nghiệp vụ:** Toàn bộ trải nghiệm của một người khách bước vào quán từ lúc quét QR, xem menu đến khi gửi đơn và theo dõi trạng thái món.
-* **Danh sách màn hình (6 màn):**
-  1. `index.html` — Trang chủ giới thiệu & Chọn bàn bắt đầu (`TASK-01` / `feature/index`)
-  2. `pages/login.html` — Cổng đăng nhập nhân viên (`TASK-02` / `feature/login`)
-  3. `pages/diner-menu.html` — Thực đơn tìm kiếm/lọc món (`TASK-03` / `feature/diner-menu`)
-  4. `pages/diner-dish-detail.html` — Xem chi tiết món, chọn topping/ghi chú (`TASK-04` / `feature/diner-dish-detail`)
-  5. `pages/diner-table-order.html` — Giỏ món bàn ăn, xem lại tiền & gửi đơn (`TASK-05` / `feature/diner-table-order`)
-  6. `pages/diner-order-status.html` — Khách theo dõi tiến độ món ra & gửi phản hồi (`TASK-06` / `feature/diner-order-status`)
-* **Tính năng AI phụ trách:** **AI-1 — Taste Recommender** (Gợi ý món ăn theo khẩu vị thực khách).
-* **Trách nhiệm chéo toàn hệ thống (Trục chéo 1):** Kiểm thử Responsive đa thiết bị (320px, 768px, 1024px+), Thanh điều hướng chung (Navigation / Role Switcher), Khả năng tiếp cận (Accessibility Tab/Esc, `:focus-visible`, `alt`, `label`).
-
----
-
-### 👨‍🍳 SV2 — Đặng Xuân Dương: Khối Vận hành — Điều phối Bếp & Phục vụ (5 màn)
-* **Logic nghiệp vụ:** Toàn bộ công việc thực thi đơn hàng tại quán (Bếp nấu gì, bàn nào đang ngồi, bàn nào yêu cầu thanh toán bill).
-* **Danh sách màn hình (5 màn):**
-  1. `pages/kitchen-board.html` — Bảng Kanban điều phối món (Chờ $\rightarrow$ Nấu $\rightarrow$ Xong) (`TASK-07` / `feature/kitchen-board`)
-  2. `pages/kitchen-order-detail.html` — Chi tiết từng đơn cần nấu, tick xong từng món (`TASK-08` / `feature/kitchen-order-detail`)
-  3. `pages/kitchen-wait-time-alerts.html` — Cảnh báo đơn trễ thời gian chờ (`TASK-09` / `feature/kitchen-wait-time-alerts`)
-  4. `pages/admin-table-management.html` — Quản lý trạng thái bàn (Trống / Có khách) & in QR bàn (`TASK-10` / `feature/admin-table-management`)
-  5. `pages/manager-payment-requests.html` — Danh sách bàn yêu cầu thanh toán & xác nhận thu tiền (`TASK-11` / `feature/manager-payment-requests`)
-* **Tính năng AI phụ trách:** **AI-2 — Kitchen Load Predictor** (Dự báo quá tải bếp và cảnh báo thời gian chờ).
-* **Trách nhiệm chéo toàn hệ thống (Trục chéo 2):** Xử lý dữ liệu (backend / localStorage trong `js/database.js`, `js/api.js`), Bộ dữ liệu mẫu JSON 24 món ăn (`assets/data/app-data.json`), viết hàm dùng chung chống XSS `escapeHTML()`, Triển khai (Deploy) & QA.
+### ðŸ‘¤ SV1 â€” TrÆ°Æ¡ng Viá»‡t HoÃ ng: Khá»‘i Máº·t tiá»n â€” HÃ nh trÃ¬nh Thá»±c khÃ¡ch (6 mÃ n)
+* **Logic nghiá»‡p vá»¥:** ToÃ n bá»™ tráº£i nghiá»‡m cá»§a má»™t ngÆ°á»i khÃ¡ch bÆ°á»›c vÃ o quÃ¡n tá»« lÃºc quÃ©t QR, xem menu Ä‘áº¿n khi gá»­i Ä‘Æ¡n vÃ  theo dÃµi tráº¡ng thÃ¡i mÃ³n.
+* **Danh sÃ¡ch mÃ n hÃ¬nh (6 mÃ n):**
+  1. `index.html` â€” Trang chá»§ giá»›i thiá»‡u & Chá»n bÃ n báº¯t Ä‘áº§u (`TASK-01` / `feature/index`)
+  2. `pages/login.html` â€” Cá»•ng Ä‘Äƒng nháº­p nhÃ¢n viÃªn (`TASK-02` / `feature/login`)
+  3. `pages/diner-menu.html` â€” Thá»±c Ä‘Æ¡n tÃ¬m kiáº¿m/lá»c mÃ³n (`TASK-03` / `feature/diner-menu`)
+  4. `pages/diner-dish-detail.html` â€” Xem chi tiáº¿t mÃ³n, chá»n topping/ghi chÃº (`TASK-04` / `feature/diner-dish-detail`)
+  5. `pages/diner-table-order.html` â€” Giá» mÃ³n bÃ n Äƒn, xem láº¡i tiá»n & gá»­i Ä‘Æ¡n (`TASK-05` / `feature/diner-table-order`)
+  6. `pages/diner-order-status.html` â€” KhÃ¡ch theo dÃµi tiáº¿n Ä‘á»™ mÃ³n ra & gá»­i pháº£n há»“i (`TASK-06` / `feature/diner-order-status`)
+* **TÃ­nh nÄƒng AI phá»¥ trÃ¡ch:** **AI-1 â€” Taste Recommender** (Gá»£i Ã½ mÃ³n Äƒn theo kháº©u vá»‹ thá»±c khÃ¡ch).
+* **TrÃ¡ch nhiá»‡m chÃ©o toÃ n há»‡ thá»‘ng (Trá»¥c chÃ©o 1):** Kiá»ƒm thá»­ Responsive Ä‘a thiáº¿t bá»‹ (320px, 768px, 1024px+), Thanh Ä‘iá»u hÆ°á»›ng chung (Navigation / Role Switcher), Kháº£ nÄƒng tiáº¿p cáº­n (Accessibility Tab/Esc, `:focus-visible`, `alt`, `label`).
 
 ---
 
-### 💼 SV3 — Nguyễn Hoàng Hải (Leader): Khối Quản trị — Quản lý & Chủ nhà hàng (6 màn)
-* **Logic nghiệp vụ:** Bộ não chiến lược của nhà hàng (quản lý món bán, xem doanh thu lời lỗ, xem đánh giá của khách, quản lý tài khoản nhân viên và cấu hình quán).
-* **Danh sách màn hình (6 màn):**
-  1. `pages/manager-menu-management.html` — CRUD quản lý món ăn, đổi giá, bật/tắt hết hàng (`TASK-12` / `feature/manager-menu-management`)
-  2. `pages/admin-sales-insights.html` — Báo cáo doanh số bán chạy, biểu đồ & xuất CSV (`TASK-13` / `feature/admin-sales-insights`)
-  3. `pages/manager-feedback-center.html` — Trung tâm tiếp nhận và xử lý đánh giá của khách (`TASK-14` / `feature/manager-feedback-center`)
-  4. `pages/admin-user-management.html` — Quản lý tài khoản nhân viên (cấp quyền, vô hiệu hóa) (`TASK-15` / `feature/admin-user-management`)
-  5. `pages/admin-settings.html` — Cài đặt thông tin nhà hàng, hotline, chế độ Sáng/Tối (`TASK-16` / `feature/admin-settings`)
-  6. `pages/404.html` — Màn hình báo lỗi và phục hồi điều hướng hệ thống (`TASK-17` / `feature/404`)
-* **Tính năng AI phụ trách:** **AI-3 — Feedback Theme Extractor** (Trợ lý AI phân tích và gom nhóm chủ đề phản hồi của khách).
-* **Trách nhiệm chéo toàn hệ thống (Trục chéo 3):** Hệ thống thiết kế (`css/common.css`, `css/header.css`, biến `:root` màu sắc/typography), Quản lý kiến trúc nhánh Git (`dev` $\rightarrow$ `main`, PR Peer Review).
+### ðŸ‘¨â€ðŸ³ SV2 â€” Äáº·ng XuÃ¢n DÆ°Æ¡ng: Khá»‘i Váº­n hÃ nh â€” Äiá»u phá»‘i Báº¿p & Phá»¥c vá»¥ (5 mÃ n)
+* **Logic nghiá»‡p vá»¥:** ToÃ n bá»™ cÃ´ng viá»‡c thá»±c thi Ä‘Æ¡n hÃ ng táº¡i quÃ¡n (Báº¿p náº¥u gÃ¬, bÃ n nÃ o Ä‘ang ngá»“i, bÃ n nÃ o yÃªu cáº§u thanh toÃ¡n bill).
+* **Danh sÃ¡ch mÃ n hÃ¬nh (5 mÃ n):**
+  1. `pages/kitchen-board.html` â€” Báº£ng Kanban Ä‘iá»u phá»‘i mÃ³n (Chá» $\rightarrow$ Náº¥u $\rightarrow$ Xong) (`TASK-07` / `feature/kitchen-board`)
+  2. `pages/kitchen-order-detail.html` â€” Chi tiáº¿t tá»«ng Ä‘Æ¡n cáº§n náº¥u, tick xong tá»«ng mÃ³n (`TASK-08` / `feature/kitchen-order-detail`)
+  3. `pages/kitchen-wait-time-alerts.html` â€” Cáº£nh bÃ¡o Ä‘Æ¡n trá»… thá»i gian chá» (`TASK-09` / `feature/kitchen-wait-time-alerts`)
+  4. `pages/manager-table-management.html` â€” Quáº£n lÃ½ tráº¡ng thÃ¡i bÃ n (Trá»‘ng / CÃ³ khÃ¡ch) & in QR bÃ n (`TASK-10` / `feature/manager-table-management`)
+  5. `pages/manager-payment-requests.html` â€” Danh sÃ¡ch bÃ n yÃªu cáº§u thanh toÃ¡n & xÃ¡c nháº­n thu tiá»n (`TASK-11` / `feature/manager-payment-requests`)
+* **TÃ­nh nÄƒng AI phá»¥ trÃ¡ch:** **AI-2 â€” Kitchen Load Predictor** (Dá»± bÃ¡o quÃ¡ táº£i báº¿p vÃ  cáº£nh bÃ¡o thá»i gian chá»).
+* **TrÃ¡ch nhiá»‡m chÃ©o toÃ n há»‡ thá»‘ng (Trá»¥c chÃ©o 2):** Xá»­ lÃ½ dá»¯ liá»‡u (backend / localStorage trong `js/database.js`, `js/api.js`), Bá»™ dá»¯ liá»‡u máº«u JSON 24 mÃ³n Äƒn (`assets/data/app-data.json`), viáº¿t hÃ m dÃ¹ng chung chá»‘ng XSS `escapeHTML()`, Triá»ƒn khai (Deploy) & QA.
+
+---
+
+### ðŸ’¼ SV3 â€” Nguyá»…n HoÃ ng Háº£i (Leader): Khá»‘i Quáº£n trá»‹ â€” Quáº£n lÃ½ & Chá»§ nhÃ  hÃ ng (6 mÃ n)
+* **Logic nghiá»‡p vá»¥:** Bá»™ nÃ£o chiáº¿n lÆ°á»£c cá»§a nhÃ  hÃ ng (quáº£n lÃ½ mÃ³n bÃ¡n, xem doanh thu lá»i lá»—, xem Ä‘Ã¡nh giÃ¡ cá»§a khÃ¡ch, quáº£n lÃ½ tÃ i khoáº£n nhÃ¢n viÃªn vÃ  cáº¥u hÃ¬nh quÃ¡n).
+* **Danh sÃ¡ch mÃ n hÃ¬nh (6 mÃ n):**
+  1. `pages/manager-menu-management.html` â€” CRUD quáº£n lÃ½ mÃ³n Äƒn, Ä‘á»•i giÃ¡, báº­t/táº¯t háº¿t hÃ ng (`TASK-12` / `feature/manager-menu-management`)
+  2. `pages/admin-sales-insights.html` â€” BÃ¡o cÃ¡o doanh sá»‘ bÃ¡n cháº¡y, biá»ƒu Ä‘á»“ & xuáº¥t CSV (`TASK-13` / `feature/admin-sales-insights`)
+  3. `pages/manager-feedback-center.html` â€” Trung tÃ¢m tiáº¿p nháº­n vÃ  xá»­ lÃ½ Ä‘Ã¡nh giÃ¡ cá»§a khÃ¡ch (`TASK-14` / `feature/manager-feedback-center`)
+  4. `pages/admin-user-management.html` â€” Quáº£n lÃ½ tÃ i khoáº£n nhÃ¢n viÃªn (cáº¥p quyá»n, vÃ´ hiá»‡u hÃ³a) (`TASK-15` / `feature/admin-user-management`)
+  5. `pages/admin-settings.html` â€” CÃ i Ä‘áº·t thÃ´ng tin nhÃ  hÃ ng, hotline, cháº¿ Ä‘á»™ SÃ¡ng/Tá»‘i (`TASK-16` / `feature/admin-settings`)
+  6. `pages/404.html` â€” MÃ n hÃ¬nh bÃ¡o lá»—i vÃ  phá»¥c há»“i Ä‘iá»u hÆ°á»›ng há»‡ thá»‘ng (`TASK-17` / `feature/404`)
+* **TÃ­nh nÄƒng AI phá»¥ trÃ¡ch:** **AI-3 â€” Feedback Theme Extractor** (Trá»£ lÃ½ AI phÃ¢n tÃ­ch vÃ  gom nhÃ³m chá»§ Ä‘á» pháº£n há»“i cá»§a khÃ¡ch).
+* **TrÃ¡ch nhiá»‡m chÃ©o toÃ n há»‡ thá»‘ng (Trá»¥c chÃ©o 3):** Há»‡ thá»‘ng thiáº¿t káº¿ (`css/common.css`, `css/header.css`, biáº¿n `:root` mÃ u sáº¯c/typography), Quáº£n lÃ½ kiáº¿n trÃºc nhÃ¡nh Git (`dev` $\rightarrow$ `main`, PR Peer Review).

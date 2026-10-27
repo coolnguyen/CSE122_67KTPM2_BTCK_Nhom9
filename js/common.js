@@ -90,14 +90,14 @@ function getQrSession() {
 }
 
 function roleHome(role) {
-  return ({ kitchen: 'kitchen-board.html', manager: 'manager-menu-management.html', admin: 'admin-user-management.html', service: 'admin-table-management.html' })[role] || 'login.html';
+  return ({ kitchen: 'kitchen-board.html', manager: 'manager-menu-management.html', admin: 'admin-user-management.html', service: 'manager-table-management.html' })[role] || 'login.html';
 }
 
 const protectedRoles = {
   'kitchen-board': 'kitchen', 'kitchen-detail': 'kitchen', 'kitchen-alerts': 'kitchen',
   'manager-menu': 'manager', 'manager-payments': 'manager',
   'manager-feedback': 'manager', 'manager-sales': 'admin', 'admin-sales': 'admin', 'admin-sales-insights': 'admin',
-  'admin-tables': ['manager', 'service'], 'admin-users': 'admin', 'admin-settings': 'admin'
+  'manager-tables': ['manager', 'service'], 'admin-tables': ['manager', 'service'], 'admin-users': 'admin', 'admin-settings': 'admin'
 };
 
 function guardPage() {

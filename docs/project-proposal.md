@@ -156,7 +156,7 @@ Dá»± Ã¡n tuyá»‡t Ä‘á»‘i khÃ´ng sá»­ dá»¥ng khung chat h�
          â”‚      â””â”€â”€ Pháº£n há»“i khÃ¡ch & AI Chá»§ Ä‘á» (pages/manager-feedback-center.html)
          â”‚
          â””â”€â”€â–º [QUáº¢N TRá»Š VIÃŠN / CHá»¦ QUÃN]
-                â”œâ”€â”€ SÆ¡ Ä‘á»“ bÃ n & MÃ£ QR bÃ n (pages/admin-table-management.html)
+                â”œâ”€â”€ SÆ¡ Ä‘á»“ bÃ n & MÃ£ QR bÃ n (pages/manager-table-management.html)
                 â”œâ”€â”€ Quáº£n lÃ½ tÃ i khoáº£n nhÃ¢n viÃªn (pages/admin-user-management.html)
                 â””â”€â”€ CÃ i Ä‘áº·t há»‡ thá»‘ng nhÃ  hÃ ng (pages/admin-settings.html)
 ```
