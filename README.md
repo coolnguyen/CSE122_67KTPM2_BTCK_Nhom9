@@ -34,8 +34,7 @@ Dự án áp dụng mô hình phân bổ công việc cân bằng **6 – 5 – 
 * 🌐 **Website chạy thử (Live Deployment):** `[Đang triển khai GitHub Pages / Vercel]`
 * 📁 **Kho mã nguồn GitHub:** [https://github.com/coolnguyen/CSE122_67KTPM2_BTCK_Nhom9](https://github.com/coolnguyen/CSE122_67KTPM2_BTCK_Nhom9)
 * 🎨 **Bản thiết kế Figma:** [https://www.figma.com/design/N8wER6qISetc5Gf4pANqka/MenuMind](https://www.figma.com/design/N8wER6qISetc5Gf4pANqka/MenuMind)
-* 📋 **Bảng tiến độ Trello:** `[Dán liên kết Trello công khai tại đây]`
-* 📹 **Thư mục Video OBS Minh chứng:** `[Dán liên kết Google Drive video 17 màn hình]`
+* 📋 **Bảng tiến độ Trello:** https://trello.com/b/W1fnZ2hI/menumind
 
 ---
 
