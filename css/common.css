@@ -274,15 +274,41 @@ dialog::backdrop {
   width: 24px;
   color: var(--muted);
   font-size: 1rem;
+  transition: color .2s ease;
+}
+
+.side-nav a svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
 }
 
 .side-nav a:hover {
   background: rgba(255, 255, 255, .7);
+  color: var(--ink);
+}
+
+.side-nav a:hover span {
+  color: var(--leaf);
 }
 
 .side-nav a.active {
-  color: white;
+  color: #ffffff !important;
   background: var(--leaf);
+}
+
+.side-nav a.active span {
+  color: #ffffff !important;
+}
+
+.side-nav a.active:hover {
+  background: var(--leaf);
+  color: #ffffff !important;
+}
+
+.side-nav a.active:hover span {
+  color: #ffffff !important;
 }
 
 .side-nav a:last-child {
@@ -556,6 +582,7 @@ dialog::backdrop {
 
 .toast-region {
   position: fixed;
+  pointer-events: none;
   z-index: 100;
   inset: auto 20px 20px auto;
   display: grid;

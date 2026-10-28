@@ -465,14 +465,21 @@
       "status": "new",
       "priority": false,
       "wait": 6,
+      "subtotal": 367000,
+      "serviceFee": 18350,
+      "total": 385350,
       "items": [
         {
           "menuId": "m03",
-          "qty": 1
+          "qty": 1,
+          "unitPrice": 89000,
+          "done": false
         },
         {
           "menuId": "m05",
-          "qty": 2
+          "qty": 2,
+          "unitPrice": 139000,
+          "done": false
         }
       ],
       "note": "Một phần mì không hành"
@@ -484,14 +491,21 @@
       "status": "cooking",
       "priority": true,
       "wait": 13,
+      "subtotal": 516000,
+      "serviceFee": 25800,
+      "total": 541800,
       "items": [
         {
           "menuId": "m01",
-          "qty": 2
+          "qty": 2,
+          "unitPrice": 189000,
+          "done": true
         },
         {
           "menuId": "m07",
-          "qty": 2
+          "qty": 2,
+          "unitPrice": 69000,
+          "done": false
         }
       ],
       "note": "Cá hồi chín vừa"
@@ -503,14 +517,21 @@
       "status": "cooking",
       "priority": false,
       "wait": 17,
+      "subtotal": 318000,
+      "serviceFee": 15900,
+      "total": 333900,
       "items": [
         {
           "menuId": "m02",
-          "qty": 1
+          "qty": 1,
+          "unitPrice": 219000,
+          "done": false
         },
         {
           "menuId": "m04",
-          "qty": 1
+          "qty": 1,
+          "unitPrice": 99000,
+          "done": true
         }
       ],
       "note": "Dị ứng đậu phộng"
@@ -522,10 +543,15 @@
       "status": "ready",
       "priority": true,
       "wait": 23,
+      "subtotal": 417000,
+      "serviceFee": 20850,
+      "total": 437850,
       "items": [
         {
           "menuId": "m05",
-          "qty": 3
+          "qty": 3,
+          "unitPrice": 139000,
+          "done": true
         }
       ],
       "note": "Mang món cùng lúc"
@@ -537,14 +563,21 @@
       "status": "served",
       "priority": false,
       "wait": 26,
+      "subtotal": 367000,
+      "serviceFee": 18350,
+      "total": 385350,
       "items": [
         {
           "menuId": "m06",
-          "qty": 2
+          "qty": 2,
+          "unitPrice": 149000,
+          "done": true
         },
         {
           "menuId": "m07",
-          "qty": 1
+          "qty": 1,
+          "unitPrice": 69000,
+          "done": true
         }
       ],
       "note": ""
@@ -556,10 +589,15 @@
       "status": "cancelled",
       "priority": false,
       "wait": 8,
+      "subtotal": 219000,
+      "serviceFee": 10950,
+      "total": 229950,
       "items": [
         {
           "menuId": "m02",
-          "qty": 1
+          "qty": 1,
+          "unitPrice": 219000,
+          "done": false
         }
       ],
       "note": "Khách đổi lịch"
@@ -644,43 +682,68 @@
       "id": "f01",
       "table": "A02",
       "rating": 5,
-      "text": "Cá hồi ngon, nhân viên giải thích món rất kỹ.",
-      "theme": "Món ăn",
-      "status": "new"
+      "text": "Cá hồi áp chảo rất tươi và ngon, nhân viên phục vụ tận tình chu đáo.",
+      "theme": "Hương vị món",
+      "status": "new",
+      "createdAt": "2026-10-27T11:20:00Z"
     },
     {
       "id": "f02",
       "table": "C01",
       "rating": 3,
-      "text": "Đồ ăn ổn nhưng chờ món chính hơi lâu.",
+      "text": "Món ăn ngon vừa miệng nhưng khung giờ tối chờ món chính hơi lâu (khoảng 25 phút).",
       "theme": "Thời gian chờ",
-      "status": "new"
+      "status": "new",
+      "createdAt": "2026-10-27T11:45:00Z"
     },
     {
       "id": "f03",
       "table": "B02",
       "rating": 5,
-      "text": "Không gian vườn dễ chịu, món chay nhiều lựa chọn.",
+      "text": "Không gian sân vườn thoáng đãng, các món chay phong phú và thanh đạm.",
       "theme": "Không gian",
       "status": "replied",
       "reply": "MenuMind xin chân thành cảm ơn quý khách! Rất vui vì quý khách đã có trải nghiệm thư thái tại sân vườn nhà hàng.",
-      "repliedAt": "2026-10-26T20:15:00Z"
+      "repliedAt": "2026-10-26T20:15:00Z",
+      "createdAt": "2026-10-26T19:50:00Z"
     },
     {
       "id": "f04",
       "table": "A06",
       "rating": 4,
-      "text": "Mì Quảng đậm vị nhưng hơi cay với trẻ nhỏ.",
+      "text": "Mì xào hải sản đậm đà, tôm tươi nhưng hơi cay so với khẩu vị trẻ nhỏ.",
       "theme": "Khẩu vị",
-      "status": "new"
+      "status": "new",
+      "createdAt": "2026-10-27T12:10:00Z"
     },
     {
       "id": "f05",
       "table": "B04",
       "rating": 2,
-      "text": "Phải nhắc hai lần mới có thêm nước lọc.",
-      "theme": "Phục vụ",
-      "status": "new"
+      "text": "Bàn ngoài vườn phải nhắc nhân viên 2 lần mới có thêm nước lọc và khăn lạnh.",
+      "theme": "Thái độ phục vụ",
+      "status": "new",
+      "createdAt": "2026-10-27T12:30:00Z"
+    },
+    {
+      "id": "f06",
+      "table": "A01",
+      "rating": 5,
+      "text": "Salad vườn rất giòn và sốt chanh mật ong đặc biệt, chắc chắn sẽ quay lại!",
+      "theme": "Hương vị món",
+      "status": "replied",
+      "reply": "MenuMind cảm ơn quý khách rất nhiều! Hẹn gặp lại quý khách trong những bữa ăn sắp tới nhé!",
+      "repliedAt": "2026-10-26T21:00:00Z",
+      "createdAt": "2026-10-26T20:30:00Z"
+    },
+    {
+      "id": "f07",
+      "table": "B03",
+      "rating": 3,
+      "text": "Giờ cao điểm phục vụ lên món hơi chậm, mong quán cải thiện tốc độ ra món.",
+      "theme": "Thời gian chờ",
+      "status": "new",
+      "createdAt": "2026-10-27T13:05:00Z"
     }
   ],
   "staff": [
@@ -690,7 +753,7 @@
       "email": "minhanh@menumind.vn",
       "role": "kitchen",
       "status": "active",
-      "shift": "Chiều"
+      "shift": "Chiều (14:00 - 22:00)"
     },
     {
       "id": "u02",
@@ -698,7 +761,7 @@
       "email": "quocbao@menumind.vn",
       "role": "kitchen",
       "status": "active",
-      "shift": "Tối"
+      "shift": "Tối (17:00 - 23:00)"
     },
     {
       "id": "u03",
@@ -721,8 +784,48 @@
       "name": "Linh Chi",
       "email": "linhchi@menumind.vn",
       "role": "service",
-      "status": "inactive",
-      "shift": "Sáng"
+      "status": "active",
+      "shift": "Sáng (06:00 - 14:00)"
+    }
+  ],
+  "payments": [
+    {
+      "id": "p01",
+      "table_code": "A02",
+      "reference": "HD-A02-091",
+      "method": "cash",
+      "amount": 541800,
+      "status": "pending",
+      "created_at": "2026-10-27T12:45:00Z"
+    },
+    {
+      "id": "p02",
+      "table_code": "B02",
+      "reference": "HD-B02-092",
+      "method": "bank_transfer",
+      "amount": 385350,
+      "status": "pending",
+      "created_at": "2026-10-27T13:10:00Z"
+    },
+    {
+      "id": "p03",
+      "table_code": "A04",
+      "reference": "HD-A04-089",
+      "method": "card",
+      "amount": 640000,
+      "status": "paid",
+      "created_at": "2026-10-27T11:30:00Z",
+      "paid_at": "2026-10-27T12:00:00Z"
+    },
+    {
+      "id": "p04",
+      "table_code": "A05",
+      "reference": "HD-A05-088",
+      "method": "cash",
+      "amount": 459900,
+      "status": "paid",
+      "created_at": "2026-10-27T10:15:00Z",
+      "paid_at": "2026-10-27T10:45:00Z"
     }
   ]
 }

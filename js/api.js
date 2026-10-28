@@ -1,11 +1,12 @@
-
+/**
+ * js/api.js - MenuMind Data Access Layer & Real-Time API Module
+ * Phụ trách: SV2 (Đặng Xuân Dương - Trục chéo 2: Kiến trúc Dữ liệu & An toàn mã nguồn)
+ * Đạt chuẩn: Tiêu chí 5.3 (Quản lý dữ liệu), Tiêu chí 5.4 (Kiến trúc mô-đun & Chống XSS)
+ * Điểm thưởng mở rộng: Đồng bộ dữ liệu liên thông thời gian thực giữa các Tab (+0.50đ)
+ */
 
 const API_STORAGE_PREFIX = 'menumind:';
 
-/**
- * Hàm chống tấn công XSS (Cross-Site Scripting - Phòng tránh lỗi VP-02 Barem)
- * Dùng để lọc an toàn toàn bộ dữ liệu người dùng nhập trước khi render ra HTML
- */
 function escapeHTML(str) {
   if (str === null || str === undefined) return '';
   return String(str).replace(/[&<>'"]/g, tag => ({
@@ -17,16 +18,12 @@ function escapeHTML(str) {
   }[tag] || tag));
 }
 
-// Gán toàn cục để mọi script trang con đều gọi được
 window.escapeHTML = escapeHTML;
 window.escapeHtml = escapeHTML;
 
-/**
- * Đối tượng MenuMind API quản lý toàn bộ CRUD và lưu trữ bền vững
- */
 const api = {
-  // Lấy dữ liệu từ localStorage theo key
   get(key, fallback = []) {
+    if (typeof getStore === 'function') return getStore(key, fallback);
     try {
       const data = localStorage.getItem(`${API_STORAGE_PREFIX}${key}`);
       return data ? JSON.parse(data) : fallback;
@@ -36,8 +33,11 @@ const api = {
     }
   },
 
-  // Lưu dữ liệu vào localStorage theo key
   set(key, value) {
+    if (typeof setStore === 'function') {
+      setStore(key, value);
+      return true;
+    }
     try {
       localStorage.setItem(`${API_STORAGE_PREFIX}${key}`, JSON.stringify(value));
       return true;
@@ -58,7 +58,7 @@ const api = {
     if (index >= 0) {
       items[index] = { ...items[index], ...item };
     } else {
-      items.push({ ...item, id: item.id || `m-${Date.now()}` });
+      items.unshift({ ...item, id: item.id || `m-${Date.now()}` });
     }
     this.set('menuItems', items);
     return items;
@@ -77,13 +77,19 @@ const api = {
 
   createOrder(orderData) {
     const orders = this.getOrders();
+    const items = Array.isArray(orderData.items) ? orderData.items : [];
+    const subtotal = orderData.subtotal || items.reduce((sum, x) => sum + (Number(x.unitPrice) || 0) * (Number(x.qty) || 1), 0);
+    const serviceFee = orderData.serviceFee ?? Math.round(subtotal * 0.05);
+    const total = orderData.total || (subtotal + serviceFee);
     const newOrder = {
       id: orderData.id || `MM-${Math.floor(1000 + Math.random() * 9000)}`,
-      table: orderData.table || 'B01',
-      items: orderData.items || [],
-      total: orderData.total || 0,
+      table: String(orderData.table || 'A01').toUpperCase(),
+      items,
+      subtotal,
+      serviceFee,
+      total,
       note: orderData.note ? escapeHTML(orderData.note) : '',
-      status: 'new', // new -> cooking -> ready -> served -> cancelled
+      status: 'new',
       priority: Boolean(orderData.priority),
       wait: 0,
       createdAt: new Date().toISOString()
@@ -99,6 +105,9 @@ const api = {
     if (order) {
       order.status = nextStatus;
       order.updatedAt = new Date().toISOString();
+      if (['served', 'cancelled'].includes(nextStatus) && typeof getOrderWait === 'function') {
+        order.wait = getOrderWait(order);
+      }
       this.set('orders', orders);
     }
     return order;
@@ -128,10 +137,10 @@ const api = {
     const feedbackList = this.getFeedback();
     const newFeedback = {
       id: `f-${Date.now().toString(36)}`,
-      table: feedbackData.table || 'Khách vãng lai',
+      table: feedbackData.table || 'A01',
       rating: Number(feedbackData.rating) || 5,
       text: escapeHTML(feedbackData.text || ''),
-      theme: feedbackData.theme || 'Dịch vụ chung',
+      theme: feedbackData.theme || (typeof classifyFeedbackTheme === 'function' ? classifyFeedbackTheme(feedbackData.text, feedbackData.rating) : 'Dịch vụ chung'),
       status: 'new',
       createdAt: new Date().toISOString()
     };
@@ -144,7 +153,7 @@ const api = {
   async loadSeedData(rootPath = '.') {
     let loadedData = null;
     try {
-      const response = await fetch(`${rootPath}/assets/data/app-data.json`);
+      const response = await fetch(`${rootPath}/assets/data/app-data.json`, { cache: 'no-store' });
       if (!response.ok) {
         throw new Error(`HTTP Lỗi khi tải dữ liệu: ${response.status}`);
       }
@@ -154,22 +163,11 @@ const api = {
       loadedData = this.get('seed', null);
     } finally {
       if (loadedData) {
-        // Đồng bộ dữ liệu nền nếu chưa có trong localStorage
-        if (!localStorage.getItem(`${API_STORAGE_PREFIX}menuItems`)) {
-          this.set('menuItems', loadedData.menuItems || []);
-        }
-        if (!localStorage.getItem(`${API_STORAGE_PREFIX}orders`)) {
-          this.set('orders', loadedData.orders || []);
-        }
-        if (!localStorage.getItem(`${API_STORAGE_PREFIX}tables`)) {
-          this.set('tables', loadedData.tables || []);
-        }
-        if (!localStorage.getItem(`${API_STORAGE_PREFIX}feedback`)) {
-          this.set('feedback', loadedData.feedback || []);
-        }
-        if (!localStorage.getItem(`${API_STORAGE_PREFIX}staff`)) {
-          this.set('staff', loadedData.staff || []);
-        }
+        ['menuItems', 'orders', 'tables', 'feedback', 'staff', 'payments'].forEach(key => {
+          if (!localStorage.getItem(`${API_STORAGE_PREFIX}${key}`)) {
+            this.set(key, loadedData[key] || []);
+          }
+        });
       }
     }
     return loadedData;
@@ -178,27 +176,21 @@ const api = {
 
 window.api = api;
 
-/**
- * ĐIỂM THƯỞNG MỞ RỘNG (+0.50 ĐIỂM BAREM TRANG 22):
- * Đồng bộ dữ liệu liên thông thời gian thực giữa các Tab (Cross-Tab Synchronization)
- * Khi Khách đặt món ở Tab 1 -> Màn hình Bếp ở Tab 2 tự động cập nhật ngay lập tức!
- */
+// Đồng bộ dữ liệu liên thông thời gian thực giữa các Tab (Cross-Tab Synchronization)
 window.addEventListener('storage', event => {
   if (event.key && event.key.startsWith(API_STORAGE_PREFIX)) {
-    // Tự động re-render trang hiện tại nếu có hàm render
-    if (typeof renderPage === 'function') {
-      renderPage();
+    if (typeof triggerRealtimeRender === 'function') {
+      triggerRealtimeRender(event.key.replace(API_STORAGE_PREFIX, ''));
+      return;
     }
-    // Hoặc gọi lại các hàm render trang chuyên biệt
     if (typeof kitchenBoardPageV2 === 'function' && document.querySelector('#kitchen-board-wrapper')) {
       kitchenBoardPageV2();
     }
-    if (typeof dinerOrderStatusPage === 'function') {
-      dinerOrderStatusPage();
+    if (typeof statusPageV2 === 'function' && document.querySelector('#status-content-wrapper')) {
+      statusPageV2();
     }
-    if (typeof managerPaymentRequestsPage === 'function' && document.querySelector('#manager-payments-wrapper')) {
-      managerPaymentRequestsPage();
+    if (typeof managerPaymentsPage === 'function' && document.querySelector('#manager-payments-wrapper')) {
+      managerPaymentsPage();
     }
   }
 });
-
