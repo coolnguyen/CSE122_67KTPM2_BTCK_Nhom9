@@ -1,6 +1,7 @@
 /* ==========================================================================
    css/index.css - MenuMind Bistro Brand Identity & Dining Space Showcase
    Phong cách Fine Dining & Contemporary Bistro sang trọng, tinh tế, nghệ thuật
+   Bổ sung: Carousel Slide Trình Diễn Bộ Sưu Tập Món Bếp Trưởng Mượt Mà
    ========================================================================== */
 
 /* 1. HERO BRAND SECTION */
@@ -120,17 +121,17 @@
   line-height: 1.35;
 }
 
-/* 2. HERO SHOWCASE: CHEF'S SIGNATURE MASTERPIECE CARD */
+/* 2. HERO SHOWCASE & CHEF'S SIGNATURE CAROUSEL */
 .hero-showcase {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 520px;
+  min-height: 540px;
   padding: 30px 10px;
 }
 
-/* Subtle Ambient Glow */
+/* Ambient Radial Glow */
 .showcase-glow {
   position: absolute;
   inset: -15%;
@@ -140,22 +141,43 @@
   pointer-events: none;
 }
 
-.masterpiece-card {
+/* Carousel Outer Frame */
+.hero-carousel-wrapper {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.carousel-viewport {
+  overflow: hidden;
+  border-radius: 22px;
+  width: 100%;
+  box-shadow: 0 30px 70px -15px rgba(16, 42, 43, 0.16), 0 0 0 1px rgba(255, 255, 255, 0.85) inset;
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.carousel-slide {
+  width: 100%;
+  min-width: 100%;
+  flex-shrink: 0;
+}
+
+/* Masterpiece Card */
+.masterpiece-card {
+  width: 100%;
   background: var(--surface);
   border: 1px solid rgba(16, 42, 43, 0.09);
   border-radius: 22px;
-  box-shadow: 0 30px 70px -15px rgba(16, 42, 43, 0.16), 0 0 0 1px rgba(255, 255, 255, 0.85) inset;
   overflow: hidden;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-
-.masterpiece-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 38px 80px -15px rgba(16, 42, 43, 0.22);
+  transition: transform 0.35s ease;
 }
 
 .dish-visual-frame {
@@ -181,7 +203,7 @@
 .dish-overlay-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, transparent 40%, rgba(0, 0, 0, 0.45) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, transparent 40%, rgba(0, 0, 0, 0.48) 100%);
   pointer-events: none;
 }
 
@@ -198,6 +220,19 @@
   font-weight: 700;
   letter-spacing: 0.03em;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dish-badge-price {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: rgba(23, 107, 91, 0.92);
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  padding: 5px 14px;
+  border-radius: 999px;
+  font: 800 0.88rem 'Manrope', sans-serif;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }
 
 .dish-story-body {
@@ -222,7 +257,7 @@
 }
 
 .dish-story-head h2 {
-  font: 800 1.35rem 'Manrope', sans-serif;
+  font: 800 1.32rem 'Manrope', sans-serif;
   margin: 0;
   color: var(--ink);
   line-height: 1.25;
@@ -244,6 +279,7 @@
   color: var(--muted);
   font-size: 0.84rem;
   line-height: 1.5;
+  min-height: 40px;
 }
 
 .dish-story-foot {
@@ -254,9 +290,18 @@
   border-block-start: 1px solid var(--line);
 }
 
-.dish-price {
-  font: 800 1.4rem 'Manrope', sans-serif;
-  color: var(--leaf);
+.view-dish-btn {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.view-dish-btn:hover {
+  background: var(--leaf);
+  color: #ffffff !important;
+  border-color: var(--leaf);
 }
 
 .dish-highlights {
@@ -280,6 +325,97 @@
   color: var(--ink-2);
   padding: 4px 10px;
   border-radius: 999px;
+}
+
+/* Carousel Prev & Next Buttons */
+.carousel-btn {
+  position: absolute;
+  top: 36%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(16, 42, 43, 0.12);
+  box-shadow: 0 8px 24px rgba(16, 42, 43, 0.15);
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 4;
+  line-height: 1;
+  padding: 0 0 3px 0;
+  user-select: none;
+}
+
+.carousel-btn:hover {
+  background: var(--leaf);
+  color: #ffffff;
+  transform: translateY(-50%) scale(1.12);
+  box-shadow: 0 12px 28px rgba(23, 107, 91, 0.32);
+  border-color: transparent;
+}
+
+.carousel-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-btn.prev {
+  left: -20px;
+}
+
+.carousel-btn.next {
+  right: -20px;
+}
+
+/* Carousel Navigation Bar (Dots & Counter) */
+.carousel-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 8px 0;
+}
+
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(16, 42, 43, 0.2);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.carousel-dot:hover {
+  background: rgba(23, 107, 91, 0.5);
+}
+
+.carousel-dot.active {
+  width: 28px;
+  background: var(--leaf);
+  box-shadow: 0 2px 8px rgba(23, 107, 91, 0.3);
+}
+
+.carousel-counter {
+  font: 700 0.78rem 'Manrope', sans-serif;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.carousel-counter #carousel-current {
+  color: var(--leaf);
+  font-weight: 800;
+  font-size: 0.88rem;
 }
 
 /* Floating Brand Experience Badges */
@@ -323,13 +459,13 @@
 }
 
 .floating-brand-card.top-float {
-  top: 20px;
-  right: -18px;
+  top: 15px;
+  right: -24px;
 }
 
 .floating-brand-card.bottom-float {
-  bottom: 20px;
-  left: -18px;
+  bottom: 15px;
+  left: -24px;
 }
 
 /* 3. DINING SPACES & TABLE SELECTION */
@@ -461,6 +597,14 @@
     gap: 40px;
   }
 
+  .carousel-btn.prev {
+    left: -12px;
+  }
+
+  .carousel-btn.next {
+    right: -12px;
+  }
+
   .floating-brand-card.top-float {
     right: -5px;
   }
@@ -486,8 +630,18 @@
     margin-block-start: 10px;
   }
 
-  .masterpiece-card {
-    max-width: 450px;
+  .hero-carousel-wrapper {
+    max-width: 460px;
+  }
+
+  .carousel-btn.prev {
+    left: 8px;
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .carousel-btn.next {
+    right: 8px;
+    background: rgba(255, 255, 255, 0.92);
   }
 
   .home-table-grid {
@@ -507,6 +661,12 @@
 
   .hero-showcase {
     padding: 20px 0;
+  }
+
+  .carousel-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1.35rem;
   }
 
   .floating-brand-card {

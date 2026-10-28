@@ -79,32 +79,54 @@
                 </div>
             </div>
 
-            <!-- Hero Visual: Chef's Showcase Card -->
-            <div class="hero-showcase" aria-label="Món ăn nổi bật của bếp trưởng MenuMind">
+            <!-- Hero Visual: Chef's Signature Carousel -->
+            <div class="hero-showcase" aria-label="Bộ sưu tập món ăn tinh hoa của bếp trưởng MenuMind">
                 <div class="showcase-glow" aria-hidden="true"></div>
 
-                <div class="masterpiece-card">
-                    <div class="dish-visual-frame">
-                        <img id="hero-top-img" src="assets/images/menu/m01.jpg" alt="Món ăn đặc trưng" class="hero-dish-photo">
-                        <div class="dish-overlay-gradient"></div>
-                        <span class="curated-badge">✦ Chef's Signature Selection</span>
+                <div class="hero-carousel-wrapper" id="hero-carousel" role="region" aria-roledescription="carousel" aria-label="Món ăn đặc sắc">
+                    <!-- Carousel Viewport -->
+                    <div class="carousel-viewport">
+                        <div class="carousel-track" id="carousel-track">
+                            <!-- Slides render động qua js/index.js -->
+                            <article class="carousel-slide active" data-slide-index="0">
+                                <div class="masterpiece-card">
+                                    <div class="dish-visual-frame">
+                                        <img src="assets/images/menu/m01.jpg" alt="Cá hồi áp chảo sốt chanh" class="hero-dish-photo">
+                                        <div class="dish-overlay-gradient"></div>
+                                        <span class="curated-badge">✦ Chef's Signature · Món chính</span>
+                                        <span class="dish-badge-price">189.000 ₫</span>
+                                    </div>
+                                    <div class="dish-story-body">
+                                        <div class="dish-story-head">
+                                            <div>
+                                                <span class="dish-category-tag">giàu đạm · bán chạy</span>
+                                                <h2>Cá hồi áp chảo sốt chanh</h2>
+                                            </div>
+                                            <span class="dish-story-emoji" aria-hidden="true">🐟</span>
+                                        </div>
+                                        <p>Cá hồi Nauy áp chảo da giòn, sốt chanh bơ thảo mộc Pháp, rau mầm tươi và khoai tây nghiền bơ mịn.</p>
+                                        <div class="dish-story-foot">
+                                            <a href="pages/diner-dish-detail.html?id=m01" class="button small quiet view-dish-btn">Xem chi tiết món →</a>
+                                            <div class="dish-highlights">
+                                                <span class="rating-badge">★ 4.9 Thượng hạng</span>
+                                                <span class="prep-badge">⏱ ~18 phút</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
                     </div>
 
-                    <div class="dish-story-body">
-                        <div class="dish-story-head">
-                            <div>
-                                <span class="dish-category-tag" id="hero-top-category">Món Chính Thượng Hạng</span>
-                                <h2 id="hero-top-dish-name">Cá hồi áp chảo sốt chanh</h2>
-                            </div>
-                            <span class="dish-story-emoji" id="hero-top-emoji" aria-hidden="true">🐟</span>
-                        </div>
-                        <p id="hero-top-dish-desc">Cá hồi Nauy áp chảo da giòn, sốt chanh bơ thảo mộc Pháp, rau mầm tươi và khoai tây nghiền bơ mịn.</p>
-                        <div class="dish-story-foot">
-                            <strong class="dish-price" id="hero-top-price">189.000 ₫</strong>
-                            <div class="dish-highlights">
-                                <span class="rating-badge" id="hero-top-rating">★ 4.9 Thượng hạng</span>
-                                <span class="prep-badge" id="hero-top-time">⏱ ~18 phút</span>
-                            </div>
+                    <!-- Nút bấm chuyển Slide Prev & Next -->
+                    <button type="button" class="carousel-btn prev" id="carousel-prev" aria-label="Món trước đó">‹</button>
+                    <button type="button" class="carousel-btn next" id="carousel-next" aria-label="Món kế tiếp">›</button>
+
+                    <!-- Thanh chỉ báo vị trí Slide & Dots -->
+                    <div class="carousel-nav-bar">
+                        <div class="carousel-dots" id="carousel-dots" aria-label="Chọn trang slide"></div>
+                        <div class="carousel-counter" id="carousel-counter">
+                            <span id="carousel-current">01</span> / <span id="carousel-total">05</span>
                         </div>
                     </div>
                 </div>

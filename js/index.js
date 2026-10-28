@@ -4,39 +4,237 @@
 
 let homeZoneFilter = 'Tất cả';
 
+// ==========================================================================
+// 1. CHEF'S SIGNATURE CAROUSEL CONTROLLER
+// ==========================================================================
+const SIGNATURE_DISH_IDS = ['m01', 'm02', 'm12', 'm04', 'm07'];
+let heroCarouselIndex = 0;
+let heroCarouselTimer = null;
+let heroCarouselDishes = [];
+let heroCarouselBound = false;
+
+function getFeaturedDishes(menuItems) {
+  const curated = SIGNATURE_DISH_IDS
+    .map(id => menuItems.find(m => m.id === id && m.available !== false))
+    .filter(Boolean);
+
+  if (curated.length >= 3) return curated;
+
+  // Dự phòng: Lấy top món đánh giá cao nhất nếu dữ liệu thay đổi
+  const sorted = [...menuItems]
+    .filter(m => m.available !== false)
+    .sort((a, b) => (b.rating || 0) - (a.rating || 0));
+  return sorted.slice(0, 5);
+}
+
+function mountHeroCarousel(menuItems) {
+  const wrapper = document.querySelector('#hero-carousel');
+  const track = document.querySelector('#carousel-track');
+  const dotsContainer = document.querySelector('#carousel-dots');
+  const counterCurrent = document.querySelector('#carousel-current');
+  const counterTotal = document.querySelector('#carousel-total');
+  const prevBtn = document.querySelector('#carousel-prev');
+  const nextBtn = document.querySelector('#carousel-next');
+
+  if (!wrapper || !track) return;
+
+  heroCarouselDishes = getFeaturedDishes(menuItems);
+  if (!heroCarouselDishes.length) return;
+
+  const total = heroCarouselDishes.length;
+  if (heroCarouselIndex >= total) heroCarouselIndex = 0;
+
+  // Render các slide món ăn tinh hoa
+  track.innerHTML = heroCarouselDishes.map((dish, idx) => {
+    const tags = Array.isArray(dish.tags) && dish.tags.length > 0
+      ? dish.tags.join(' · ')
+      : `${dish.category || 'Món chính'} · Thượng hạng`;
+    const ratingText = dish.rating ? `★ ${dish.rating} Thượng hạng` : '★ 4.9 Thượng hạng';
+    const prepTime = dish.time ? `⏱ ~${dish.time} phút` : '⏱ ~15 phút';
+    const imgSrc = typeof dishImage === 'function' ? dishImage(dish) : (dish.image || 'assets/images/menu/m01.jpg');
+
+    return `
+      <article class="carousel-slide ${idx === heroCarouselIndex ? 'active' : ''}" data-slide-index="${idx}" aria-label="${escapeHtml(dish.name)}">
+        <div class="masterpiece-card">
+          <div class="dish-visual-frame">
+            <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(dish.name)}" class="hero-dish-photo" loading="${idx === 0 ? 'eager' : 'lazy'}">
+            <div class="dish-overlay-gradient"></div>
+            <span class="curated-badge">✦ Chef's Signature · ${escapeHtml(dish.category || 'Món chính')}</span>
+            <span class="dish-badge-price">${money(dish.price)}</span>
+          </div>
+          <div class="dish-story-body">
+            <div class="dish-story-head">
+              <div>
+                <span class="dish-category-tag">${escapeHtml(tags)}</span>
+                <h2>${escapeHtml(dish.name)}</h2>
+              </div>
+              <span class="dish-story-emoji" aria-hidden="true">${dish.emoji || '🍽️'}</span>
+            </div>
+            <p>${escapeHtml(dish.description || 'Hương vị tinh tế được tuyển chọn từ nguyên liệu tươi ngon thượng hạng.')}</p>
+            <div class="dish-story-foot">
+              <a href="pages/diner-dish-detail.html?id=${encodeURIComponent(dish.id)}" class="button small quiet view-dish-btn">Xem chi tiết món →</a>
+              <div class="dish-highlights">
+                <span class="rating-badge">${escapeHtml(ratingText)}</span>
+                <span class="prep-badge">${escapeHtml(prepTime)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  // Render chấm tròn định vị (dots)
+  if (dotsContainer) {
+    dotsContainer.innerHTML = heroCarouselDishes.map((_, idx) => `
+      <button type="button" class="carousel-dot ${idx === heroCarouselIndex ? 'active' : ''}" data-index="${idx}" aria-label="Đến món số ${idx + 1}"></button>
+    `).join('');
+  }
+
+  // Cập nhật tổng số slide
+  if (counterTotal) {
+    counterTotal.textContent = String(total).padStart(2, '0');
+  }
+
+  function updateCarouselUI() {
+    track.style.transform = `translateX(-${heroCarouselIndex * 100}%)`;
+
+    if (counterCurrent) {
+      counterCurrent.textContent = String(heroCarouselIndex + 1).padStart(2, '0');
+    }
+
+    if (dotsContainer) {
+      const dots = dotsContainer.querySelectorAll('.carousel-dot');
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === heroCarouselIndex);
+      });
+    }
+
+    const slides = track.querySelectorAll('.carousel-slide');
+    slides.forEach((slide, idx) => {
+      slide.classList.toggle('active', idx === heroCarouselIndex);
+    });
+  }
+
+  function nextSlide() {
+    heroCarouselIndex = (heroCarouselIndex + 1) % total;
+    updateCarouselUI();
+  }
+
+  function prevSlide() {
+    heroCarouselIndex = (heroCarouselIndex - 1 + total) % total;
+    updateCarouselUI();
+  }
+
+  function goToSlide(idx) {
+    heroCarouselIndex = Math.max(0, Math.min(idx, total - 1));
+    updateCarouselUI();
+  }
+
+  function startAutoPlay() {
+    stopAutoPlay();
+    heroCarouselTimer = setInterval(nextSlide, 4500);
+  }
+
+  function stopAutoPlay() {
+    if (heroCarouselTimer) {
+      clearInterval(heroCarouselTimer);
+      heroCarouselTimer = null;
+    }
+  }
+
+  // Chỉ gắn bộ lắng nghe sự kiện một lần duy nhất
+  if (!heroCarouselBound) {
+    heroCarouselBound = true;
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        prevSlide();
+        startAutoPlay();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        nextSlide();
+        startAutoPlay();
+      });
+    }
+
+    if (dotsContainer) {
+      dotsContainer.addEventListener('click', e => {
+        const dot = e.target.closest('.carousel-dot');
+        if (dot && dot.dataset.index !== undefined) {
+          goToSlide(parseInt(dot.dataset.index, 10));
+          startAutoPlay();
+        }
+      });
+    }
+
+    // Tạm dừng khi rê chuột hoặc chạm vào slide để khách đọc mô tả món
+    wrapper.addEventListener('mouseenter', stopAutoPlay);
+    wrapper.addEventListener('mouseleave', startAutoPlay);
+    wrapper.addEventListener('focusin', stopAutoPlay);
+    wrapper.addEventListener('focusout', startAutoPlay);
+
+    // Hỗ trợ vuốt tay mượt mà trên Mobile & Tablet (Touch Swipe)
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    wrapper.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+      stopAutoPlay();
+    }, { passive: true });
+
+    wrapper.addEventListener('touchend', e => {
+      const touchEndX = e.changedTouches[0].screenX;
+      const touchEndY = e.changedTouches[0].screenY;
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+
+      if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX < 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+      startAutoPlay();
+    }, { passive: true });
+
+    // Hỗ trợ phím mũi tên bàn phím khi trỏ chuột vào vùng slide
+    window.addEventListener('keydown', e => {
+      if (document.activeElement && ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+      if (wrapper.matches(':hover') || wrapper.contains(document.activeElement)) {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          prevSlide();
+          startAutoPlay();
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          nextSlide();
+          startAutoPlay();
+        }
+      }
+    });
+  }
+
+  updateCarouselUI();
+  startAutoPlay();
+}
+
+// ==========================================================================
+// 2. MAIN HOMEPAGE RENDER CONTROLLER
+// ==========================================================================
 function homePage() {
   const tables = getStore('tables', appData.tables || []);
   const orders = getStore('orders', appData.orders || []);
   const menuItems = getStore('menuItems', appData.menuItems || []);
   const payments = getStore('payments', appData.payments || []);
 
-  // 1. Cập nhật Món Ăn Bếp Trưởng (Chef's Signature Dish)
-  const topDish = [...menuItems]
-    .filter(m => m.available)
-    .sort((a, b) => (b.orders || 0) - (a.orders || 0))[0] || menuItems[0];
-
-  const topDishName = document.querySelector('#hero-top-dish-name');
-  const topDishDesc = document.querySelector('#hero-top-dish-desc');
-  const topDishCategory = document.querySelector('#hero-top-category');
-  const topDishPrice = document.querySelector('#hero-top-price');
-  const topDishRating = document.querySelector('#hero-top-rating');
-  const topDishTime = document.querySelector('#hero-top-time');
-  const topDishImg = document.querySelector('#hero-top-img');
-  const topEmojiEl = document.querySelector('#hero-top-emoji');
-
-  if (topDish) {
-    if (topDishName) topDishName.textContent = topDish.name;
-    if (topDishDesc) topDishDesc.textContent = topDish.description || '';
-    if (topDishCategory) topDishCategory.textContent = `${topDish.category} Thượng Hạng`;
-    if (topDishPrice) topDishPrice.textContent = money(topDish.price);
-    if (topDishRating) topDishRating.textContent = `★ ${topDish.rating} (${topDish.orders || 128} lượt gọi)`;
-    if (topDishTime) topDishTime.textContent = `⏱ ~${topDish.time || 18} phút`;
-    if (topDishImg && typeof dishImage === 'function') {
-      topDishImg.src = dishImage(topDish);
-      topDishImg.alt = topDish.name;
-    }
-    if (topEmojiEl) topEmojiEl.textContent = topDish.emoji || '🍽️';
-  }
+  // 1. Khởi động Carousel món ăn tinh hoa bếp trưởng
+  mountHeroCarousel(menuItems);
 
   // 2. Render bộ lọc không gian (Khu vực nhà hàng)
   const zones = ['Tất cả', ...new Set(tables.map(t => t.zone))];
