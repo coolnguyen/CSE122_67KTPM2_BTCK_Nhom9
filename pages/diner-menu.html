@@ -35,6 +35,33 @@
     </header>
 
     <main id="main-content" class="site-main">
+        <!-- GUEST MODE BANNER: Hiển thị khi khách xem tham khảo từ ngoài nhà hàng -->
+        <aside class="guest-mode-banner" id="guest-mode-banner">
+            <div class="guest-banner-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+            <div class="guest-banner-text">
+                <strong>Quý khách đang xem Thực đơn tham khảo trực tuyến</strong>
+                <p>Khi đến dùng bữa tại MenuMind Bistro, quý khách chỉ cần quét mã QR tại bàn để gửi món trực tiếp vào bếp và theo dõi tiến độ nấu món theo thời gian thực.</p>
+            </div>
+            <div class="guest-banner-actions">
+                <button type="button" class="button small primary" id="guest-seat-btn">Tôi đang ngồi tại nhà hàng</button>
+                <a href="../index.html#dining-reservation" class="button small quiet">Đặt bàn trước</a>
+            </div>
+        </aside>
+
+        <!-- DINE-IN ACTIVE BAR: Hiển thị khi đã kết nối bàn ăn -->
+        <aside class="dine-in-bar" id="dine-in-bar" style="display:none;">
+            <div class="dine-in-info">
+                <span class="pulse-dot"></span>
+                <span>Đang phục vụ <strong id="dine-in-table-label">Bàn A01</strong> (<span id="dine-in-zone-label">Cửa sổ</span>)</span>
+            </div>
+            <div class="dine-in-actions">
+                <a href="diner-order-status.html" class="button small quiet">Xem tiến độ món ăn →</a>
+                <button type="button" class="button small quiet" id="menu-leave-table-btn">Rời bàn</button>
+            </div>
+        </aside>
+
         <header class="page-head">
             <div>
                 <p class="kicker">Thực đơn tại bàn</p>
@@ -111,6 +138,23 @@
             </aside>
         </div>
     </main>
+
+    <!-- DIALOG CHỌN BÀN ĂN DÀNH CHO KHÁCH TẠI QUÁN -->
+    <dialog id="table-select-dialog" class="table-select-dialog" aria-labelledby="table-dialog-title">
+        <header class="dialog-head">
+            <h2 id="table-dialog-title">Chọn bàn quý khách đang ngồi</h2>
+            <button class="icon-button" type="button" data-close="table-select-dialog" aria-label="Đóng">×</button>
+        </header>
+        <div class="table-select-body">
+            <p>Vui lòng chọn số bàn trên mã QR đặt tại bàn của quý khách để kết nối và gửi món vào bếp:</p>
+            <div class="quick-tables-grid" id="quick-tables-list">
+                <!-- Danh sách chip bàn render động -->
+            </div>
+            <div class="dialog-foot-actions">
+                <a href="../index.html#dining-reservation" class="button quiet small">Tôi chưa đến nhà hàng · Đặt bàn trước</a>
+            </div>
+        </div>
+    </dialog>
 
     <footer class="site-footer">
         <span>MenuMind · vận hành thông minh, phục vụ có nhịp</span>

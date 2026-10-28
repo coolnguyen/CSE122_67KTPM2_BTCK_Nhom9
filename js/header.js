@@ -146,35 +146,66 @@ function syncGlobalNav() {
   const isStatus = ['status', 'cart'].includes(currentPageKey) || currentFile.includes('order-status') || currentFile.includes('table-order');
   const isStaff = ['login', 'admin', 'manager', 'kitchen'].some(k => currentPageKey.startsWith(k)) || currentFile === 'login.html';
 
-  nav.innerHTML = `
-    <a href="${rootPrefix}index.html"${isHome ? ' class="active" aria-current="page"' : ''}>Trang chủ</a>
-    ${isHome ? `<a href="#dining-spaces">Không gian</a><a href="#dining-journey">Trải nghiệm QR</a>` : ''}
-    <a href="${prefix}diner-menu.html"${isMenu ? ' class="active" aria-current="page"' : ''}>Thực đơn</a>
-    <a href="${prefix}diner-order-status.html"${isStatus ? ' class="active" aria-current="page"' : ''}>Theo dõi đơn</a>
-    <a href="${prefix}login.html"${isStaff ? ' class="active" aria-current="page"' : ''}>Khu vực nhân viên</a>
-  `;
+  const dineInTable = typeof getDineInTable === 'function' ? getDineInTable() : null;
+
+  if (dineInTable) {
+    // 1. Chế độ Khách tại quán (Đã quét QR bàn ăn): Xem thực đơn gọi món, tiến độ bếp và giỏ hàng tại bàn
+    nav.innerHTML = `
+      <a href="${rootPrefix}index.html"${isHome ? ' class="active" aria-current="page"' : ''}>Trang chủ</a>
+      <a href="${prefix}diner-menu.html?table=${encodeURIComponent(dineInTable)}"${isMenu ? ' class="active" aria-current="page"' : ''}>Thực đơn</a>
+      <a href="${prefix}diner-order-status.html?table=${encodeURIComponent(dineInTable)}"${isStatus ? ' class="active" aria-current="page"' : ''}>Tiến độ món ăn</a>
+      <a href="${prefix}login.html"${isStaff ? ' class="active" aria-current="page"' : ''}>Khu vực nhân viên</a>
+    `;
+  } else {
+    // 2. Chế độ Khách ngoài nhà hàng (Trực tuyến / Tham khảo / Đặt bàn trước)
+    nav.innerHTML = `
+      <a href="${rootPrefix}index.html"${isHome ? ' class="active" aria-current="page"' : ''}>Trang chủ</a>
+      <a href="${rootPrefix}index.html#bistro-story">Câu chuyện</a>
+      <a href="${prefix}diner-menu.html"${isMenu ? ' class="active" aria-current="page"' : ''}>Thực đơn</a>
+      <a href="${rootPrefix}index.html#dining-spaces">Không gian</a>
+      <a href="${rootPrefix}index.html#dining-reservation">Đặt bàn</a>
+      <a href="${prefix}login.html"${isStaff ? ' class="active" aria-current="page"' : ''}>Khu vực nhân viên</a>
+    `;
+  }
 }
 
 function updateRolePill() {
   const rolePill = document.querySelector('.role-pill');
   if (!rolePill) return;
-  const currentPageKey = document.body.dataset.page || '';
-  const isDinerPage = ['home', 'menu', 'dish-detail', 'cart', 'status'].includes(currentPageKey);
+  const isRoot = document.body.dataset.root === '.' || !location.pathname.includes('/pages/');
+  const rootPrefix = isRoot ? '' : '../';
+  const prefix = isRoot ? 'pages/' : '';
   const session = typeof getAuthSession === 'function' ? getAuthSession() : null;
 
-  if (isDinerPage && currentPageKey !== 'home') {
-    const table = typeof getActiveTable === 'function' ? getActiveTable() : (sessionStorage.getItem('menumind:table') || 'A01');
-    rolePill.innerHTML = `<span class="pulse-dot"></span>Bàn ${escapeHtml(table)}`;
-    rolePill.setAttribute('title', `Đang phục vụ Bàn ${table} · Nhấn để đổi vai trò`);
-    return;
-  }
-
+  // 1. Nhân viên / Quản lý / Bếp / Admin
   if (session?.staff?.role) {
     const roleLabels = { manager: 'Quản lý', admin: 'Quản trị', kitchen: 'Bếp', service: 'Phục vụ' };
     const label = roleLabels[session.staff.role] || session.staff.role;
     rolePill.innerHTML = `<span class="pulse-dot"></span>${escapeHtml(session.staff.name || label)} (${label})`;
     rolePill.setAttribute('title', `Tài khoản: ${session.staff.name || session.staff.email} (${label})`);
+    rolePill.setAttribute('href', `${prefix}login.html`);
+    rolePill.classList.remove('reservation-pill', 'dine-in-pill');
+    return;
   }
+
+  const dineInTable = typeof getDineInTable === 'function' ? getDineInTable() : null;
+
+  // 2. Khách đang dùng bữa tại bàn (Dine-in)
+  if (dineInTable) {
+    rolePill.innerHTML = `<span class="pulse-dot"></span>Bàn ${escapeHtml(dineInTable)}`;
+    rolePill.setAttribute('title', `Đang phục vụ Bàn ${dineInTable} · Nhấn để xem giỏ món hoặc đổi bàn`);
+    rolePill.setAttribute('href', `${prefix}diner-table-order.html?table=${encodeURIComponent(dineInTable)}`);
+    rolePill.classList.remove('reservation-pill');
+    rolePill.classList.add('dine-in-pill');
+    return;
+  }
+
+  // 3. Khách tham khảo từ ngoài nhà hàng (Online Visitor)
+  rolePill.innerHTML = `<span class="pulse-dot gold-dot"></span>Đặt bàn ngay`;
+  rolePill.setAttribute('title', 'Nhấn để đặt bàn giữ chỗ tại MenuMind Bistro');
+  rolePill.setAttribute('href', `${rootPrefix}index.html#dining-reservation`);
+  rolePill.classList.remove('dine-in-pill');
+  rolePill.classList.add('reservation-pill');
 }
 
 // ==========================================================================

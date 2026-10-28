@@ -228,6 +228,46 @@ function mountHeroCarousel(menuItems) {
 // ==========================================================================
 // 2. MAIN HOMEPAGE RENDER CONTROLLER
 // ==========================================================================
+// 2. CURATED SIGNATURE MENU PREVIEW RENDERER
+// ==========================================================================
+function renderCuratedMenuPreview(menuItems) {
+  const container = document.querySelector('#curated-menu-grid');
+  if (!container) return;
+
+  const curatedIds = ['m01', 'm02', 'm12', 'm07'];
+  const curatedDishes = curatedIds
+    .map(id => menuItems.find(m => m.id === id && m.available !== false))
+    .filter(Boolean);
+
+  container.innerHTML = curatedDishes.map(dish => {
+    const imgSrc = typeof dishImage === 'function' ? dishImage(dish) : (dish.image || 'assets/images/menu/m01.jpg');
+    const tags = Array.isArray(dish.tags) ? dish.tags.join(' · ') : (dish.category || 'Món chính');
+    const prepTime = dish.time ? `~${dish.time} phút` : '~15 phút';
+    const rating = dish.rating ? `★ ${dish.rating}` : '★ 4.9';
+
+    return `
+      <article class="curated-card">
+        <div class="curated-media">
+          <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(dish.name)}" class="curated-photo" loading="lazy">
+          <span class="curated-price-pill">${money(dish.price)}</span>
+        </div>
+        <div class="curated-body">
+          <span class="curated-tag">${escapeHtml(tags)}</span>
+          <h4>${escapeHtml(dish.name)}</h4>
+          <p>${escapeHtml(dish.description || 'Tuyệt tác hương vị đương đại tuyển chọn.')}</p>
+          <div class="curated-meta">
+            <span>${escapeHtml(rating)}</span>
+            <span>Chế biến ${escapeHtml(prepTime)}</span>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+// ==========================================================================
+// 3. HOME PAGE CONTROLLER
+// ==========================================================================
 function homePage() {
   const tables = getStore('tables', appData.tables || []);
   const menuItems = getStore('menuItems', appData.menuItems || []);
@@ -235,12 +275,47 @@ function homePage() {
   // 1. Khởi động Carousel món ăn tinh hoa bếp trưởng
   mountHeroCarousel(menuItems);
 
-  // 2. Render danh sách bàn trong chế độ giả lập QR Simulator
-  const currentSelectedTable = typeof getActiveTable === 'function' ? getActiveTable() : 'A01';
+  // 2. Render bộ sưu tập món tinh tuyển xem trước
+  renderCuratedMenuPreview(menuItems);
+
+  // 3. Render danh sách bàn và trạng thái trong chế độ giả lập QR Simulator
+  renderSimulatorState(tables);
+
+  // 4. Thiết lập ngày tối thiểu cho các form đặt bàn là hôm nay
+  const today = new Date().toISOString().split('T')[0];
+  document.querySelectorAll('input[type="date"]').forEach(inp => {
+    inp.min = today;
+    if (!inp.value) inp.value = today;
+  });
+}
+
+function renderSimulatorState(tables = getStore('tables', appData.tables || [])) {
+  const dineInTable = typeof getDineInTable === 'function' ? getDineInTable() : null;
+  const statusBox = document.querySelector('#sim-status-box');
   const simContainer = document.querySelector('#simulator-tables');
+
+  if (statusBox) {
+    if (dineInTable) {
+      statusBox.innerHTML = `
+        <span class="sim-status-badge active-table">
+          <span class="pulse-dot"></span> Đang phục vụ: <b>Bàn ${escapeHtml(dineInTable)}</b>
+        </span>
+        <button type="button" class="button small quiet sim-leave-btn" id="sim-exit-table-btn">
+          Thoát chế độ bàn (Về khách vãng lai)
+        </button>
+      `;
+    } else {
+      statusBox.innerHTML = `
+        <span class="sim-status-badge">
+          <span class="pulse-dot gold-dot"></span> Chế độ: Khách tham khảo trực tuyến (Chưa chọn bàn)
+        </span>
+      `;
+    }
+  }
+
   if (simContainer) {
     simContainer.innerHTML = tables.map(t => {
-      const isCurrent = t.id === currentSelectedTable;
+      const isCurrent = t.id === dineInTable;
       const zoneLabel = t.zone || 'Khu vực';
       return `
         <button type="button" class="chip simulator-table-chip ${isCurrent ? 'active' : ''}" data-sim-table="${escapeHtml(t.id)}">
@@ -249,19 +324,19 @@ function homePage() {
       `;
     }).join('');
   }
-
-  // 3. Thiết lập ngày tối thiểu cho form đặt bàn là hôm nay
-  const dateInput = document.querySelector('#reserve-date-input');
-  if (dateInput && !dateInput.value) {
-    const today = new Date().toISOString().split('T')[0];
-    dateInput.min = today;
-    dateInput.value = today;
-  }
 }
 
 document.addEventListener('click', e => {
   const b = e.target.closest('button, a');
   if (!b) return;
+
+  // Nút thoát chế độ bàn trong Simulator
+  if (b.id === 'sim-exit-table-btn') {
+    if (typeof clearDineInSession === 'function') clearDineInSession();
+    toast('✓ Đã chuyển về chế độ khách tham khảo trực tuyến (Không còn kết nối bàn ăn).');
+    renderSimulatorState();
+    return;
+  }
 
   // Nút mở form đặt bàn theo không gian
   if (b.classList.contains('open-reserve-btn') || b.dataset.zone) {
@@ -289,7 +364,7 @@ document.addEventListener('click', e => {
       setStore('tables', tables);
     }
     const qr = setActiveTable(code);
-    toast(`✓ Đã kích hoạt phiên QR cho Bàn ${code}. Đang mở thực đơn...`);
+    toast(`✓ Đã kích hoạt phiên QR cho Bàn ${code}. Đang mở thực đơn gọi món...`);
     setTimeout(() => {
       location.href = `pages/diner-menu.html?table=${encodeURIComponent(qr.table)}&id=${encodeURIComponent(qr.token)}`;
     }, 280);
@@ -297,19 +372,36 @@ document.addEventListener('click', e => {
   }
 });
 
-// Xử lý gửi form đặt bàn trải nghiệm
+// Xử lý gửi form đặt bàn trải nghiệm (Cả form nhúng lẫn dialog popup)
 document.addEventListener('submit', e => {
-  if (e.target.id === 'reservation-form') {
+  if (e.target.id === 'reservation-form' || e.target.id === 'inline-reservation-form') {
     e.preventDefault();
     const fd = new FormData(e.target);
     const name = fd.get('name') || 'quý khách';
+    const phone = fd.get('phone') || '';
     const zone = fd.get('zone') || 'Sảnh tiệc';
     const date = fd.get('date');
     const time = fd.get('time');
     const guests = fd.get('guests') || 4;
+    const notes = fd.get('notes') || '';
+
+    // Lưu vào danh sách đặt bàn trong hệ thống
+    const reservations = getStore('reservations', []);
+    reservations.push({
+      id: uid('RES'),
+      name,
+      phone,
+      zone,
+      date,
+      time,
+      guests,
+      notes,
+      createdAt: new Date().toISOString()
+    });
+    setStore('reservations', reservations);
 
     document.querySelector('#reservation-dialog')?.close();
-    toast(`✓ MenuMind Bistro đã nhận thông tin đặt bàn của ${name}! Khu vực: ${zone} (${guests} khách, ngày ${date} lúc ${time}). Lễ tân sẽ liên hệ xác nhận sớm nhất.`);
+    toast(`✓ MenuMind Bistro đã nhận yêu cầu đặt bàn của quý khách ${name}! Khu vực: ${zone} (${guests} khách, ngày ${date} lúc ${time}). Đội ngũ lễ tân sẽ gọi tới ${phone} để xác nhận trong ít phút.`);
     e.target.reset();
   }
 });

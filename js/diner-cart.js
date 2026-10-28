@@ -24,7 +24,8 @@ function setTableCart(cartItems, tableCode = (typeof getActiveTable === 'functio
 }
 
 function updateCartCount() {
-  const cart = getTableCart();
+  const dineIn = typeof getDineInTable === 'function' ? getDineInTable() : null;
+  const cart = dineIn ? getTableCart(dineIn) : [];
   const count = (Array.isArray(cart) ? cart : []).reduce(
     (total, item) => total + Math.max(1, Number.parseInt(item?.qty, 10) || 1),
     0
@@ -36,7 +37,27 @@ function updateCartCount() {
   return count;
 }
 
+function openTableSelectPrompt(pendingDish = null) {
+  const dialog = document.querySelector('#table-select-dialog');
+  if (dialog) {
+    if (pendingDish) {
+      dialog.dataset.pendingDish = JSON.stringify(pendingDish);
+    } else {
+      delete dialog.dataset.pendingDish;
+    }
+    dialog.showModal();
+    return;
+  }
+  toast('Quý khách đang xem thực đơn tham khảo. Vui lòng quét mã QR tại bàn để gọi món hoặc đặt bàn trước nếu chưa đến quán!', 'info');
+}
+
 function addToCart(id, quantity = 1, note = '') {
+  // Nếu là khách tham khảo trực tuyến chưa ngồi tại bàn
+  if (typeof isDineIn === 'function' && !isDineIn()) {
+    openTableSelectPrompt({ id, quantity, note });
+    return false;
+  }
+
   const tableCode = typeof getActiveTable === 'function' ? getActiveTable() : 'A01';
   if (paymentLocksOrdering(undefined, tableCode)) {
     toast(orderingLockMessage(undefined, tableCode), 'error');
@@ -82,6 +103,7 @@ function addToCart(id, quantity = 1, note = '') {
 
 window.getTableCart = getTableCart;
 window.setTableCart = setTableCart;
+window.openTableSelectPrompt = openTableSelectPrompt;
 window.addEventListener('pageshow', updateCartCount);
 window.addEventListener('storage', event => {
   if (event.key === 'menumind:cart' || event.key === 'menumind:carts') updateCartCount();

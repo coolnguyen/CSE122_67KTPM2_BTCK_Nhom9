@@ -46,16 +46,38 @@ function containsAvoidedIngredient(item, avoid) {
 }
 
 function dinerMenuPage() {
-  const table = typeof getActiveTable === 'function' ? getActiveTable() : (sessionStorage.getItem('menumind:table') || 'A01');
+  const dineInTable = typeof getDineInTable === 'function' ? getDineInTable() : null;
   const tables = getStore('tables', appData.tables || []);
+  const guestBanner = document.querySelector('#guest-mode-banner');
+  const dineInBar = document.querySelector('#dine-in-bar');
   const tableKicker = document.querySelector('.page-head .kicker');
-  if (tableKicker) {
-    const options = tables
-      .filter(t => t.status !== 'cleaning' || t.id === table)
-      .map(t => `<option value="${escapeHtml(t.id)}" ${t.id === table ? 'selected' : ''}>Bàn ${escapeHtml(t.id)} (${escapeHtml(t.zone)})</option>`)
-      .join('');
-    tableKicker.innerHTML = `Thực đơn tại bàn · <select id="diner-table-switcher" aria-label="Đổi bàn phục vụ" style="display:inline-block;width:auto;padding:3px 8px;font-size:.75rem;font-weight:700;border-radius:6px;margin-left:4px;">${options}</select>`;
+
+  if (dineInTable) {
+    // 1. Chế độ Khách tại quán: đã kết nối bàn ăn
+    if (guestBanner) guestBanner.style.display = 'none';
+    if (dineInBar) {
+      dineInBar.style.display = 'flex';
+      const tableObj = tables.find(t => t.id === dineInTable);
+      const zoneName = tableObj?.zone || 'Khu vực';
+      const labelEl = document.querySelector('#dine-in-table-label');
+      const zoneEl = document.querySelector('#dine-in-zone-label');
+      if (labelEl) labelEl.textContent = `Bàn ${dineInTable}`;
+      if (zoneEl) zoneEl.textContent = zoneName;
+    }
+    if (tableKicker) {
+      tableKicker.innerHTML = `Thực đơn gọi món tại bàn · <strong>Bàn ${escapeHtml(dineInTable)}</strong>`;
+    }
+  } else {
+    // 2. Chế độ Khách tham khảo trực tuyến từ ngoài quán
+    if (guestBanner) guestBanner.style.display = 'flex';
+    if (dineInBar) dineInBar.style.display = 'none';
+    if (tableKicker) {
+      tableKicker.innerHTML = `Thực đơn tham khảo trực tuyến · MenuMind Bistro Contemporary`;
+    }
   }
+
+  // Render danh sách bàn trong Quick Table Picker Dialog
+  renderQuickTablesList(tables, dineInTable);
 
   const searchInput = document.querySelector('#menu-search');
   if (searchInput && menuFilters.q && !searchInput.value) {
@@ -65,6 +87,23 @@ function dinerMenuPage() {
   renderCategories();
   renderMenu();
   if (typeof updateCartCount === 'function') updateCartCount();
+}
+
+function renderQuickTablesList(tables, currentTable) {
+  const container = document.querySelector('#quick-tables-list');
+  if (!container) return;
+
+  container.innerHTML = tables
+    .filter(t => t.status !== 'cleaning')
+    .map(t => {
+      const isCurrent = t.id === currentTable;
+      return `
+        <button type="button" class="quick-table-btn ${isCurrent ? 'active' : ''}" data-select-table="${escapeHtml(t.id)}">
+          <strong>Bàn ${escapeHtml(t.id)}</strong>
+          <small>${escapeHtml(t.zone || 'Khu vực')} (${t.seats} chỗ)</small>
+        </button>
+      `;
+    }).join('');
 }
 
 function renderCategories() {
@@ -103,6 +142,11 @@ function renderMenu() {
 
 function dishCard(i) {
   const locked = paymentLocksOrdering();
+  const isVisitor = typeof isDineIn === 'function' && !isDineIn();
+  const addTitle = isVisitor
+    ? 'Nhấn để chọn bàn và gọi món'
+    : (locked ? 'Phiên bàn đã khóa gọi món' : `Thêm ${escapeHtml(i.name)} vào giỏ`);
+
   return `
     <article class="dish-card">
       <a class="dish-visual tone-${escapeHtml(String(i.id).slice(-1))}" data-dish-id="${escapeHtml(i.id)}" href="diner-dish-detail.html?id=${encodeURIComponent(i.id)}" aria-label="Xem ${escapeHtml(i.name)}">
@@ -118,7 +162,7 @@ function dishCard(i) {
         <p>${escapeHtml(i.description)}</p>
         <div class="dish-foot">
           <strong>${money(i.price)}</strong>
-          <button class="add-button" data-add="${escapeHtml(i.id)}" ${locked ? 'disabled title="Phiên bàn đã khóa gọi món"' : ''} aria-label="Thêm ${escapeHtml(i.name)} vào giỏ">+</button>
+          <button class="add-button" data-add="${escapeHtml(i.id)}" ${locked ? 'disabled' : ''} title="${escapeHtml(addTitle)}" aria-label="Thêm ${escapeHtml(i.name)} vào giỏ">+</button>
         </div>
       </div>
     </article>
@@ -228,6 +272,38 @@ function runTasteAI(form, nextCandidate = false) {
 document.addEventListener('click', e => {
   const b = e.target.closest('button, a');
   if (!b) return;
+
+  // Nút mở chọn bàn cho khách tại quán
+  if (b.id === 'guest-seat-btn') {
+    document.querySelector('#table-select-dialog')?.showModal();
+    return;
+  }
+
+  // Nút rời bàn
+  if (b.id === 'menu-leave-table-btn') {
+    if (typeof clearDineInSession === 'function') clearDineInSession();
+    toast('✓ Đã rời bàn. Hệ thống đã chuyển về chế độ thực đơn tham khảo.');
+    dinerMenuPage();
+    return;
+  }
+
+  // Chọn bàn từ Quick Table Picker Dialog
+  if (b.dataset.selectTable) {
+    const code = b.dataset.selectTable;
+    const dialog = document.querySelector('#table-select-dialog');
+    const pendingStr = dialog?.dataset?.pendingDish;
+    setActiveTable(code);
+    dialog?.close();
+    dinerMenuPage();
+    toast(`✓ Đã kết nối Bàn ${code}. Chúc quý khách bữa ăn ngon miệng!`);
+    if (pendingStr) {
+      try {
+        const p = JSON.parse(pendingStr);
+        if (typeof addToCart === 'function') addToCart(p.id, p.quantity, p.note);
+      } catch {}
+    }
+    return;
+  }
 
   if (b.dataset.category) {
     menuFilters.category = b.dataset.category;

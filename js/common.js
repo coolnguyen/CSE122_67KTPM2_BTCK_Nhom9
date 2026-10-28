@@ -153,25 +153,56 @@ function getQrSession() {
   try { return JSON.parse(sessionStorage.getItem('menumind:qr-session') || 'null'); } catch { return null; }
 }
 
-function getActiveTable() {
+function getDineInTable() {
   const params = new URLSearchParams(location.search);
   const fromUrl = params.get('table');
-  if (fromUrl) return fromUrl.trim().toUpperCase();
+  if (fromUrl) {
+    const code = fromUrl.trim().toUpperCase();
+    sessionStorage.setItem('menumind:table', code);
+    sessionStorage.setItem('menumind:dine_in_table', code);
+    return code;
+  }
   const qr = getQrSession();
-  if (qr?.table) return String(qr.table).trim().toUpperCase();
-  return (sessionStorage.getItem('menumind:table') || 'A01').trim().toUpperCase();
+  if (qr?.table) {
+    const code = String(qr.table).trim().toUpperCase();
+    sessionStorage.setItem('menumind:table', code);
+    sessionStorage.setItem('menumind:dine_in_table', code);
+    return code;
+  }
+  const stored = sessionStorage.getItem('menumind:dine_in_table') || sessionStorage.getItem('menumind:table');
+  return stored ? stored.trim().toUpperCase() : null;
+}
+
+function isDineIn() {
+  return Boolean(getDineInTable());
+}
+
+function getActiveTable(fallback = 'A01') {
+  const dineIn = getDineInTable();
+  if (dineIn) return dineIn;
+  return fallback ? String(fallback).trim().toUpperCase() : null;
 }
 
 function setActiveTable(tableCode, token = '') {
   const code = String(tableCode || 'A01').trim().toUpperCase();
   sessionStorage.setItem('menumind:table', code);
+  sessionStorage.setItem('menumind:dine_in_table', code);
   const session = typeof ensureTableSession === 'function'
     ? ensureTableSession(code, false)
     : { table_code: code, token: token || `qr-${code.toLowerCase()}` };
   const finalToken = token || session.token;
   sessionStorage.setItem('menumind:qr-session', JSON.stringify({ table: code, token: finalToken }));
   if (typeof updateRolePill === 'function') updateRolePill();
+  if (typeof syncGlobalNav === 'function') syncGlobalNav();
   return { table: code, token: finalToken };
+}
+
+function clearDineInSession() {
+  sessionStorage.removeItem('menumind:table');
+  sessionStorage.removeItem('menumind:dine_in_table');
+  sessionStorage.removeItem('menumind:qr-session');
+  if (typeof updateRolePill === 'function') updateRolePill();
+  if (typeof syncGlobalNav === 'function') syncGlobalNav();
 }
 
 function roleHome(role) {
@@ -229,6 +260,7 @@ function guardPage() {
 
 function getTablePayment(tableCode = getActiveTable()) {
   const code = String(tableCode || '').trim().toUpperCase();
+  if (!code) return null;
   const payments = getStore('payments', appData.payments || []);
   const sessions = typeof getLocalSessions === 'function' ? getLocalSessions() : {};
   const activeSession = sessions[code];
@@ -248,6 +280,7 @@ function getTablePayment(tableCode = getActiveTable()) {
 }
 
 function paymentLocksOrdering(paymentOverride = undefined, tableCode = getActiveTable()) {
+  if (!tableCode) return false;
   const payment = paymentOverride !== undefined ? paymentOverride : getTablePayment(tableCode);
   if (!payment) return false;
   if (payment.table_code && String(payment.table_code).toUpperCase() !== String(tableCode).toUpperCase()) {

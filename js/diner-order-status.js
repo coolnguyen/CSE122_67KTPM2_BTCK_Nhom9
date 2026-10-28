@@ -185,7 +185,27 @@ function showPaymentRequestPopup() {
 }
 
 function statusPageV2() {
-  const table = typeof getActiveTable === 'function' ? getActiveTable() : (sessionStorage.getItem('menumind:table') || 'A01');
+  const dineInTable = typeof getDineInTable === 'function' ? getDineInTable() : null;
+  const wrapper = document.querySelector('#status-content-wrapper');
+  if (!wrapper) return;
+
+  if (!dineInTable) {
+    wrapper.innerHTML = `
+      ${pageHead(
+        'Tiến độ món ăn tại bàn',
+        'Tính năng dành cho thực khách dùng bữa tại nhà hàng',
+        'Khi quý khách ngồi tại bàn và gửi đơn vào bếp, tiến độ chế biến từng món sẽ được cập nhật liên tục theo thời gian thực tại đây.'
+      )}
+      ${emptyState(
+        'Quý khách chưa kết nối bàn ăn',
+        'Quý khách đang ở chế độ xem trực tuyến từ xa. Khi đến dùng bữa tại nhà hàng, quý khách quét mã QR tại bàn để gửi món vào bếp và theo dõi tiến độ nấu món trực tiếp.',
+        '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;"><a class="button primary" href="diner-menu.html">Khám phá thực đơn</a><a class="button quiet" href="../index.html#qr-simulator">Mở bộ giả lập QR bàn ăn</a></div>'
+      )}
+    `;
+    return;
+  }
+
+  const table = dineInTable;
   const tables = getStore('tables', appData.tables || []);
   const menuItems = getStore('menuItems', appData.menuItems || []);
   const allOrders = getStore('orders', appData.orders || []);
@@ -196,9 +216,6 @@ function statusPageV2() {
       const db = parseOrderDate(b.createdAt)?.date?.getTime() || 0;
       return db - da;
     });
-
-  const wrapper = document.querySelector('#status-content-wrapper');
-  if (!wrapper) return;
 
   const tableOptions = tables
     .map(t => `<option value="${escapeHtml(t.id)}" ${t.id === table ? 'selected' : ''}>Bàn ${escapeHtml(t.id)} (${escapeHtml(statusLabel(t.status))})</option>`)

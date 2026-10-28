@@ -513,7 +513,170 @@
   left: 0;
 }
 
-/* 3. DINING SPACES SHOWCASE */
+/* 2. STORY & CULINARY PHILOSOPHY */
+.story-section {
+  padding: clamp(32px, 4vw, 56px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 4px 24px rgba(16, 42, 43, 0.03);
+  margin-block-end: 44px;
+}
+
+.story-section .section-title {
+  margin-block-end: 28px;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.story-card {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 24px;
+  border-radius: 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(16, 42, 43, 0.06);
+}
+
+.story-icon {
+  font-size: 2rem;
+  margin-block-end: 14px;
+  line-height: 1;
+}
+
+.story-card h3 {
+  font: 800 1.15rem 'Manrope', sans-serif;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
+.story-card p {
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0;
+}
+
+/* 3. CURATED SIGNATURE MENU PREVIEW */
+.curated-menu-section {
+  padding: clamp(32px, 4vw, 56px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  margin-block-end: 44px;
+}
+
+.curated-menu-section .section-title {
+  margin-block-end: 28px;
+}
+
+.curated-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.curated-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.curated-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(16, 42, 43, 0.08);
+}
+
+.curated-media {
+  position: relative;
+  height: 160px;
+  overflow: hidden;
+  background: #edf1e9;
+}
+
+.curated-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.curated-card:hover .curated-photo {
+  transform: scale(1.06);
+}
+
+.curated-price-pill {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(23, 107, 91, 0.92);
+  color: #fff;
+  font: 800 0.8rem 'Manrope', sans-serif;
+  padding: 4px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+.curated-body {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  flex: 1;
+}
+
+.curated-tag {
+  font: 700 0.68rem 'Manrope', sans-serif;
+  color: var(--leaf);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-block-end: 6px;
+}
+
+.curated-body h4 {
+  font: 800 0.98rem 'Manrope', sans-serif;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.curated-body p {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0 0 12px;
+  flex: 1;
+}
+
+.curated-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block-start: 10px;
+  border-block-start: 1px solid var(--line);
+  font-size: 0.72rem;
+  color: var(--ink-2);
+}
+
+.curated-menu-cta {
+  display: flex;
+  justify-content: center;
+  margin-block-start: 32px;
+}
+
+/* 4. DINING SPACES SHOWCASE */
 .spaces-section {
   padding: clamp(32px, 4vw, 56px);
   border: 1px solid var(--line);
@@ -696,7 +859,113 @@
   margin: 0;
 }
 
-/* 5. QR TABLE SIMULATOR */
+/* 6. ONLINE TABLE RESERVATION */
+.reservation-section {
+  padding: clamp(32px, 4vw, 56px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 8px 32px rgba(16, 42, 43, 0.04);
+  margin-block-end: 44px;
+}
+
+.reservation-card-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.reservation-intro .res-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(212, 175, 55, 0.15);
+  color: #b8912e;
+  font: 700 0.72rem 'Manrope', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-block-end: 12px;
+}
+
+.reservation-intro h2 {
+  font: 800 1.6rem 'Manrope', sans-serif;
+  color: var(--ink);
+  margin: 0 0 12px;
+  line-height: 1.25;
+}
+
+.reservation-intro p {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0 0 20px;
+}
+
+.res-perks {
+  display: grid;
+  gap: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--leaf);
+}
+
+.inline-res-form {
+  background: var(--paper);
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+}
+
+.inline-res-form .form-submit-row {
+  margin-block-start: 12px;
+}
+
+/* 7. LOCATION & OPENING HOURS */
+.contact-hours-section {
+  margin-block-end: 44px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.contact-card {
+  padding: 26px 22px;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 16px rgba(16, 42, 43, 0.03);
+}
+
+.contact-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-block-end: 10px;
+}
+
+.contact-card h3 {
+  font: 800 1.05rem 'Manrope', sans-serif;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.contact-card p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0 0 8px;
+}
+
+.contact-card small {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+/* 8. QR TABLE SIMULATOR */
 .simulator-section {
   margin-block-end: 44px;
 }
@@ -706,6 +975,47 @@
   border: 1.5px dashed rgba(23, 107, 91, 0.35);
   border-radius: 16px;
   background: rgba(23, 107, 91, 0.03);
+}
+
+.sim-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-block-end: 18px;
+}
+
+.sim-status-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sim-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.sim-status-badge.active-table {
+  background: rgba(23, 107, 91, 0.12);
+  border-color: rgba(23, 107, 91, 0.3);
+  color: var(--leaf);
+}
+
+.sim-leave-btn {
+  padding: 6px 12px;
+  font-size: 0.76rem;
+  cursor: pointer;
 }
 
 .simulator-pill {
@@ -729,7 +1039,7 @@
 .simulator-header p {
   font-size: 0.84rem;
   color: var(--muted);
-  margin: 0 0 18px;
+  margin: 0;
 }
 
 .simulator-tables-grid {
@@ -875,8 +1185,15 @@
   }
 
   .spaces-showcase-grid,
-  .journey-grid {
+  .journey-grid,
+  .story-grid,
+  .contact-grid,
+  .reservation-card-wrapper {
     grid-template-columns: 1fr;
+  }
+
+  .curated-menu-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .reservation-form .form-row {
@@ -894,6 +1211,10 @@
     gap: 10px;
   }
 
+  .curated-menu-grid {
+    grid-template-columns: 1fr;
+  }
+
   .hero-showcase {
     padding: 10px 0;
   }
@@ -904,8 +1225,11 @@
     font-size: 1.2rem;
   }
 
+  .story-section,
+  .curated-menu-section,
   .spaces-section,
   .smart-journey-section,
+  .reservation-section,
   .simulator-card {
     padding: 24px 18px;
   }

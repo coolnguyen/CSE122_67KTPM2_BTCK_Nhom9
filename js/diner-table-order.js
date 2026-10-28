@@ -5,7 +5,27 @@
 let generalOrderNote = '';
 
 function cartPage() {
-  const table = typeof getActiveTable === 'function' ? getActiveTable() : (sessionStorage.getItem('menumind:table') || 'A01');
+  const dineInTable = typeof getDineInTable === 'function' ? getDineInTable() : null;
+  const wrapper = document.querySelector('#cart-content-wrapper');
+
+  if (!dineInTable) {
+    const kicker = document.querySelector('#cart-kicker');
+    const subtitle = document.querySelector('#cart-subtitle');
+    const headActions = document.querySelector('#cart-head-actions');
+    if (kicker) kicker.textContent = 'Giỏ món tham khảo';
+    if (subtitle) subtitle.textContent = 'Tính năng giỏ hàng và gửi món vào bếp chỉ kích hoạt khi quý khách ngồi tại bàn nhà hàng.';
+    if (headActions) headActions.innerHTML = `<a class="button primary" href="diner-menu.html">Xem thực đơn</a>`;
+    if (wrapper) {
+      wrapper.innerHTML = emptyState(
+        'Quý khách chưa kết nối bàn ăn',
+        'Quý khách đang ở chế độ xem trực tuyến từ xa. Khi đến dùng bữa tại nhà hàng, hãy quét mã QR tại bàn để kích hoạt giỏ món và gửi đơn trực tiếp vào bếp!',
+        '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;"><a class="button primary" href="diner-menu.html">Khám phá thực đơn</a><a class="button quiet" href="../index.html#qr-simulator">Mở bộ giả lập QR bàn ăn</a></div>'
+      );
+    }
+    return;
+  }
+
+  const table = dineInTable;
   const cart = typeof getTableCart === 'function' ? getTableCart(table) : getStore('cart', []);
   const menuItems = getStore('menuItems', appData.menuItems || []);
   const details = cart
@@ -23,7 +43,6 @@ function cartPage() {
   const kicker = document.querySelector('#cart-kicker');
   const subtitle = document.querySelector('#cart-subtitle');
   const headActions = document.querySelector('#cart-head-actions');
-  const wrapper = document.querySelector('#cart-content-wrapper');
 
   if (kicker) kicker.textContent = `Bàn ${table}`;
   if (subtitle) {
