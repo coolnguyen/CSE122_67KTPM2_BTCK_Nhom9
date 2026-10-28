@@ -101,7 +101,7 @@ async function readRemoteData() {
     catch { return []; }
   };
   const [menuItems, tables] = await Promise.all([safeRead('menuItems?select=*'), safeRead('tables?select=*')]);
-  const canReadPayments = ['service', 'manager', 'admin'].includes(auth?.staff?.role);
+  const canReadPayments = ['manager', 'admin'].includes(auth?.staff?.role);
   const [staff, orders, feedback, payments] = await Promise.all([
     safeRead('staff?select=*', secured),
     safeRead('orders?select=*&order=createdAt.desc', secured),

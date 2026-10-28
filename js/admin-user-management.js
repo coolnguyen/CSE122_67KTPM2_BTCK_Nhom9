@@ -27,8 +27,7 @@ function roleDisplayName(role) {
   const roles = {
     kitchen: 'Nhân viên bếp',
     manager: 'Quản lý',
-    admin: 'Quản trị viên',
-    service: 'Phục vụ'
+    admin: 'Quản trị viên'
   };
   return roles[role] || role || 'Chưa gán';
 }
@@ -192,7 +191,7 @@ document.addEventListener('submit', async e => {
   const fd = new FormData(f);
   const name = String(fd.get('name') || '').trim();
   const email = String(fd.get('email') || '').trim().toLowerCase();
-  const role = String(fd.get('role') || 'service');
+  const role = String(fd.get('role') || 'manager');
   const shift = String(fd.get('shift') || 'Linh hoạt');
 
   const errName = document.querySelector('#err-name');

@@ -179,7 +179,7 @@ function updateRolePill() {
 
   // 1. Nhân viên / Quản lý / Bếp / Admin
   if (session?.staff?.role) {
-    const roleLabels = { manager: 'Quản lý', admin: 'Quản trị', kitchen: 'Bếp', service: 'Phục vụ' };
+    const roleLabels = { manager: 'Quản lý', admin: 'Quản trị', kitchen: 'Bếp' };
     const label = roleLabels[session.staff.role] || session.staff.role;
     rolePill.innerHTML = `<span class="pulse-dot"></span>${escapeHtml(session.staff.name || label)} (${label})`;
     rolePill.setAttribute('title', `Tài khoản: ${session.staff.name || session.staff.email} (${label})`);
@@ -232,10 +232,10 @@ function syncSidebar() {
       role = 'kitchen';
       sessionStorage.setItem('menumind:active_role', 'kitchen');
     }
-    // Các trang chỉ dành riêng cho Quản lý / Phục vụ
+    // Các trang chỉ dành riêng cho Quản lý
     else if (['manager-tables', 'manager-menu', 'manager-payments'].includes(currentPageKey)) {
-      role = cachedRole === 'service' ? 'service' : 'manager';
-      sessionStorage.setItem('menumind:active_role', role);
+      role = 'manager';
+      sessionStorage.setItem('menumind:active_role', 'manager');
     }
     // Các trang dùng chung (manager-feedback, admin-sales-insights)
     else if (cachedRole) {
@@ -294,19 +294,10 @@ function syncSidebar() {
       { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
     ];
   }
-  // 4. VAI TRÒ PHỤC VỤ (SERVICE): Bàn ăn & thanh toán
-  else if (role === 'service') {
-    sideNav.setAttribute('aria-label', 'Điều hướng Phục vụ');
-    navItems = [
-      { href: 'manager-table-management.html', pages: ['manager-tables', 'admin-tables'], label: 'Bàn ăn', icon: ICONS.tables },
-      { href: 'manager-payment-requests.html', pages: ['manager-payments'], label: 'Thanh toán', icon: ICONS.payments },
-      { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
-    ];
-  }
 
   if (!navItems.length) return;
 
-  const roleTitleMap = { admin: 'Quản trị viên', manager: 'Quản lý', kitchen: 'Khu vực bếp', service: 'Phục vụ' };
+  const roleTitleMap = { admin: 'Quản trị viên', manager: 'Quản lý', kitchen: 'Khu vực bếp' };
   const currentRoleTitle = roleTitleMap[role] || 'Khu vực làm việc';
 
   sideNav.innerHTML = `

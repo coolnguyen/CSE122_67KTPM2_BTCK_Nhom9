@@ -11,8 +11,7 @@ function getMockStaff(email) {
       : [
           { id: 'u03', name: 'Thu Hà', email: 'thuha@menumind.vn', role: 'manager', status: 'active', shift: 'Cả ngày' },
           { id: 'u04', name: 'Hoàng Nam', email: 'hoangnam@menumind.vn', role: 'admin', status: 'active', shift: 'Cả ngày' },
-          { id: 'u01', name: 'Minh Anh', email: 'minhanh@menumind.vn', role: 'kitchen', status: 'active', shift: 'Chiều' },
-          { id: 'u05', name: 'Linh Chi', email: 'linhchi@menumind.vn', role: 'service', status: 'active', shift: 'Sáng' }
+          { id: 'u01', name: 'Minh Anh', email: 'minhanh@menumind.vn', role: 'kitchen', status: 'active', shift: 'Chiều' }
         ];
   return staffList.find(s => String(s.email || '').toLowerCase() === String(email || '').toLowerCase());
 }
