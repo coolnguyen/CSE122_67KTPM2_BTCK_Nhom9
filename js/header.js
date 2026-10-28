@@ -150,7 +150,7 @@ function updateRolePill() {
 }
 
 // ==========================================================================
-// ĐỒNG BỘ THANH ĐIỀU HƯỚNG BÊN (SIDEBAR NAVIGATION) - KHÔNG BAO GIỜ BỊ MẤT OPTION
+// ĐỒNG BỘ THANH ĐIỀU HƯỚNG BÊN (SIDEBAR NAVIGATION) CHUẨN XÁC THEO PHÂN QUYỀN VAI TRÒ
 // ==========================================================================
 function syncSidebar() {
   const sideNav = document.querySelector('.side-nav');
@@ -162,8 +162,28 @@ function syncSidebar() {
 
   let role = session?.staff?.role;
   if (!role) {
-    if (currentPageKey.startsWith('kitchen-')) role = 'kitchen';
-    else role = 'admin';
+    const cachedRole = sessionStorage.getItem('menumind:active_role');
+    // Các trang chỉ dành riêng cho Admin
+    if (['admin-users', 'admin-settings'].includes(currentPageKey)) {
+      role = 'admin';
+      sessionStorage.setItem('menumind:active_role', 'admin');
+    }
+    // Các trang chỉ dành riêng cho Bếp
+    else if (currentPageKey.startsWith('kitchen-')) {
+      role = 'kitchen';
+      sessionStorage.setItem('menumind:active_role', 'kitchen');
+    }
+    // Các trang chỉ dành riêng cho Quản lý / Phục vụ
+    else if (['manager-tables', 'manager-menu', 'manager-payments'].includes(currentPageKey)) {
+      role = cachedRole === 'service' ? 'service' : 'manager';
+      sessionStorage.setItem('menumind:active_role', role);
+    }
+    // Các trang dùng chung (manager-feedback, admin-sales-insights)
+    else if (cachedRole) {
+      role = cachedRole;
+    } else {
+      role = currentPageKey.startsWith('admin-') ? 'admin' : 'manager';
+    }
   }
 
   const ICONS = {
@@ -180,38 +200,58 @@ function syncSidebar() {
     kitchenAlerts: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`
   };
 
-  const managementNav = [
-    { href: 'admin-user-management.html', pages: ['admin-users'], label: 'Tài khoản', icon: ICONS.account },
-    { href: 'manager-table-management.html', pages: ['manager-tables', 'admin-tables'], label: 'Bàn ăn & QR', icon: ICONS.tables },
-    { href: 'manager-menu-management.html', pages: ['manager-menu'], label: 'Thực đơn', icon: ICONS.menu },
-    { href: 'admin-sales-insights.html', pages: ['admin-sales', 'admin-sales-insights', 'manager-sales'], label: 'Bán hàng', icon: ICONS.sales },
-    { href: 'manager-payment-requests.html', pages: ['manager-payments'], label: 'Thanh toán', icon: ICONS.payments },
-    { href: 'manager-feedback-center.html', pages: ['manager-feedback'], label: 'Phản hồi', icon: ICONS.feedback },
-    { href: 'admin-settings.html', pages: ['admin-settings'], label: 'Cài đặt', icon: ICONS.settings },
-    { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
-  ];
-
-  const kitchenNav = [
-    { href: 'kitchen-board.html', pages: ['kitchen-board'], label: 'Bảng đơn', icon: ICONS.kitchenBoard },
-    { href: 'kitchen-order-detail.html', pages: ['kitchen-detail'], label: 'Chi tiết đơn', icon: ICONS.kitchenDetail },
-    { href: 'kitchen-wait-time-alerts.html', pages: ['kitchen-alerts'], label: 'Cảnh báo chờ', icon: ICONS.kitchenAlerts },
-    { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
-  ];
-
   let navItems = [];
-  if (role === 'kitchen') {
-    sideNav.setAttribute('aria-label', 'Điều hướng bếp');
-    navItems = kitchenNav;
-  } else {
-    // Không gian Quản lý & Quản trị: Luôn giữ đầy đủ 8 danh mục cốt lõi, không bao giờ bị mất option khi chuyển trang
-    sideNav.setAttribute('aria-label', 'Điều hướng quản lý');
-    navItems = managementNav;
+
+  // 1. VAI TRÒ QUẢN TRỊ VIÊN (ADMIN): Chỉ quản lý User, Doanh thu, Phản hồi, Cài đặt & Đổi vai trò
+  if (role === 'admin') {
+    sideNav.setAttribute('aria-label', 'Điều hướng Quản trị viên');
+    navItems = [
+      { href: 'admin-user-management.html', pages: ['admin-users'], label: 'Tài khoản', icon: ICONS.account },
+      { href: 'admin-sales-insights.html', pages: ['admin-sales', 'admin-sales-insights', 'manager-sales'], label: 'Bán hàng', icon: ICONS.sales },
+      { href: 'manager-feedback-center.html', pages: ['manager-feedback'], label: 'Phản hồi', icon: ICONS.feedback },
+      { href: 'admin-settings.html', pages: ['admin-settings'], label: 'Cài đặt', icon: ICONS.settings },
+      { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
+    ];
+  }
+  // 2. VAI TRÒ QUẢN LÝ (MANAGER): Vận hành bàn ăn, thực đơn, doanh thu, thanh toán, phản hồi
+  else if (role === 'manager') {
+    sideNav.setAttribute('aria-label', 'Điều hướng Quản lý');
+    navItems = [
+      { href: 'manager-table-management.html', pages: ['manager-tables', 'admin-tables'], label: 'Bàn ăn & QR', icon: ICONS.tables },
+      { href: 'manager-menu-management.html', pages: ['manager-menu'], label: 'Thực đơn', icon: ICONS.menu },
+      { href: 'admin-sales-insights.html', pages: ['admin-sales', 'admin-sales-insights', 'manager-sales'], label: 'Bán hàng', icon: ICONS.sales },
+      { href: 'manager-payment-requests.html', pages: ['manager-payments'], label: 'Thanh toán', icon: ICONS.payments },
+      { href: 'manager-feedback-center.html', pages: ['manager-feedback'], label: 'Phản hồi', icon: ICONS.feedback },
+      { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
+    ];
+  }
+  // 3. VAI TRÒ BẾP (KITCHEN): Bảng đơn, chi tiết đơn, cảnh báo chờ
+  else if (role === 'kitchen') {
+    sideNav.setAttribute('aria-label', 'Điều hướng Bếp');
+    navItems = [
+      { href: 'kitchen-board.html', pages: ['kitchen-board'], label: 'Bảng đơn', icon: ICONS.kitchenBoard },
+      { href: 'kitchen-order-detail.html', pages: ['kitchen-detail'], label: 'Chi tiết đơn', icon: ICONS.kitchenDetail },
+      { href: 'kitchen-wait-time-alerts.html', pages: ['kitchen-alerts'], label: 'Cảnh báo chờ', icon: ICONS.kitchenAlerts },
+      { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
+    ];
+  }
+  // 4. VAI TRÒ PHỤC VỤ (SERVICE): Bàn ăn & thanh toán
+  else if (role === 'service') {
+    sideNav.setAttribute('aria-label', 'Điều hướng Phục vụ');
+    navItems = [
+      { href: 'manager-table-management.html', pages: ['manager-tables', 'admin-tables'], label: 'Bàn ăn', icon: ICONS.tables },
+      { href: 'manager-payment-requests.html', pages: ['manager-payments'], label: 'Thanh toán', icon: ICONS.payments },
+      { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
+    ];
   }
 
   if (!navItems.length) return;
 
+  const roleTitleMap = { admin: 'Quản trị viên', manager: 'Quản lý', kitchen: 'Khu vực bếp', service: 'Phục vụ' };
+  const currentRoleTitle = roleTitleMap[role] || 'Khu vực làm việc';
+
   sideNav.innerHTML = `
-    <p>Không gian làm việc</p>
+    <p>${escapeHtml(currentRoleTitle)}</p>
     ${navItems.map(item => {
       const isMatch = item.href === currentFile || (item.pages && item.pages.includes(currentPageKey));
       const activeAttr = isMatch ? ' class="active" aria-current="page"' : '';

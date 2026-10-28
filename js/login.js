@@ -81,6 +81,7 @@ async function performLogin(email, password, button, feedback) {
   }
 
   if (session && staff) {
+    sessionStorage.setItem('menumind:active_role', staff.role);
     sessionStorage.setItem('menumind:session', JSON.stringify({
       accessToken: session.access_token,
       refreshToken: session.refresh_token,
@@ -117,6 +118,7 @@ function loginPage() {
 document.addEventListener('click', e => {
   if (e.target.id === 'btn-logout' || e.target.closest('#btn-logout')) {
     sessionStorage.removeItem('menumind:session');
+    sessionStorage.removeItem('menumind:active_role');
     toast('Đã đăng xuất khỏi phiên làm việc', 'info');
     setTimeout(() => location.reload(), 250);
     return;
