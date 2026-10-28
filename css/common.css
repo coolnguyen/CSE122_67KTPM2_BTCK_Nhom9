@@ -295,7 +295,7 @@ dialog::backdrop {
 
 .side-nav a.active {
   color: #ffffff !important;
-  background: var(--leaf);
+  background: var(--leaf) !important;
 }
 
 .side-nav a.active span {
@@ -303,8 +303,9 @@ dialog::backdrop {
 }
 
 .side-nav a.active:hover {
-  background: var(--leaf);
+  background: var(--leaf-dark) !important;
   color: #ffffff !important;
+  filter: brightness(1.06);
 }
 
 .side-nav a.active:hover span {
@@ -766,8 +767,23 @@ dialog::backdrop {
   background: var(--paper);
 }
 
-[data-theme="dark"] .side-nav a:hover {
+[data-theme="dark"] .side-nav a:not(.active):hover {
   background: rgba(255, 255, 255, .06);
+}
+
+[data-theme="dark"] .side-nav a.active,
+[data-theme="dark"] .side-nav a.active:hover {
+  background: var(--leaf) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .side-nav a.active:hover {
+  filter: brightness(1.12);
+}
+
+[data-theme="dark"] .side-nav a.active span,
+[data-theme="dark"] .side-nav a.active:hover span {
+  color: #ffffff !important;
 }
 
 [data-theme="dark"] input,
