@@ -123,19 +123,21 @@ document.addEventListener('click', e => {
     return;
   }
 
-  const chip = e.target.closest('[data-login-email]');
-  if (chip) {
-    const email = chip.dataset.loginEmail;
-    const form = document.querySelector('#login-form');
-    if (form) {
-      const emailInput = form.querySelector('input[name="email"]');
-      const passInput = form.querySelector('input[name="password"]');
-      if (emailInput) emailInput.value = email;
-      if (passInput) passInput.value = '123456';
+  const toggleBtn = e.target.closest('#btn-toggle-password');
+  if (toggleBtn) {
+    const input = document.querySelector('#login-password');
+    if (!input) return;
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    const openEye = toggleBtn.querySelector('.eye-open');
+    const closedEye = toggleBtn.querySelector('.eye-closed');
+    if (openEye && closedEye) {
+      openEye.style.display = isPassword ? 'none' : 'block';
+      closedEye.style.display = isPassword ? 'block' : 'none';
     }
-    const button = document.querySelector('#login-form button[type="submit"]');
-    const feedback = document.querySelector('#login-feedback');
-    performLogin(email, '123456', button, feedback);
+    toggleBtn.setAttribute('aria-label', isPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+    toggleBtn.setAttribute('title', isPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+    return;
   }
 });
 
