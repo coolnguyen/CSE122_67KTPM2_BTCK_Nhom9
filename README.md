@@ -24,8 +24,8 @@ Dự án áp dụng mô hình phân bổ công việc cân bằng **6 – 5 – 
 **MenuMind** là nguyên mẫu ứng dụng Web đa vai trò (Multi-Role Web Application) giải quyết bài toán vận hành nhà hàng hiện đại:
 * 📱 **Thực khách (Diner):** Quét QR tại bàn, khám phá thực đơn, nhận tư vấn khẩu vị cá nhân hóa bằng AI, đặt món và theo dõi tiến độ ra món thời gian thực.
 * 👨‍🍳 **Nhân viên Bếp (Kitchen):** Quản lý luồng chế biến trên bảng Kanban, cập nhật tiến độ nấu và nhận cảnh báo quá tải bếp từ AI.
-* 💼 **Quản lý (Manager):** Kiểm soát thực đơn, xử lý yêu cầu thanh toán tại bàn, xem báo cáo doanh số và phân tích phản hồi khách hàng bằng AI.
-* ⚙️ **Quản trị viên (Admin):** Quản lý sơ đồ bàn tiệc & mã QR, phân quyền tài khoản nhân viên và cấu hình thông số hệ thống.
+* 💼 **Quản lý (Manager):** Kiểm soát thực đơn, xử lý yêu cầu thanh toán tại bàn, Quản lý sơ đồ bàn tiệc & mã QR và phân tích phản hồi khách hàng bằng AI.
+* ⚙️ **Quản trị viên (Admin):** Xem báo cáo doanh số, phân quyền tài khoản nhân viên và cấu hình thông số hệ thống.
 
 ---
 
