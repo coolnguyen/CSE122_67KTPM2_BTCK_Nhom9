@@ -8,56 +8,56 @@
 const BASE_SALES_DATA = {
   'this-week': {
     label: 'Tuần này (Trực tiếp)',
-    kicker: 'Chu kỳ 7 ngày gần nhất + Doanh thu phiên hiện tại',
-    baseRevenueVnd: 48600000,
-    baseOrders: 326,
-    revenueTrend: '+12,4%',
-    ordersTrend: '+8,1%',
-    aovTrend: '+3,2%',
-    waitTrend: '−2 phút',
+    kicker: 'Doanh thu ca làm việc thời gian thực',
+    baseRevenueVnd: 0,
+    baseOrders: 0,
+    revenueTrend: 'Bắt đầu ca',
+    ordersTrend: '0 đơn',
+    aovTrend: '--',
+    waitTrend: '--',
     days: [
-      { day: 'T2', date: '20/10/2026', rev: 6200000, orders: 42 },
-      { day: 'T3', date: '21/10/2026', rev: 7800000, orders: 53 },
-      { day: 'T4', date: '22/10/2026', rev: 5400000, orders: 38 },
-      { day: 'T5', date: '23/10/2026', rev: 8800000, orders: 60 },
-      { day: 'T6', date: '24/10/2026', rev: 7200000, orders: 49 },
-      { day: 'T7', date: '25/10/2026', rev: 9600000, orders: 65 },
-      { day: 'H.Nay', date: '27/10/2026', rev: 3600000, orders: 19, isLiveToday: true }
+      { day: 'T2', date: 'Hôm nay', rev: 0, orders: 0, isLiveToday: true },
+      { day: 'T3', date: 'Theo ca', rev: 0, orders: 0 },
+      { day: 'T4', date: 'Theo ca', rev: 0, orders: 0 },
+      { day: 'T5', date: 'Theo ca', rev: 0, orders: 0 },
+      { day: 'T6', date: 'Theo ca', rev: 0, orders: 0 },
+      { day: 'T7', date: 'Theo ca', rev: 0, orders: 0 },
+      { day: 'CN', date: 'Theo ca', rev: 0, orders: 0 }
     ]
   },
   'last-week': {
     label: 'Tuần trước',
-    kicker: 'Chu kỳ 7 ngày trước',
-    baseRevenueVnd: 43200000,
-    baseOrders: 301,
-    revenueTrend: '+5,2%',
-    ordersTrend: '+4,0%',
-    aovTrend: '+1,5%',
-    waitTrend: '0 phút',
+    kicker: 'Lịch sử chu kỳ tuần trước',
+    baseRevenueVnd: 0,
+    baseOrders: 0,
+    revenueTrend: '--',
+    ordersTrend: '--',
+    aovTrend: '--',
+    waitTrend: '--',
     days: [
-      { day: 'T2', date: '13/10/2026', rev: 5500000, orders: 38 },
-      { day: 'T3', date: '14/10/2026', rev: 6400000, orders: 44 },
-      { day: 'T4', date: '15/10/2026', rev: 5100000, orders: 35 },
-      { day: 'T5', date: '16/10/2026', rev: 7300000, orders: 51 },
-      { day: 'T6', date: '17/10/2026', rev: 6800000, orders: 47 },
-      { day: 'T7', date: '18/10/2026', rev: 8200000, orders: 58 },
-      { day: 'CN', date: '19/10/2026', rev: 3900000, orders: 28 }
+      { day: 'T2', date: 'Tuần trước', rev: 0, orders: 0 },
+      { day: 'T3', date: 'Tuần trước', rev: 0, orders: 0 },
+      { day: 'T4', date: 'Tuần trước', rev: 0, orders: 0 },
+      { day: 'T5', date: 'Tuần trước', rev: 0, orders: 0 },
+      { day: 'T6', date: 'Tuần trước', rev: 0, orders: 0 },
+      { day: 'T7', date: 'Tuần trước', rev: 0, orders: 0 },
+      { day: 'CN', date: 'Tuần trước', rev: 0, orders: 0 }
     ]
   },
   'this-month': {
     label: 'Tháng này (Trực tiếp)',
-    kicker: 'Tổng hợp từ đầu tháng + Phiên trực tiếp',
-    baseRevenueVnd: 186400000,
-    baseOrders: 1280,
-    revenueTrend: '+15,8%',
-    ordersTrend: '+10,2%',
-    aovTrend: '+4,1%',
-    waitTrend: '−1 phút',
+    kicker: 'Tổng hợp tích lũy tháng thực tế',
+    baseRevenueVnd: 0,
+    baseOrders: 0,
+    revenueTrend: 'Bắt đầu tháng',
+    ordersTrend: '0 đơn',
+    aovTrend: '--',
+    waitTrend: '--',
     days: [
-      { day: 'Tuần 1', date: '01/10-07/10', rev: 43200000, orders: 301 },
-      { day: 'Tuần 2', date: '08/10-14/10', rev: 48600000, orders: 326 },
-      { day: 'Tuần 3', date: '15/10-21/10', rev: 46100000, orders: 318 },
-      { day: 'Tuần 4', date: '22/10-28/10', rev: 48500000, orders: 335, isLiveToday: true }
+      { day: 'Tuần 1', date: '01-07', rev: 0, orders: 0 },
+      { day: 'Tuần 2', date: '08-14', rev: 0, orders: 0 },
+      { day: 'Tuần 3', date: '15-21', rev: 0, orders: 0 },
+      { day: 'Tuần 4', date: '22-H.Nay', rev: 0, orders: 0, isLiveToday: true }
     ]
   }
 };
@@ -184,23 +184,39 @@ function renderTopDishes() {
   if (!ranksEl) return;
 
   const menuItems = getStore('menuItems', appData.menuItems || []);
-  const sorted = [...menuItems].sort((a, b) => (b.orders || 0) - (a.orders || 0)).slice(0, 5);
+  const sorted = [...menuItems].filter(m => (m.orders || 0) > 0).sort((a, b) => (b.orders || 0) - (a.orders || 0)).slice(0, 5);
 
   if (sorted.length === 0) {
-    ranksEl.innerHTML = '<p class="fine-print">Chưa có dữ liệu gọi món.</p>';
+    ranksEl.innerHTML = '<div style="text-align: center; padding: 32px 14px; color: var(--muted);"><p style="margin: 0; font-size: 0.92rem; font-weight: 600;">Chưa có lượt gọi món phát sinh trong ca làm việc.</p><small style="display: block; margin-top: 6px;">Bảng xếp hạng món bán chạy sẽ tự động cập nhật ngay khi thực khách gọi món.</small></div>';
     return;
   }
 
-  ranksEl.innerHTML = sorted.map((item, index) => `
-    <div class="rank-row">
-      <span aria-hidden="true">${index + 1}</span>
-      <div>
-        <strong>${escapeHtml(item.name)}</strong>
-        <small>${item.orders || 0} lượt gọi · ${escapeHtml(item.category || 'Món')}</small>
+  const maxOrders = Math.max(...sorted.map(d => d.orders || 1));
+
+  ranksEl.innerHTML = sorted.map((d, index) => {
+    const pct = Math.round(((d.orders || 0) / maxOrders) * 100);
+    const revenue = ((d.orders || 0) * (d.price || 0)).toLocaleString('vi-VN');
+    const badgeClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : 'rank-normal';
+
+    return `
+      <div class="dish-rank-row">
+        <span class="rank-badge ${badgeClass}">#${index + 1}</span>
+        <div class="dish-rank-info">
+          <div class="dish-rank-title">
+            <strong>${escapeHtml(d.name)}</strong>
+            <span class="rank-revenue">${revenue} đ</span>
+          </div>
+          <div class="dish-progress-bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100">
+            <span style="width: ${pct}%"></span>
+          </div>
+          <div class="dish-meta-sub">
+            <small>${escapeHtml(d.category || 'Món chính')}</small>
+            <small><strong>${d.orders || 0}</strong> lượt gọi</small>
+          </div>
+        </div>
       </div>
-      <b>${money((item.price || 0) * (item.orders || 0))}</b>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 function salesPage() {

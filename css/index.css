@@ -11,8 +11,8 @@
   gap: clamp(28px, 4.5vw, 64px);
   align-items: center;
   min-height: 580px;
-  padding-block: 40px 60px;
   max-width: 100%;
+  overflow-x: clip;
 }
 
 .hero-copy {
@@ -505,12 +505,12 @@
 
 .floating-brand-card.top-float {
   top: 15px;
-  right: 0;
+  right: clamp(6px, 1.5vw, 16px);
 }
 
 .floating-brand-card.bottom-float {
   bottom: 15px;
-  left: 0;
+  left: clamp(6px, 1.5vw, 16px);
 }
 
 /* 2. STORY & CULINARY PHILOSOPHY */
@@ -1153,7 +1153,7 @@
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1080px) {
   .hero-brand {
     grid-template-columns: 1fr;
     min-height: auto;

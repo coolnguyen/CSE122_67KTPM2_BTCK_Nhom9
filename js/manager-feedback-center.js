@@ -5,24 +5,16 @@
  * ============================================================================
  */
 
-const DEFAULT_FEEDBACK = [
-  { id: 'f01', table: 'A02', rating: 5, text: 'Cá hồi áp chảo rất tươi và ngon, nhân viên phục vụ tận tình chu đáo.', theme: 'Hương vị món', status: 'new' },
-  { id: 'f02', table: 'C01', rating: 3, text: 'Món ăn ngon vừa miệng nhưng khung giờ tối chờ món chính hơi lâu (khoảng 25 phút).', theme: 'Thời gian chờ', status: 'new' },
-  { id: 'f03', table: 'B02', rating: 5, text: 'Không gian sân vườn thoáng đãng, các món chay phong phú và thanh đạm.', theme: 'Không gian', status: 'replied', reply: 'MenuMind xin chân thành cảm ơn quý khách! Rất vui vì quý khách đã có trải nghiệm thư thái tại sân vườn nhà hàng.', repliedAt: '2026-10-26T20:15:00Z' },
-  { id: 'f04', table: 'A06', rating: 4, text: 'Mì xào hải sản đậm đà, tôm tươi nhưng hơi cay so với khẩu vị trẻ nhỏ.', theme: 'Khẩu vị', status: 'new' },
-  { id: 'f05', table: 'B04', rating: 2, text: 'Bàn ngoài vườn phải nhắc nhân viên 2 lần mới có thêm nước lọc và khăn lạnh.', theme: 'Thái độ phục vụ', status: 'new' },
-  { id: 'f06', table: 'A01', rating: 5, text: 'Salad vườn rất giòn và sốt chanh mật ong đặc biệt, chắc chắn sẽ quay lại!', theme: 'Hương vị món', status: 'replied', reply: 'MenuMind cảm ơn quý khách rất nhiều! Hẹn gặp lại quý khách trong những bữa ăn sắp tới nhé!', repliedAt: '2026-10-26T21:00:00Z' },
-  { id: 'f07', table: 'B03', rating: 3, text: 'Giờ cao điểm phục vụ lên món hơi chậm, mong quán cải thiện tốc độ ra món.', theme: 'Thời gian chờ', status: 'new' }
-];
+const DEFAULT_FEEDBACK = [];
 
 function getFeedbackList() {
-  let feedback = getStore('feedback', null);
-  if (!Array.isArray(feedback) || feedback.length === 0) {
-    feedback = (Array.isArray(appData.feedback) && appData.feedback.length > 0) ? appData.feedback : DEFAULT_FEEDBACK;
-    setStore('feedback', feedback, true);
-    if (appData) appData.feedback = feedback;
+  const stored = getStore('feedback', null);
+  if (Array.isArray(stored)) {
+    return stored;
   }
-  return feedback;
+  const initial = Array.isArray(appData.feedback) ? appData.feedback : [];
+  setStore('feedback', initial, true);
+  return initial;
 }
 
 function feedbackPage() {

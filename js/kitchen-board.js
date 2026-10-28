@@ -134,7 +134,7 @@ function kitchenBoardPageV2() {
           </div>
         </div>
         <div class="board kitchen-queue-grid">
-          ${visibleActive.length ? visibleActive.map(orderCard).join('') : emptyState('Đã xử lý hết', 'Không còn đơn đang chờ ở bộ lọc hiện tại.')}
+          ${visibleActive.length ? visibleActive.map(orderCard).join('') : emptyState('Bếp sẵn sàng nhận món', 'Chưa có đơn gọi món mới từ thực khách. Đơn mới sẽ tự động xuất hiện theo thời gian thực.')}
         </div>
       </section>
       <section class="queue-section completed-queue">
@@ -145,7 +145,7 @@ function kitchenBoardPageV2() {
           </div>
         </div>
         <div class="kitchen-queue-grid">
-          ${completed.length ? completed.map(orderCard).join('') : emptyState('Chưa có đơn hoàn tất', 'Đơn đã phục vụ sẽ được chuyển xuống khu vực này.')}
+          ${completed.length ? completed.map(orderCard).join('') : emptyState('Chưa có món hoàn tất', 'Các món sau khi hoàn tất chế biến sẽ lưu tại đây.')}
         </div>
       </section>
     `;

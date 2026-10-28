@@ -400,6 +400,14 @@ document.addEventListener('submit', e => {
     });
     setStore('reservations', reservations);
 
+    // Cập nhật trạng thái bàn trong khu vực tương ứng sang 'reserved' (Đã đặt) nếu có bàn trống
+    const tables = getStore('tables', appData.tables || []);
+    const matchingTable = tables.find(t => t.zone === zone && t.status === 'available');
+    if (matchingTable) {
+      matchingTable.status = 'reserved';
+      setStore('tables', tables);
+    }
+
     document.querySelector('#reservation-dialog')?.close();
     toast(`✓ MenuMind Bistro đã nhận yêu cầu đặt bàn của quý khách ${name}! Khu vực: ${zone} (${guests} khách, ngày ${date} lúc ${time}). Đội ngũ lễ tân sẽ gọi tới ${phone} để xác nhận trong ít phút.`);
     e.target.reset();
