@@ -24,7 +24,7 @@
             <span>MenuMind <em>Bistro</em></span>
         </div>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav">
-            <span aria-hidden="true">☰</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
             <span class="sr-only">Mở điều hướng</span>
         </button>
         <nav id="global-nav" class="global-nav" aria-label="Điều hướng chính">
@@ -41,7 +41,7 @@
         <section class="hero-brand">
             <div class="hero-copy">
                 <div class="brand-badge">
-                    <span class="brand-star">✦</span>
+                    <span class="brand-dot" aria-hidden="true"></span>
                     <span>Contemporary Dining &amp; Smart Flavor</span>
                 </div>
                 <h1>Nghệ thuật ẩm thực.<br><span class="accent-title">Thấu hiểu từng khẩu vị.</span></h1>
@@ -56,23 +56,23 @@
                 <!-- 3 Brand Pillars -->
                 <div class="brand-pillars">
                     <div class="pillar-card">
-                        <span class="pillar-icon">🌿</span>
+                        <span class="pillar-num">01</span>
                         <div>
                             <strong>Farm-to-Table</strong>
-                            <small>Nguyên liệu hữu cơ tươi mới mỗi ngày</small>
+                            <small>Nguyên liệu hữu cơ tuyển chọn mỗi ngày</small>
                         </div>
                     </div>
                     <div class="pillar-card">
-                        <span class="pillar-icon">👨‍🍳</span>
+                        <span class="pillar-num">02</span>
                         <div>
-                            <strong>Bếp trưởng thủ công</strong>
+                            <strong>Kỹ nghệ thủ công</strong>
                             <small>Nghệ thuật chế biến đương đại tinh tế</small>
                         </div>
                     </div>
                     <div class="pillar-card">
-                        <span class="pillar-icon">✨</span>
+                        <span class="pillar-num">03</span>
                         <div>
-                            <strong>Khẩu vị chuẩn gu</strong>
+                            <strong>Khẩu vị thấu cảm</strong>
                             <small>AI tư vấn riêng theo sở thích của bạn</small>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                                     <div class="dish-visual-frame">
                                         <img src="assets/images/menu/m01.jpg" alt="Cá hồi áp chảo sốt chanh" class="hero-dish-photo">
                                         <div class="dish-overlay-gradient"></div>
-                                        <span class="curated-badge">✦ Chef's Signature · Món chính</span>
+                                        <span class="curated-badge">Chef's Signature · Món chính</span>
                                         <span class="dish-badge-price">189.000 ₫</span>
                                     </div>
                                     <div class="dish-story-body">
@@ -102,14 +102,14 @@
                                                 <span class="dish-category-tag">giàu đạm · bán chạy</span>
                                                 <h2>Cá hồi áp chảo sốt chanh</h2>
                                             </div>
-                                            <span class="dish-story-emoji" aria-hidden="true">🐟</span>
+                                            <span class="dish-edition">N° 01</span>
                                         </div>
                                         <p>Cá hồi Nauy áp chảo da giòn, sốt chanh bơ thảo mộc Pháp, rau mầm tươi và khoai tây nghiền bơ mịn.</p>
                                         <div class="dish-story-foot">
                                             <a href="pages/diner-dish-detail.html?id=m01" class="button small quiet view-dish-btn">Xem chi tiết món →</a>
                                             <div class="dish-highlights">
-                                                <span class="rating-badge">★ 4.9 Thượng hạng</span>
-                                                <span class="prep-badge">⏱ ~18 phút</span>
+                                                <span class="rating-badge">Đánh giá 4.9 / 5.0</span>
+                                                <span class="prep-badge">Chế biến ~18 phút</span>
                                             </div>
                                         </div>
                                     </div>
@@ -119,8 +119,12 @@
                     </div>
 
                     <!-- Nút bấm chuyển Slide Prev & Next -->
-                    <button type="button" class="carousel-btn prev" id="carousel-prev" aria-label="Món trước đó">‹</button>
-                    <button type="button" class="carousel-btn next" id="carousel-next" aria-label="Món kế tiếp">›</button>
+                    <button type="button" class="carousel-btn prev" id="carousel-prev" aria-label="Món trước đó">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <button type="button" class="carousel-btn next" id="carousel-next" aria-label="Món kế tiếp">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
 
                     <!-- Thanh chỉ báo vị trí Slide & Dots -->
                     <div class="carousel-nav-bar">
@@ -133,19 +137,19 @@
 
                 <!-- Floating Taste Experience Card -->
                 <div class="floating-brand-card top-float">
-                    <span class="float-icon">✨</span>
+                    <span class="float-tag-lead">Gợi ý riêng</span>
                     <div>
-                        <strong>Gợi ý theo gu của bạn</strong>
-                        <small>Thanh mát · Đậm đà · Thuần chay</small>
+                        <strong>Khẩu vị chuẩn gu thực khách</strong>
+                        <small>Thanh đạm · Đậm đà · Thuần chay</small>
                     </div>
                 </div>
 
                 <!-- Floating Ambiance Badge -->
                 <div class="floating-brand-card bottom-float">
-                    <span class="float-icon">🥂</span>
+                    <span class="float-tag-lead">Không gian</span>
                     <div>
-                        <strong>Không gian ấm cúng &amp; tinh tế</strong>
-                        <small>Sân vườn thoáng đãng · Phòng VIP riêng tư</small>
+                        <strong>Trải nghiệm ẩm thực tinh tế</strong>
+                        <small>Sân vườn thoáng đãng · Phòng riêng sang trọng</small>
                     </div>
                 </div>
             </div>

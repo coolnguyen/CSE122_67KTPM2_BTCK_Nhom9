@@ -49,8 +49,9 @@ function mountHeroCarousel(menuItems) {
     const tags = Array.isArray(dish.tags) && dish.tags.length > 0
       ? dish.tags.join(' · ')
       : `${dish.category || 'Món chính'} · Thượng hạng`;
-    const ratingText = dish.rating ? `★ ${dish.rating} Thượng hạng` : '★ 4.9 Thượng hạng';
-    const prepTime = dish.time ? `⏱ ~${dish.time} phút` : '⏱ ~15 phút';
+    const editionCode = `N° 0${idx + 1}`;
+    const ratingText = dish.rating ? `Đánh giá ${dish.rating} / 5.0` : 'Đánh giá 4.9 / 5.0';
+    const prepTime = dish.time ? `Chế biến ~${dish.time} phút` : 'Chế biến ~15 phút';
     const imgSrc = typeof dishImage === 'function' ? dishImage(dish) : (dish.image || 'assets/images/menu/m01.jpg');
 
     return `
@@ -59,7 +60,7 @@ function mountHeroCarousel(menuItems) {
           <div class="dish-visual-frame">
             <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(dish.name)}" class="hero-dish-photo" loading="${idx === 0 ? 'eager' : 'lazy'}">
             <div class="dish-overlay-gradient"></div>
-            <span class="curated-badge">✦ Chef's Signature · ${escapeHtml(dish.category || 'Món chính')}</span>
+            <span class="curated-badge">Chef's Signature · ${escapeHtml(dish.category || 'Món chính')}</span>
             <span class="dish-badge-price">${money(dish.price)}</span>
           </div>
           <div class="dish-story-body">
@@ -68,7 +69,7 @@ function mountHeroCarousel(menuItems) {
                 <span class="dish-category-tag">${escapeHtml(tags)}</span>
                 <h2>${escapeHtml(dish.name)}</h2>
               </div>
-              <span class="dish-story-emoji" aria-hidden="true">${dish.emoji || '🍽️'}</span>
+              <span class="dish-edition">${editionCode}</span>
             </div>
             <p>${escapeHtml(dish.description || 'Hương vị tinh tế được tuyển chọn từ nguyên liệu tươi ngon thượng hạng.')}</p>
             <div class="dish-story-foot">

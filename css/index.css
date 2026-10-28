@@ -35,9 +35,13 @@
   margin-block-end: 20px;
 }
 
-.brand-star {
-  color: var(--citrus);
-  font-size: 0.85rem;
+.brand-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--leaf);
+  box-shadow: 0 0 0 3px rgba(23, 107, 91, 0.2);
+  display: inline-block;
 }
 
 .hero-copy h1 {
@@ -98,12 +102,15 @@
   border-color: rgba(23, 107, 91, 0.3);
 }
 
-.pillar-icon {
-  font-size: 1.4rem;
+.pillar-num {
+  font: 800 0.8rem 'Manrope', sans-serif;
+  color: var(--leaf);
+  letter-spacing: 0.08em;
+  background: rgba(23, 107, 91, 0.08);
+  border: 1px solid rgba(23, 107, 91, 0.18);
+  padding: 5px 9px;
+  border-radius: 8px;
   line-height: 1;
-  padding: 6px;
-  background: var(--paper);
-  border-radius: 10px;
   flex-shrink: 0;
 }
 
@@ -263,15 +270,17 @@
   line-height: 1.25;
 }
 
-.dish-story-emoji {
-  font-size: 1.8rem;
-  background: var(--paper);
-  padding: 8px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
+.dish-edition {
+  font: 800 0.78rem 'Manrope', sans-serif;
+  letter-spacing: 0.1em;
+  color: var(--leaf);
+  background: rgba(23, 107, 91, 0.08);
+  border: 1px solid rgba(23, 107, 91, 0.18);
+  padding: 6px 12px;
+  border-radius: 999px;
   line-height: 1;
   flex-shrink: 0;
+  text-transform: uppercase;
 }
 
 .dish-story-body p {
@@ -313,18 +322,24 @@
 }
 
 .rating-badge {
-  background: var(--citrus-soft);
-  color: #b45309;
+  background: rgba(23, 107, 91, 0.08);
+  color: var(--leaf);
+  border: 1px solid rgba(23, 107, 91, 0.18);
   padding: 4px 10px;
   border-radius: 999px;
   font-weight: 700;
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
 }
 
 .prep-badge {
   background: var(--paper);
   color: var(--ink-2);
+  border: 1px solid var(--line);
   padding: 4px 10px;
   border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.74rem;
 }
 
 /* Carousel Prev & Next Buttons */
@@ -341,22 +356,41 @@
   box-shadow: 0 8px 24px rgba(16, 42, 43, 0.15);
   display: grid;
   place-items: center;
-  font-size: 1.6rem;
   color: var(--ink);
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 4;
-  line-height: 1;
-  padding: 0 0 3px 0;
+  padding: 0;
   user-select: none;
+}
+
+.carousel-btn svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  transition: transform 0.2s ease;
 }
 
 .carousel-btn:hover {
   background: var(--leaf);
   color: #ffffff;
-  transform: translateY(-50%) scale(1.12);
+  transform: translateY(-50%) scale(1.1);
   box-shadow: 0 12px 28px rgba(23, 107, 91, 0.32);
   border-color: transparent;
+}
+
+.carousel-btn:hover svg {
+  stroke: #ffffff;
+}
+
+.carousel-btn.prev:hover svg {
+  transform: translateX(-1px);
+}
+
+.carousel-btn.next:hover svg {
+  transform: translateX(1px);
 }
 
 .carousel-btn:active {
@@ -438,10 +472,17 @@
   transform: translateY(-2px);
 }
 
-.floating-brand-card .float-icon {
-  font-size: 1.35rem;
-  line-height: 1;
+.floating-brand-card .float-tag-lead {
+  font: 800 0.68rem 'Manrope', sans-serif;
+  letter-spacing: 0.08em;
+  color: var(--leaf);
+  background: rgba(23, 107, 91, 0.08);
+  border: 1px solid rgba(23, 107, 91, 0.2);
+  padding: 5px 9px;
+  border-radius: 6px;
+  text-transform: uppercase;
   flex-shrink: 0;
+  line-height: 1;
 }
 
 .floating-brand-card strong {
