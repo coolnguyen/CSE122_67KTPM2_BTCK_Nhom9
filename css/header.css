@@ -56,7 +56,13 @@
   transition: transform .2s ease;
 }
 
-.global-nav a:hover::after {
+.global-nav a.active {
+  color: var(--leaf);
+  font-weight: 700;
+}
+
+.global-nav a:hover::after,
+.global-nav a.active::after {
   transform: scaleX(1);
 }
 

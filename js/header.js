@@ -89,6 +89,7 @@ document.addEventListener('click', e => {
 });
 
 function initHeaderAndNav() {
+  syncGlobalNav();
   mountThemeButton();
   updateRolePill();
   syncSidebar();
@@ -98,6 +99,32 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initHeaderAndNav);
 } else {
   initHeaderAndNav();
+}
+
+// ==========================================================================
+// ĐỒNG BỘ THANH ĐIỀU HƯỚNG CHÍNH (GLOBAL NAV) KHÔNG BAO GIỜ MẤT OPTION
+// ==========================================================================
+function syncGlobalNav() {
+  const nav = document.querySelector('#global-nav');
+  if (!nav) return;
+
+  const isRoot = document.body.dataset.root === '.' || !location.pathname.includes('/pages/');
+  const prefix = isRoot ? 'pages/' : '';
+  const rootPrefix = isRoot ? '' : '../';
+  const currentPageKey = document.body.dataset.page || '';
+  const currentFile = location.pathname.split('/').pop() || 'index.html';
+
+  const isTableOrder = currentFile === 'index.html' || currentPageKey === 'home';
+  const isMenu = ['menu', 'dish-detail'].includes(currentPageKey) || currentFile.includes('menu') || currentFile.includes('dish-detail');
+  const isStatus = ['status', 'cart'].includes(currentPageKey) || currentFile.includes('order-status') || currentFile.includes('table-order');
+  const isStaff = ['login', 'admin', 'manager', 'kitchen'].some(k => currentPageKey.startsWith(k)) || currentFile === 'login.html';
+
+  nav.innerHTML = `
+    <a href="${rootPrefix}index.html#dining-spaces"${isTableOrder ? ' class="active" aria-current="page"' : ''}>Chọn bàn QR</a>
+    <a href="${prefix}diner-menu.html"${isMenu ? ' class="active" aria-current="page"' : ''}>Thực đơn</a>
+    <a href="${prefix}diner-order-status.html"${isStatus ? ' class="active" aria-current="page"' : ''}>Theo dõi đơn</a>
+    <a href="${prefix}login.html"${isStaff ? ' class="active" aria-current="page"' : ''}>Khu vực nhân viên</a>
+  `;
 }
 
 function updateRolePill() {
@@ -123,7 +150,7 @@ function updateRolePill() {
 }
 
 // ==========================================================================
-// ĐỒNG BỘ THANH ĐIỀU HƯỚNG BÊN (SIDEBAR NAVIGATION) THEO PHÂN QUYỀN VAI TRÒ
+// ĐỒNG BỘ THANH ĐIỀU HƯỚNG BÊN (SIDEBAR NAVIGATION) - KHÔNG BAO GIỜ BỊ MẤT OPTION
 // ==========================================================================
 function syncSidebar() {
   const sideNav = document.querySelector('.side-nav');
@@ -135,9 +162,7 @@ function syncSidebar() {
 
   let role = session?.staff?.role;
   if (!role) {
-    if (currentPageKey.startsWith('admin-')) role = 'admin';
-    else if (currentPageKey.startsWith('kitchen-')) role = 'kitchen';
-    else if (currentPageKey.startsWith('manager-')) role = 'manager';
+    if (currentPageKey.startsWith('kitchen-')) role = 'kitchen';
     else role = 'admin';
   }
 
@@ -155,43 +180,32 @@ function syncSidebar() {
     kitchenAlerts: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`
   };
 
+  const managementNav = [
+    { href: 'admin-user-management.html', pages: ['admin-users'], label: 'Tài khoản', icon: ICONS.account },
+    { href: 'manager-table-management.html', pages: ['manager-tables', 'admin-tables'], label: 'Bàn ăn & QR', icon: ICONS.tables },
+    { href: 'manager-menu-management.html', pages: ['manager-menu'], label: 'Thực đơn', icon: ICONS.menu },
+    { href: 'admin-sales-insights.html', pages: ['admin-sales', 'admin-sales-insights', 'manager-sales'], label: 'Bán hàng', icon: ICONS.sales },
+    { href: 'manager-payment-requests.html', pages: ['manager-payments'], label: 'Thanh toán', icon: ICONS.payments },
+    { href: 'manager-feedback-center.html', pages: ['manager-feedback'], label: 'Phản hồi', icon: ICONS.feedback },
+    { href: 'admin-settings.html', pages: ['admin-settings'], label: 'Cài đặt', icon: ICONS.settings },
+    { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
+  ];
+
+  const kitchenNav = [
+    { href: 'kitchen-board.html', pages: ['kitchen-board'], label: 'Bảng đơn', icon: ICONS.kitchenBoard },
+    { href: 'kitchen-order-detail.html', pages: ['kitchen-detail'], label: 'Chi tiết đơn', icon: ICONS.kitchenDetail },
+    { href: 'kitchen-wait-time-alerts.html', pages: ['kitchen-alerts'], label: 'Cảnh báo chờ', icon: ICONS.kitchenAlerts },
+    { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
+  ];
+
   let navItems = [];
-  if (role === 'admin') {
-    sideNav.setAttribute('aria-label', 'Điều hướng admin');
-    navItems = [
-      { href: 'admin-user-management.html', pages: ['admin-users'], label: 'Tài khoản', icon: ICONS.account },
-      { href: 'manager-table-management.html', pages: ['manager-tables', 'admin-tables'], label: 'Bàn ăn & QR', icon: ICONS.tables },
-      { href: 'manager-menu-management.html', pages: ['manager-menu'], label: 'Thực đơn', icon: ICONS.menu },
-      { href: 'admin-sales-insights.html', pages: ['admin-sales', 'admin-sales-insights', 'manager-sales'], label: 'Bán hàng', icon: ICONS.sales },
-      { href: 'manager-feedback-center.html', pages: ['manager-feedback'], label: 'Phản hồi', icon: ICONS.feedback },
-      { href: 'admin-settings.html', pages: ['admin-settings'], label: 'Cài đặt', icon: ICONS.settings },
-      { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
-    ];
-  } else if (role === 'manager') {
-    sideNav.setAttribute('aria-label', 'Điều hướng manager');
-    navItems = [
-      { href: 'manager-table-management.html', pages: ['manager-tables', 'admin-tables'], label: 'Bàn ăn', icon: ICONS.tables },
-      { href: 'manager-menu-management.html', pages: ['manager-menu'], label: 'Thực đơn', icon: ICONS.menu },
-      { href: 'admin-sales-insights.html', pages: ['admin-sales', 'admin-sales-insights', 'manager-sales'], label: 'Bán hàng', icon: ICONS.sales },
-      { href: 'manager-payment-requests.html', pages: ['manager-payments'], label: 'Thanh toán', icon: ICONS.payments },
-      { href: 'manager-feedback-center.html', pages: ['manager-feedback'], label: 'Phản hồi', icon: ICONS.feedback },
-      { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
-    ];
-  } else if (role === 'service') {
-    sideNav.setAttribute('aria-label', 'Điều hướng phục vụ');
-    navItems = [
-      { href: 'manager-table-management.html', pages: ['manager-tables', 'admin-tables'], label: 'Bàn ăn', icon: ICONS.tables },
-      { href: 'manager-payment-requests.html', pages: ['manager-payments'], label: 'Thanh toán', icon: ICONS.payments },
-      { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
-    ];
-  } else if (role === 'kitchen') {
+  if (role === 'kitchen') {
     sideNav.setAttribute('aria-label', 'Điều hướng bếp');
-    navItems = [
-      { href: 'kitchen-board.html', pages: ['kitchen-board'], label: 'Bảng đơn', icon: ICONS.kitchenBoard },
-      { href: 'kitchen-order-detail.html', pages: ['kitchen-detail'], label: 'Chi tiết đơn', icon: ICONS.kitchenDetail },
-      { href: 'kitchen-wait-time-alerts.html', pages: ['kitchen-alerts'], label: 'Cảnh báo chờ', icon: ICONS.kitchenAlerts },
-      { href: 'login.html', pages: ['login'], label: 'Đổi vai trò', icon: ICONS.switchRole }
-    ];
+    navItems = kitchenNav;
+  } else {
+    // Không gian Quản lý & Quản trị: Luôn giữ đầy đủ 8 danh mục cốt lõi, không bao giờ bị mất option khi chuyển trang
+    sideNav.setAttribute('aria-label', 'Điều hướng quản lý');
+    navItems = managementNav;
   }
 
   if (!navItems.length) return;
