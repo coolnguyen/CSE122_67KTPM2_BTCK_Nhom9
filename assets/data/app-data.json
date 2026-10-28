@@ -10,7 +10,7 @@
       "vegetarian": false,
       "available": true,
       "rating": 4.9,
-      "orders": 0,
+      "orders": 128,
       "emoji": "🐟",
       "image": "assets/images/menu/m01.jpg",
       "description": "Cá hồi áp chảo da giòn, sốt chanh bơ, rau xanh và khoai nghiền.",
@@ -29,7 +29,7 @@
       "vegetarian": false,
       "available": true,
       "rating": 4.8,
-      "orders": 0,
+      "orders": 102,
       "emoji": "🥩",
       "image": "assets/images/menu/m02.jpg",
       "description": "Sườn bò nướng mềm, sốt tiêu đen, cà chua và rau củ theo mùa.",
@@ -48,7 +48,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.7,
-      "orders": 0,
+      "orders": 88,
       "emoji": "🥗",
       "image": "assets/images/menu/m03.jpg",
       "description": "Xà lách non, cà chua bi, bánh mì giòn và sốt chanh mật ong.",
@@ -67,7 +67,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.8,
-      "orders": 0,
+      "orders": 76,
       "emoji": "🥗",
       "image": "assets/images/menu/m04.jpg",
       "description": "Rau xanh, bơ, đậu gà, củ quả giòn và sốt mè rang nhà làm.",
@@ -86,7 +86,7 @@
       "vegetarian": false,
       "available": true,
       "rating": 4.7,
-      "orders": 0,
+      "orders": 94,
       "emoji": "🍜",
       "image": "assets/images/menu/m05.jpg",
       "description": "Mì xào dai mềm, tôm tươi, giá hẹ và sốt me chua ngọt.",
@@ -105,7 +105,7 @@
       "vegetarian": false,
       "available": true,
       "rating": 4.6,
-      "orders": 0,
+      "orders": 61,
       "emoji": "🍛",
       "image": "assets/images/menu/m06.jpg",
       "description": "Gà mềm nấu cà ri, nước cốt dừa, khoai củ và gia vị ấm.",
@@ -124,7 +124,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.9,
-      "orders": 0,
+      "orders": 143,
       "emoji": "🍨",
       "image": "assets/images/menu/m07.jpg",
       "description": "Brownie chocolate ấm dùng cùng kem vani và sốt caramel.",
@@ -143,7 +143,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.6,
-      "orders": 0,
+      "orders": 112,
       "emoji": "🍹",
       "image": "assets/images/menu/m08.jpg",
       "description": "Trà đen, đào miếng, cam vàng và sả tươi, phục vụ lạnh.",
@@ -162,7 +162,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.6,
-      "orders": 0,
+      "orders": 67,
       "emoji": "🥟",
       "image": "assets/images/menu/m09.jpg",
       "description": "Bánh xếp nhân rau củ, vỏ giòn nhẹ, dùng cùng sốt me cay.",
@@ -181,7 +181,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.7,
-      "orders": 0,
+      "orders": 81,
       "emoji": "🍝",
       "image": "assets/images/menu/m10.jpg",
       "description": "Mì trứng xào nấm, cải thìa và rau củ với nước tương ít mặn.",
@@ -200,7 +200,7 @@
       "vegetarian": false,
       "available": true,
       "rating": 4.8,
-      "orders": 0,
+      "orders": 136,
       "emoji": "🍚",
       "image": "assets/images/menu/m11.jpg",
       "description": "Cơm chiên tơi hạt cùng tôm, trứng, rau củ và hành lá.",
@@ -219,7 +219,7 @@
       "vegetarian": false,
       "available": true,
       "rating": 4.9,
-      "orders": 0,
+      "orders": 97,
       "emoji": "🍣",
       "image": "assets/images/menu/m12.jpg",
       "description": "Cá hồi tươi, bơ, cơm giấm và rong biển, dùng cùng gừng hồng.",
@@ -238,7 +238,7 @@
       "vegetarian": false,
       "available": true,
       "rating": 4.7,
-      "orders": 0,
+      "orders": 79,
       "emoji": "🍕",
       "image": "assets/images/menu/m13.jpg",
       "description": "Đế bánh mỏng giòn, gà nướng, nấm, hành tím và phô mai mozzarella.",
@@ -257,7 +257,7 @@
       "vegetarian": false,
       "available": true,
       "rating": 4.8,
-      "orders": 0,
+      "orders": 91,
       "emoji": "🍝",
       "image": "assets/images/menu/m14.jpg",
       "description": "Mì Ý sốt cà chua, tôm, mực, cà chua bi và thảo mộc.",
@@ -276,7 +276,7 @@
       "vegetarian": false,
       "available": true,
       "rating": 4.6,
-      "orders": 0,
+      "orders": 64,
       "emoji": "🥙",
       "image": "assets/images/menu/m15.jpg",
       "description": "Gạo lứt, ức gà nướng, cà chua, rau xanh và sốt sữa chua.",
@@ -295,7 +295,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.7,
-      "orders": 0,
+      "orders": 73,
       "emoji": "🍳",
       "image": "assets/images/menu/m16.jpg",
       "description": "Bánh mì nướng, bơ nghiền, trứng lòng đào và xà lách non.",
@@ -314,7 +314,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.8,
-      "orders": 0,
+      "orders": 105,
       "emoji": "🥞",
       "image": "assets/images/menu/m17.jpg",
       "description": "Pancake mềm, dâu tươi, việt quất, chuối và mật ong.",
@@ -333,7 +333,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.8,
-      "orders": 0,
+      "orders": 151,
       "emoji": "☕",
       "image": "assets/images/menu/m18.jpg",
       "description": "Espresso rang vừa hòa cùng sữa tươi đánh nóng mịn.",
@@ -352,7 +352,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.5,
-      "orders": 0,
+      "orders": 58,
       "emoji": "🍸",
       "image": "assets/images/menu/m19.jpg",
       "description": "Chanh dây, cam, soda và syrup thảo mộc, hoàn toàn không cồn.",
@@ -371,7 +371,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.8,
-      "orders": 0,
+      "orders": 86,
       "emoji": "🍰",
       "image": "assets/images/menu/m20.jpg",
       "description": "Cốt bánh vani mềm, kem sữa nhẹ và phúc bồn tử tươi.",
@@ -390,7 +390,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.7,
-      "orders": 0,
+      "orders": 69,
       "emoji": "🥗",
       "image": "assets/images/menu/m21.jpg",
       "description": "Đậu hũ áp chảo, bắp, bơ, bắp cải tím và sốt mè rang.",
@@ -409,7 +409,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.6,
-      "orders": 0,
+      "orders": 43,
       "emoji": "🍝",
       "image": "assets/images/menu/m22.jpg",
       "description": "Pasta nhân nấm, sốt kem thảo mộc và phô mai parmesan.",
@@ -428,7 +428,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.7,
-      "orders": 0,
+      "orders": 93,
       "emoji": "🥤",
       "image": "assets/images/menu/m23.jpg",
       "description": "Dâu tươi, chanh xanh, bạc hà và soda mát lạnh.",
@@ -447,7 +447,7 @@
       "vegetarian": true,
       "available": true,
       "rating": 4.7,
-      "orders": 0,
+      "orders": 74,
       "emoji": "🥗",
       "image": "assets/images/menu/m24.jpg",
       "description": "Xà lách romaine, dưa leo, phô mai, cà chua và sốt thảo mộc.",
@@ -457,7 +457,152 @@
       ]
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "id": "MM-2410",
+      "table": "B04",
+      "createdAt": "18:42",
+      "status": "new",
+      "priority": false,
+      "wait": 6,
+      "subtotal": 367000,
+      "serviceFee": 18350,
+      "total": 385350,
+      "items": [
+        {
+          "menuId": "m03",
+          "qty": 1,
+          "unitPrice": 89000,
+          "done": false
+        },
+        {
+          "menuId": "m05",
+          "qty": 2,
+          "unitPrice": 139000,
+          "done": false
+        }
+      ],
+      "note": "Một phần mì không hành"
+    },
+    {
+      "id": "MM-2409",
+      "table": "A02",
+      "createdAt": "18:35",
+      "status": "cooking",
+      "priority": true,
+      "wait": 13,
+      "subtotal": 516000,
+      "serviceFee": 25800,
+      "total": 541800,
+      "items": [
+        {
+          "menuId": "m01",
+          "qty": 2,
+          "unitPrice": 189000,
+          "done": true
+        },
+        {
+          "menuId": "m07",
+          "qty": 2,
+          "unitPrice": 69000,
+          "done": false
+        }
+      ],
+      "note": "Cá hồi chín vừa"
+    },
+    {
+      "id": "MM-2408",
+      "table": "C01",
+      "createdAt": "18:31",
+      "status": "cooking",
+      "priority": false,
+      "wait": 17,
+      "subtotal": 318000,
+      "serviceFee": 15900,
+      "total": 333900,
+      "items": [
+        {
+          "menuId": "m02",
+          "qty": 1,
+          "unitPrice": 219000,
+          "done": false
+        },
+        {
+          "menuId": "m04",
+          "qty": 1,
+          "unitPrice": 99000,
+          "done": true
+        }
+      ],
+      "note": "Dị ứng đậu phộng"
+    },
+    {
+      "id": "MM-2407",
+      "table": "A06",
+      "createdAt": "18:24",
+      "status": "ready",
+      "priority": true,
+      "wait": 23,
+      "subtotal": 417000,
+      "serviceFee": 20850,
+      "total": 437850,
+      "items": [
+        {
+          "menuId": "m05",
+          "qty": 3,
+          "unitPrice": 139000,
+          "done": true
+        }
+      ],
+      "note": "Mang món cùng lúc"
+    },
+    {
+      "id": "MM-2406",
+      "table": "B02",
+      "createdAt": "18:18",
+      "status": "served",
+      "priority": false,
+      "wait": 26,
+      "subtotal": 367000,
+      "serviceFee": 18350,
+      "total": 385350,
+      "items": [
+        {
+          "menuId": "m06",
+          "qty": 2,
+          "unitPrice": 149000,
+          "done": true
+        },
+        {
+          "menuId": "m07",
+          "qty": 1,
+          "unitPrice": 69000,
+          "done": true
+        }
+      ],
+      "note": ""
+    },
+    {
+      "id": "MM-2405",
+      "table": "S01",
+      "createdAt": "18:08",
+      "status": "cancelled",
+      "priority": false,
+      "wait": 8,
+      "subtotal": 219000,
+      "serviceFee": 10950,
+      "total": 229950,
+      "items": [
+        {
+          "menuId": "m02",
+          "qty": 1,
+          "unitPrice": 219000,
+          "done": false
+        }
+      ],
+      "note": "Khách đổi lịch"
+    }
+  ],
   "tables": [
     {
       "id": "A01",
@@ -469,13 +614,13 @@
       "id": "A02",
       "zone": "Cửa sổ",
       "seats": 4,
-      "status": "available"
+      "status": "occupied"
     },
     {
       "id": "A03",
       "zone": "Cửa sổ",
       "seats": 4,
-      "status": "available"
+      "status": "reserved"
     },
     {
       "id": "A04",
@@ -487,13 +632,13 @@
       "id": "A05",
       "zone": "Cửa sổ",
       "seats": 6,
-      "status": "available"
+      "status": "cleaning"
     },
     {
       "id": "A06",
       "zone": "Cửa sổ",
       "seats": 4,
-      "status": "available"
+      "status": "occupied"
     },
     {
       "id": "B01",
@@ -505,7 +650,7 @@
       "id": "B02",
       "zone": "Vườn",
       "seats": 6,
-      "status": "available"
+      "status": "occupied"
     },
     {
       "id": "B03",
@@ -517,13 +662,13 @@
       "id": "B04",
       "zone": "Vườn",
       "seats": 4,
-      "status": "available"
+      "status": "occupied"
     },
     {
       "id": "C01",
       "zone": "Riêng",
       "seats": 8,
-      "status": "available"
+      "status": "occupied"
     },
     {
       "id": "S01",
@@ -532,7 +677,75 @@
       "status": "available"
     }
   ],
-  "feedback": [],
+  "feedback": [
+    {
+      "id": "f01",
+      "table": "A02",
+      "rating": 5,
+      "text": "Cá hồi áp chảo rất tươi và ngon, nhân viên phục vụ tận tình chu đáo.",
+      "theme": "Hương vị món",
+      "status": "new",
+      "createdAt": "2026-10-27T11:20:00Z"
+    },
+    {
+      "id": "f02",
+      "table": "C01",
+      "rating": 3,
+      "text": "Món ăn ngon vừa miệng nhưng khung giờ tối chờ món chính hơi lâu (khoảng 25 phút).",
+      "theme": "Thời gian chờ",
+      "status": "new",
+      "createdAt": "2026-10-27T11:45:00Z"
+    },
+    {
+      "id": "f03",
+      "table": "B02",
+      "rating": 5,
+      "text": "Không gian sân vườn thoáng đãng, các món chay phong phú và thanh đạm.",
+      "theme": "Không gian",
+      "status": "replied",
+      "reply": "MenuMind xin chân thành cảm ơn quý khách! Rất vui vì quý khách đã có trải nghiệm thư thái tại sân vườn nhà hàng.",
+      "repliedAt": "2026-10-26T20:15:00Z",
+      "createdAt": "2026-10-26T19:50:00Z"
+    },
+    {
+      "id": "f04",
+      "table": "A06",
+      "rating": 4,
+      "text": "Mì xào hải sản đậm đà, tôm tươi nhưng hơi cay so với khẩu vị trẻ nhỏ.",
+      "theme": "Khẩu vị",
+      "status": "new",
+      "createdAt": "2026-10-27T12:10:00Z"
+    },
+    {
+      "id": "f05",
+      "table": "B04",
+      "rating": 2,
+      "text": "Bàn ngoài vườn phải nhắc nhân viên 2 lần mới có thêm nước lọc và khăn lạnh.",
+      "theme": "Thái độ phục vụ",
+      "status": "new",
+      "createdAt": "2026-10-27T12:30:00Z"
+    },
+    {
+      "id": "f06",
+      "table": "A01",
+      "rating": 5,
+      "text": "Salad vườn rất giòn và sốt chanh mật ong đặc biệt, chắc chắn sẽ quay lại!",
+      "theme": "Hương vị món",
+      "status": "replied",
+      "reply": "MenuMind cảm ơn quý khách rất nhiều! Hẹn gặp lại quý khách trong những bữa ăn sắp tới nhé!",
+      "repliedAt": "2026-10-26T21:00:00Z",
+      "createdAt": "2026-10-26T20:30:00Z"
+    },
+    {
+      "id": "f07",
+      "table": "B03",
+      "rating": 3,
+      "text": "Giờ cao điểm phục vụ lên món hơi chậm, mong quán cải thiện tốc độ ra món.",
+      "theme": "Thời gian chờ",
+      "status": "new",
+      "createdAt": "2026-10-27T13:05:00Z"
+    }
+  ],
   "staff": [
     {
       "id": "u01",
@@ -540,7 +753,15 @@
       "email": "minhanh@menumind.vn",
       "role": "kitchen",
       "status": "active",
-      "shift": "Bếp trưởng (Ca trưa & tối)"
+      "shift": "Chiều (14:00 - 22:00)"
+    },
+    {
+      "id": "u02",
+      "name": "Quốc Bảo",
+      "email": "quocbao@menumind.vn",
+      "role": "kitchen",
+      "status": "active",
+      "shift": "Tối (17:00 - 23:00)"
     },
     {
       "id": "u03",
@@ -548,7 +769,7 @@
       "email": "thuha@menumind.vn",
       "role": "manager",
       "status": "active",
-      "shift": "Quản lý điều hành"
+      "shift": "Cả ngày"
     },
     {
       "id": "u04",
@@ -556,8 +777,47 @@
       "email": "hoangnam@menumind.vn",
       "role": "admin",
       "status": "active",
-      "shift": "Quản trị hệ thống"
+      "shift": "Cả ngày"
     }
   ],
-  "payments": []
+  "payments": [
+    {
+      "id": "p01",
+      "table_code": "A02",
+      "reference": "HD-A02-091",
+      "method": "cash",
+      "amount": 541800,
+      "status": "pending",
+      "created_at": "2026-10-27T12:45:00Z"
+    },
+    {
+      "id": "p02",
+      "table_code": "B02",
+      "reference": "HD-B02-092",
+      "method": "bank_transfer",
+      "amount": 385350,
+      "status": "pending",
+      "created_at": "2026-10-27T13:10:00Z"
+    },
+    {
+      "id": "p03",
+      "table_code": "A04",
+      "reference": "HD-A04-089",
+      "method": "card",
+      "amount": 640000,
+      "status": "paid",
+      "created_at": "2026-10-27T11:30:00Z",
+      "paid_at": "2026-10-27T12:00:00Z"
+    },
+    {
+      "id": "p04",
+      "table_code": "A05",
+      "reference": "HD-A05-088",
+      "method": "cash",
+      "amount": 459900,
+      "status": "paid",
+      "created_at": "2026-10-27T10:15:00Z",
+      "paid_at": "2026-10-27T10:45:00Z"
+    }
+  ]
 }

@@ -145,11 +145,30 @@
                 <section class="surface danger-zone">
                     <div class="section-title compact">
                         <div>
-                            <p class="kicker">Vùng nguy hiểm</p>
-                            <h2>Khôi phục mặc định ban đầu</h2>
-                            <p class="fine-print">Thao tác này sẽ đặt lại tên nhà hàng, số điện thoại và toàn bộ tùy chọn hiển thị về giá trị ban đầu của hệ thống.</p>
+                            <p class="kicker">Vùng quản trị dữ liệu hệ thống</p>
+                            <h2>Trạng thái vận hành & Dữ liệu nhà hàng</h2>
+                            <p class="fine-print">Chuyển đổi linh hoạt giữa Dữ liệu mẫu sinh động (dùng để thuyết trình, kiểm thử tính năng) và Vận hành thật (xóa trắng về 0 khi quán bắt đầu đón khách thật).</p>
                         </div>
-                        <button type="button" class="button quiet danger-text" id="btn-reset-defaults">Đặt lại toàn bộ</button>
+                    </div>
+
+                    <div class="data-mode-cards" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 18px;">
+                        <div class="mode-card" style="padding: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                <strong style="font-size: 1rem; color: var(--red);">🚀 Vận hành thật (Reset về 0)</strong>
+                                <span class="tag" style="font-size: 0.72rem; color: var(--red); background: var(--red-soft);">Sạch dữ liệu</span>
+                            </div>
+                            <p class="fine-print" style="margin: 0 0 14px; line-height: 1.5;">Xóa sạch toàn bộ đơn hàng, thanh toán và phản hồi thử nghiệm, đưa 12 bàn ăn về trạng thái trống (giữ nguyên danh mục thực đơn 24 món) để sẵn sàng đón khách thật.</p>
+                            <button type="button" class="button quiet danger-text" id="btn-reset-production">Khởi tạo vận hành thật</button>
+                        </div>
+
+                        <div class="mode-card" style="padding: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                <strong style="font-size: 1rem; color: var(--leaf);">✨ Dữ liệu mẫu (Demo Showcase)</strong>
+                                <span class="tag" style="font-size: 0.72rem; color: var(--leaf); background: var(--blue-soft);">Trình diễn</span>
+                            </div>
+                            <p class="fine-print" style="margin: 0 0 14px; line-height: 1.5;">Nạp lại các đơn hàng đang nấu ở bếp, bàn ăn đang có khách, yêu cầu thanh toán và doanh số 48,6 triệu để trình diễn tính năng cho chủ quán hoặc thầy cô.</p>
+                            <button type="button" class="button quiet" id="btn-load-demo-data">Nạp lại dữ liệu demo</button>
+                        </div>
                     </div>
                 </section>
             </form>

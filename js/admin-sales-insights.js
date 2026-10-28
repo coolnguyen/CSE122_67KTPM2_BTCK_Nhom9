@@ -5,7 +5,64 @@
  * ============================================================================
  */
 
-const BASE_SALES_DATA = {
+const DEMO_SALES_DATA = {
+  'this-week': {
+    label: 'Tuần này (Trực tiếp)',
+    kicker: 'Chu kỳ 7 ngày gần nhất + Doanh thu phiên hiện tại',
+    baseRevenueVnd: 48600000,
+    baseOrders: 326,
+    revenueTrend: '+12,4%',
+    ordersTrend: '+8,1%',
+    aovTrend: '+3,2%',
+    waitTrend: '−2 phút',
+    days: [
+      { day: 'T2', date: '20/10/2026', rev: 6200000, orders: 42 },
+      { day: 'T3', date: '21/10/2026', rev: 7800000, orders: 53 },
+      { day: 'T4', date: '22/10/2026', rev: 5400000, orders: 38 },
+      { day: 'T5', date: '23/10/2026', rev: 8800000, orders: 60 },
+      { day: 'T6', date: '24/10/2026', rev: 7200000, orders: 49 },
+      { day: 'T7', date: '25/10/2026', rev: 9600000, orders: 65 },
+      { day: 'H.Nay', date: '27/10/2026', rev: 3600000, orders: 19, isLiveToday: true }
+    ]
+  },
+  'last-week': {
+    label: 'Tuần trước',
+    kicker: 'Chu kỳ 7 ngày trước',
+    baseRevenueVnd: 43200000,
+    baseOrders: 301,
+    revenueTrend: '+5,2%',
+    ordersTrend: '+4,0%',
+    aovTrend: '+1,5%',
+    waitTrend: '0 phút',
+    days: [
+      { day: 'T2', date: '13/10/2026', rev: 5500000, orders: 38 },
+      { day: 'T3', date: '14/10/2026', rev: 6400000, orders: 44 },
+      { day: 'T4', date: '15/10/2026', rev: 5100000, orders: 35 },
+      { day: 'T5', date: '16/10/2026', rev: 7300000, orders: 51 },
+      { day: 'T6', date: '17/10/2026', rev: 6800000, orders: 47 },
+      { day: 'T7', date: '18/10/2026', rev: 8200000, orders: 58 },
+      { day: 'CN', date: '19/10/2026', rev: 3900000, orders: 28 }
+    ]
+  },
+  'this-month': {
+    label: 'Tháng này (Trực tiếp)',
+    kicker: 'Tổng hợp từ đầu tháng + Phiên trực tiếp',
+    baseRevenueVnd: 186400000,
+    baseOrders: 1280,
+    revenueTrend: '+15,8%',
+    ordersTrend: '+10,2%',
+    aovTrend: '+4,1%',
+    waitTrend: '−1 phút',
+    days: [
+      { day: 'Tuần 1', date: '01/10-07/10', rev: 43200000, orders: 301 },
+      { day: 'Tuần 2', date: '08/10-14/10', rev: 48600000, orders: 326 },
+      { day: 'Tuần 3', date: '15/10-21/10', rev: 46100000, orders: 318 },
+      { day: 'Tuần 4', date: '22/10-28/10', rev: 48500000, orders: 335, isLiveToday: true }
+    ]
+  }
+};
+
+const ZERO_SALES_DATA = {
   'this-week': {
     label: 'Tuần này (Trực tiếp)',
     kicker: 'Doanh thu ca làm việc thời gian thực',
@@ -62,6 +119,11 @@ const BASE_SALES_DATA = {
   }
 };
 
+function getActiveSalesBase() {
+  const isDemo = localStorage.getItem('menumind:demo_mode') !== 'false';
+  return isDemo ? DEMO_SALES_DATA : ZERO_SALES_DATA;
+}
+
 let currentPeriod = 'this-week';
 
 // Tính toán doanh số phát sinh trực tiếp từ các đơn hàng & thanh toán trong hệ thống
@@ -83,7 +145,8 @@ function formatMillions(vnd) {
 }
 
 function buildPeriodSnapshot(periodKey) {
-  const base = BASE_SALES_DATA[periodKey] || BASE_SALES_DATA['this-week'];
+  const baseData = getActiveSalesBase();
+  const base = baseData[periodKey] || baseData['this-week'];
   const { liveRevenue, liveOrdersCount, avgWait } = getLiveSessionDelta();
   const isLivePeriod = periodKey === 'this-week' || periodKey === 'this-month';
 
@@ -184,9 +247,10 @@ function renderTopDishes() {
   if (!ranksEl) return;
 
   const menuItems = getStore('menuItems', appData.menuItems || []);
-  const sorted = [...menuItems].filter(m => (m.orders || 0) > 0).sort((a, b) => (b.orders || 0) - (a.orders || 0)).slice(0, 5);
+  const sorted = [...menuItems].sort((a, b) => (b.orders || 0) - (a.orders || 0)).slice(0, 5);
+  const isAllZero = sorted.every(m => (m.orders || 0) === 0);
 
-  if (sorted.length === 0) {
+  if (sorted.length === 0 || isAllZero) {
     ranksEl.innerHTML = '<div style="text-align: center; padding: 32px 14px; color: var(--muted);"><p style="margin: 0; font-size: 0.92rem; font-weight: 600;">Chưa có lượt gọi món phát sinh trong ca làm việc.</p><small style="display: block; margin-top: 6px;">Bảng xếp hạng món bán chạy sẽ tự động cập nhật ngay khi thực khách gọi món.</small></div>';
     return;
   }

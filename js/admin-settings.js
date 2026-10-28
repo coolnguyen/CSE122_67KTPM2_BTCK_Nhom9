@@ -149,13 +149,47 @@ document.addEventListener('click', async e => {
   const b = e.target.closest('button');
   if (!b) return;
 
-  if (b.id === 'btn-reset-defaults') {
-    const confirmed = window.confirm('Bạn có chắc chắn muốn khôi phục toàn bộ cấu hình và dữ liệu mẫu nhà hàng về mặc định ban đầu không?');
+  if (b.id === 'btn-reset-production') {
+    const confirmed = window.confirm(
+      'CHUYỂN SANG TRẠNG THÁI VẬN HÀNH THẬT (ZERO-STATE)?\n\n' +
+      '• Toàn bộ đơn hàng và thanh toán thử nghiệm sẽ được xóa.\n' +
+      '• Toàn bộ 12 bàn ăn đưa về trạng thái Trống (sẵn sàng đón khách).\n' +
+      '• Báo cáo doanh số bắt đầu tính từ 0 ₫ cho ca làm việc mới.\n' +
+      '• Danh mục thực đơn 24 món ăn vẫn được giữ nguyên 100%.\n\n' +
+      'Bạn có chắc chắn muốn thực hiện?'
+    );
     if (!confirmed) return;
 
-    if (typeof resetAllRestaurantData === 'function') {
-      await resetAllRestaurantData();
+    if (typeof resetToProductionClean === 'function') {
+      await resetToProductionClean();
     }
+    toast('✓ Đã khởi tạo trạng thái vận hành sạch thành công! Bếp và bàn ăn đã sẵn sàng đón khách thật.', 'info');
+    setTimeout(() => location.reload(), 500);
+    return;
+  }
+
+  if (b.id === 'btn-load-demo-data') {
+    const confirmed = window.confirm(
+      'NẠP DỮ LIỆU MẪU SINH ĐỘNG (DEMO SHOWCASE)?\n\n' +
+      '• Nạp lại các đơn hàng đang chế biến tại Bếp.\n' +
+      '• Nạp trạng thái các bàn đang dùng bữa và yêu cầu thanh toán.\n' +
+      '• Kích hoạt biểu đồ doanh số 48,6 triệu và nhận xét thực khách.\n\n' +
+      'Chế độ này rất phù hợp để trình diễn đầy đủ tính năng cho chủ nhà hàng hoặc giảng viên.'
+    );
+    if (!confirmed) return;
+
+    if (typeof loadShowcaseDemoData === 'function') {
+      await loadShowcaseDemoData();
+    }
+    toast('✓ Đã nạp lại dữ liệu mẫu sinh động thành công!', 'info');
+    setTimeout(() => location.reload(), 500);
+    return;
+  }
+
+  if (b.id === 'btn-reset-defaults') {
+    const confirmed = window.confirm('Bạn có chắc chắn muốn khôi phục toàn bộ cấu hình hiển thị nhà hàng về mặc định không?');
+    if (!confirmed) return;
+
     setStore('settings', DEFAULT_SETTINGS);
     populateSettingsForm(DEFAULT_SETTINGS);
     applySystemSettingsToDOM();
@@ -165,7 +199,7 @@ document.addEventListener('click', async e => {
       el.classList.remove('active');
     });
 
-    toast('Đã khôi phục toàn bộ cấu hình và dữ liệu mẫu về mặc định!', 'info');
+    toast('Đã khôi phục cài đặt hiển thị về mặc định!', 'info');
   }
 });
 
