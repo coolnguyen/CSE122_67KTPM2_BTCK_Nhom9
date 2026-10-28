@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="MenuMind - thực đơn thông minh và điều phối đơn hàng nhà hàng.">
-    <title>MenuMind · Thực đơn thông minh</title>
+    <meta name="description" content="MenuMind Bistro – Nơi nghệ thuật ẩm thực đương đại kết hợp cùng công nghệ thực đơn thông minh thấu hiểu khẩu vị.">
+    <title>MenuMind Bistro · Nghệ Thuật Ẩm Thực Đương Đại &amp; Thực Đơn Thông Minh</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/index.css">
@@ -16,17 +16,20 @@
     <script src="js/index.js" defer></script>
 </head>
 
-<body data-root="." data-page="home" data-title="Trang chủ">
+<body data-root="." data-page="home" data-title="MenuMind Bistro">
     <header class="site-header">
         <a class="skip-link" href="#main-content">Bỏ qua điều hướng</a>
-        <div class="brand"><span class="brand-mark" aria-hidden="true">M</span><span>MenuMind</span></div>
+        <div class="brand">
+            <span class="brand-mark" aria-hidden="true">M</span>
+            <span>MenuMind <em>Bistro</em></span>
+        </div>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="global-nav">
             <span aria-hidden="true">☰</span>
             <span class="sr-only">Mở điều hướng</span>
         </button>
         <nav id="global-nav" class="global-nav" aria-label="Điều hướng chính">
-            <a href="#qr-order">Gọi món bằng QR</a>
-            <a href="pages/diner-menu.html">Thực đơn</a>
+            <a href="pages/diner-menu.html">Thực đơn đặc sản</a>
+            <a href="#dining-spaces">Không gian &amp; Chọn bàn</a>
             <a href="pages/diner-order-status.html">Theo dõi đơn</a>
             <a href="pages/login.html">Khu vực nhân viên</a>
         </nav>
@@ -34,110 +37,123 @@
     </header>
 
     <main id="main-content" class="site-main">
-        <section class="hero-grid">
+        <!-- 1. HERO BRAND SECTION -->
+        <section class="hero-brand">
             <div class="hero-copy">
-                <p class="kicker">Thực đơn biết lắng nghe</p>
-                <h1>Quét QR tại bàn.<br>Gọi món đúng nhịp.</h1>
-                <p>Mỗi lượt dùng bàn có một mã QR riêng đồng bộ thời gian thực với Bếp và Thu ngân. Mã tự hết hiệu lực khi nhân viên kết thúc phiên, giúp đơn hàng luôn gắn đúng bàn và đúng lượt khách.</p>
-                <div class="hero-actions">
-                    <a class="button primary" href="#qr-order">Chọn bàn &amp; Gọi món ngay</a>
-                    <a class="button quiet" href="pages/login.html">Đăng nhập nhân viên</a>
+                <div class="brand-badge">
+                    <span class="brand-star">✦</span>
+                    <span>Contemporary Dining &amp; Smart Flavor</span>
                 </div>
-                <dl class="quick-facts">
-                    <div>
-                        <dt id="hero-fact-tables">12 bàn</dt>
-                        <dd>đồng bộ trạng thái trực tiếp</dd>
+                <h1>Nghệ thuật ẩm thực.<br><span class="accent-title">Thấu hiểu từng khẩu vị.</span></h1>
+                <p class="brand-manifesto">
+                    Tại MenuMind Bistro, mỗi món ăn là một tác phẩm được tạo nên từ nguyên liệu hữu cơ theo mùa, kết hợp kỹ nghệ ẩm thực đương đại cùng công nghệ thực đơn thông minh – nơi bạn được thưởng thức đúng hương vị thuộc về riêng mình.
+                </p>
+                <div class="hero-actions">
+                    <a class="button primary brand-cta" href="pages/diner-menu.html">Khám phá thực đơn ngay</a>
+                    <a class="button quiet" href="#dining-spaces">Chọn bàn &amp; Không gian ngồi</a>
+                </div>
+
+                <!-- 3 Brand Pillars -->
+                <div class="brand-pillars">
+                    <div class="pillar-card">
+                        <span class="pillar-icon">🌿</span>
+                        <div>
+                            <strong>Farm-to-Table</strong>
+                            <small>Nguyên liệu hữu cơ tươi mới mỗi ngày</small>
+                        </div>
                     </div>
-                    <div>
-                        <dt id="hero-fact-dishes">24 món</dt>
-                        <dd>gợi ý AI theo khẩu vị</dd>
+                    <div class="pillar-card">
+                        <span class="pillar-icon">👨‍🍳</span>
+                        <div>
+                            <strong>Bếp trưởng thủ công</strong>
+                            <small>Nghệ thuật chế biến đương đại tinh tế</small>
+                        </div>
                     </div>
-                    <div>
-                        <dt>Thời gian thực</dt>
-                        <dd>liên thông Khách – Bếp – Quản lý</dd>
+                    <div class="pillar-card">
+                        <span class="pillar-icon">✨</span>
+                        <div>
+                            <strong>Khẩu vị chuẩn gu</strong>
+                            <small>AI tư vấn riêng theo sở thích của bạn</small>
+                        </div>
                     </div>
-                </dl>
+                </div>
             </div>
-            <div class="hero-showcase" aria-label="Minh họa nhịp phục vụ thời gian thực">
+
+            <!-- Hero Visual: Chef's Showcase Card -->
+            <div class="hero-showcase" aria-label="Món ăn nổi bật của bếp trưởng MenuMind">
                 <div class="showcase-glow" aria-hidden="true"></div>
 
-                <!-- Thẻ món ăn nổi bật thời gian thực -->
-                <div class="showcase-main-card">
-                    <div class="dish-image-wrapper">
+                <div class="masterpiece-card">
+                    <div class="dish-visual-frame">
                         <img id="hero-top-img" src="assets/images/menu/m01.jpg" alt="Món ăn đặc trưng" class="hero-dish-photo">
-                        <span class="dish-tag-badge">★ Món bán chạy nhất</span>
+                        <div class="dish-overlay-gradient"></div>
+                        <span class="curated-badge">✦ Chef's Signature Selection</span>
                     </div>
-                    <div class="dish-card-info">
-                        <div class="dish-card-header">
+
+                    <div class="dish-story-body">
+                        <div class="dish-story-head">
                             <div>
-                                <h3 id="hero-top-dish-name">Cá hồi áp chảo sốt chanh</h3>
-                                <p id="hero-top-dish-desc">Cá hồi Nauy áp chảo da giòn, sốt chanh bơ đặc trưng</p>
+                                <span class="dish-category-tag" id="hero-top-category">Món Chính Thượng Hạng</span>
+                                <h2 id="hero-top-dish-name">Cá hồi áp chảo sốt chanh</h2>
                             </div>
-                            <span class="dish-card-emoji" id="hero-top-emoji" aria-hidden="true">🐟</span>
+                            <span class="dish-story-emoji" id="hero-top-emoji" aria-hidden="true">🐟</span>
                         </div>
-                        <div class="dish-card-footer">
-                            <strong class="dish-card-price" id="hero-top-price">189.000 ₫</strong>
-                            <div class="dish-card-meta">
-                                <span class="rating" id="hero-top-rating">★ 4.9 (128 lượt)</span>
-                                <span class="dot">•</span>
-                                <span class="time" id="hero-top-time">~18 phút</span>
+                        <p id="hero-top-dish-desc">Cá hồi Nauy áp chảo da giòn, sốt chanh bơ thảo mộc Pháp, rau mầm tươi và khoai tây nghiền bơ mịn.</p>
+                        <div class="dish-story-foot">
+                            <strong class="dish-price" id="hero-top-price">189.000 ₫</strong>
+                            <div class="dish-highlights">
+                                <span class="rating-badge" id="hero-top-rating">★ 4.9 Thượng hạng</span>
+                                <span class="prep-badge" id="hero-top-time">⏱ ~18 phút</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Thẻ nhịp bếp trực tiếp -->
-                <div class="pulse-card kitchen-pulse">
-                    <div class="pulse-card-header">
-                        <span class="pulse-dot"></span>
-                        <strong id="hero-kitchen-status">Bếp đang ổn định</strong>
-                    </div>
-                    <small id="hero-kitchen-detail">Đang đồng bộ dữ liệu bếp...</small>
-                    <div class="kitchen-capacity-bar" aria-hidden="true">
-                        <div class="kitchen-capacity-fill" id="hero-kitchen-bar" style="width: 40%;"></div>
+                <!-- Floating Taste Experience Card -->
+                <div class="floating-brand-card top-float">
+                    <span class="float-icon">✨</span>
+                    <div>
+                        <strong>Gợi ý theo gu của bạn</strong>
+                        <small>Thanh mát · Đậm đà · Thuần chay</small>
                     </div>
                 </div>
 
-                <!-- Thẻ phiên gọi món tại bàn -->
-                <div class="pulse-card table-pulse">
-                    <div class="pulse-card-header">
-                        <span class="table-badge" id="hero-table-badge">Bàn A02 · VIP Sân Vườn</span>
-                        <span class="live-pill">Đang phục vụ</span>
+                <!-- Floating Ambiance Badge -->
+                <div class="floating-brand-card bottom-float">
+                    <span class="float-icon">🥂</span>
+                    <div>
+                        <strong>Không gian ấm cúng &amp; tinh tế</strong>
+                        <small>Sân vườn thoáng đãng · Phòng VIP riêng tư</small>
                     </div>
-                    <small id="hero-table-activity">2 món đang chế biến · Tiến độ ~12 phút</small>
                 </div>
             </div>
         </section>
 
-        <section class="table-section" id="qr-order">
+        <!-- 2. DINING SPACES & TABLE SELECTION -->
+        <section class="spaces-section" id="dining-spaces">
             <div class="section-title">
                 <div>
-                    <p class="kicker">Gọi món tại bàn · Thời gian thực</p>
-                    <h2>Chọn bàn hoặc mở phiên QR đang phục vụ</h2>
+                    <p class="kicker">Không gian &amp; Thưởng thức</p>
+                    <h2>Chọn vị trí trải nghiệm tại MenuMind Bistro</h2>
                 </div>
-                <p>Chọn bàn trống để mở phiên gọi món mới, hoặc chọn bàn đang dùng để gọi thêm món và theo dõi tiến độ chế biến trực tiếp.</p>
+                <p>Khám phá các góc không gian được bài trí tinh tế: từ sảnh tiệc ấm cúng, sân vườn thoáng đạt đến phòng VIP riêng tư sang trọng.</p>
             </div>
 
-            <div class="metric-strip" id="home-table-metrics">
-                <div><span>Bàn sẵn sàng</span><strong id="home-avail-count">0</strong></div>
-                <div><span>Bàn đang phục vụ</span><strong id="home-occ-count">0</strong></div>
-                <div><span>Đơn bếp đang nấu</span><strong id="home-active-orders">0</strong></div>
-                <div><span>Bàn đang dọn</span><strong class="warm" id="home-clean-count">0</strong></div>
+            <!-- Space / Zone Filter Tabs -->
+            <div class="home-zone-bar" id="home-zone-filter" aria-label="Lọc theo không gian">
+                <!-- Zone buttons render dynamically -->
             </div>
 
-            <div class="home-zone-bar" id="home-zone-filter" aria-label="Lọc bàn theo khu vực">
-                <!-- Các nút lọc khu vực được render động -->
-            </div>
-
+            <!-- Interactive Tables Grid -->
             <div class="home-table-grid" id="home-table-grid" aria-live="polite">
-                <!-- Danh sách bàn ăn thời gian thực -->
+                <!-- Table cards render dynamically -->
             </div>
         </section>
     </main>
 
     <footer class="site-footer">
-        <span>MenuMind · vận hành thông minh, phục vụ có nhịp</span>
-        <span>Hệ thống vận hành nhà hàng thời gian thực</span>
+        <span>MenuMind Bistro · Nghệ thuật ẩm thực đương đại &amp; Thực đơn thông minh</span>
+        <span>Hệ sinh thái nhà hàng thấu hiểu từng khẩu vị</span>
     </footer>
 </body>
 

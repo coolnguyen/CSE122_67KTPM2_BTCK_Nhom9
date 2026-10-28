@@ -1,5 +1,5 @@
 // ==========================================================================
-// js/index.js - Trang chủ MenuMind: Nhịp phục vụ & Chọn bàn QR thời gian thực
+// js/index.js - MenuMind Bistro: Thương hiệu Ẩm Thực & Khám Phá Không Gian Bàn
 // ==========================================================================
 
 let homeZoneFilter = 'Tất cả';
@@ -10,44 +10,27 @@ function homePage() {
   const menuItems = getStore('menuItems', appData.menuItems || []);
   const payments = getStore('payments', appData.payments || []);
 
-  // 1. Cập nhật Hero Quick Facts & Service Showcase thời gian thực
-  const activeOrders = orders.filter(o => ['new', 'cooking', 'ready'].includes(o.status));
-  const capacityPct = Math.min(100, Math.round((activeOrders.length / 10) * 100));
-  const topDish = [...menuItems].filter(m => m.available).sort((a, b) => (b.orders || 0) - (a.orders || 0))[0];
+  // 1. Cập nhật Món Ăn Bếp Trưởng (Chef's Signature Dish)
+  const topDish = [...menuItems]
+    .filter(m => m.available)
+    .sort((a, b) => (b.orders || 0) - (a.orders || 0))[0] || menuItems[0];
 
-  const factTables = document.querySelector('#hero-fact-tables');
-  const factDishes = document.querySelector('#hero-fact-dishes');
-  const kitchenStatus = document.querySelector('#hero-kitchen-status');
-  const kitchenDetail = document.querySelector('#hero-kitchen-detail');
-  const kitchenBar = document.querySelector('#hero-kitchen-bar');
-  const topDishEl = document.querySelector('#hero-top-dish');
   const topDishName = document.querySelector('#hero-top-dish-name');
   const topDishDesc = document.querySelector('#hero-top-dish-desc');
+  const topDishCategory = document.querySelector('#hero-top-category');
   const topDishPrice = document.querySelector('#hero-top-price');
   const topDishRating = document.querySelector('#hero-top-rating');
   const topDishTime = document.querySelector('#hero-top-time');
   const topDishImg = document.querySelector('#hero-top-img');
   const topEmojiEl = document.querySelector('#hero-top-emoji');
 
-  if (factTables) factTables.textContent = `${tables.length} bàn`;
-  if (factDishes) factDishes.textContent = `${menuItems.filter(m => m.available).length} món`;
-  if (kitchenStatus) {
-    kitchenStatus.textContent = capacityPct >= 80 ? 'Bếp đang cao điểm' : 'Bếp đang ổn định';
-  }
-  if (kitchenDetail) {
-    kitchenDetail.textContent = `${activeOrders.length} đơn đang chế biến · ${capacityPct}% công suất`;
-  }
-  if (kitchenBar) {
-    kitchenBar.style.width = `${Math.max(10, capacityPct)}%`;
-    kitchenBar.style.background = capacityPct >= 80 ? 'var(--citrus)' : 'var(--leaf)';
-  }
   if (topDish) {
-    if (topDishEl) topDishEl.textContent = `${topDish.name} · ★ ${topDish.rating}`;
     if (topDishName) topDishName.textContent = topDish.name;
     if (topDishDesc) topDishDesc.textContent = topDish.description || '';
+    if (topDishCategory) topDishCategory.textContent = `${topDish.category} Thượng Hạng`;
     if (topDishPrice) topDishPrice.textContent = money(topDish.price);
-    if (topDishRating) topDishRating.textContent = `★ ${topDish.rating} (${topDish.orders || 120} lượt)`;
-    if (topDishTime) topDishTime.textContent = `~${topDish.time || 15} phút`;
+    if (topDishRating) topDishRating.textContent = `★ ${topDish.rating} (${topDish.orders || 128} lượt gọi)`;
+    if (topDishTime) topDishTime.textContent = `⏱ ~${topDish.time || 18} phút`;
     if (topDishImg && typeof dishImage === 'function') {
       topDishImg.src = dishImage(topDish);
       topDishImg.alt = topDish.name;
@@ -55,32 +38,7 @@ function homePage() {
     if (topEmojiEl) topEmojiEl.textContent = topDish.emoji || '🍽️';
   }
 
-  // Cập nhật thẻ trạng thái phiên bàn đang phục vụ
-  const activeTable = tables.find(t => t.status === 'occupied') || tables[0];
-  const tableBadge = document.querySelector('#hero-table-badge');
-  const tableActivity = document.querySelector('#hero-table-activity');
-  if (activeTable) {
-    if (tableBadge) tableBadge.textContent = `Bàn ${activeTable.id} · ${activeTable.zone}`;
-    const tOrders = orders.filter(o => o.table === activeTable.id && ['new', 'cooking', 'ready'].includes(o.status));
-    if (tableActivity) {
-      tableActivity.textContent = tOrders.length > 0
-        ? `${tOrders.length} đơn đang chế biến · Tiến độ ~12 phút`
-        : `Sẵn sàng gọi món · Phiên QR đang mở`;
-    }
-  }
-
-  // 2. Cập nhật chỉ số bàn thời gian thực
-  const availCount = document.querySelector('#home-avail-count');
-  const occCount = document.querySelector('#home-occ-count');
-  const activeOrdersEl = document.querySelector('#home-active-orders');
-  const cleanCount = document.querySelector('#home-clean-count');
-
-  if (availCount) availCount.textContent = tables.filter(t => t.status === 'available').length;
-  if (occCount) occCount.textContent = tables.filter(t => t.status === 'occupied').length;
-  if (activeOrdersEl) activeOrdersEl.textContent = activeOrders.length;
-  if (cleanCount) cleanCount.textContent = tables.filter(t => t.status === 'cleaning').length;
-
-  // 3. Render bộ lọc khu vực
+  // 2. Render bộ lọc không gian (Khu vực nhà hàng)
   const zones = ['Tất cả', ...new Set(tables.map(t => t.zone))];
   const zoneBar = document.querySelector('#home-zone-filter');
   if (zoneBar) {
@@ -91,7 +49,7 @@ function homePage() {
     `).join('');
   }
 
-  // 4. Render danh sách bàn ăn tương tác trực tiếp
+  // 3. Render danh sách bàn ăn & không gian thưởng thức
   const filteredTables = homeZoneFilter === 'Tất cả'
     ? tables
     : tables.filter(t => t.zone === homeZoneFilter);
@@ -108,27 +66,31 @@ function homePage() {
     const isCleaning = t.status === 'cleaning';
     const isSelected = t.id === currentSelectedTable;
 
-    let orderInfo = 'Chưa có đơn trong phiên';
-    if (pendingPayment) {
-      orderInfo = `Chờ thanh toán · ${money(pendingPayment.amount)}`;
-    } else if (tableOrders.length > 0) {
-      orderInfo = `${tableOrders.length} lần gọi (${activeTableOrders.length} đang xử lý)`;
+    let statusText = 'Sẵn sàng đón khách';
+    if (isCleaning) {
+      statusText = 'Đang dọn dẹp & sát khuẩn';
+    } else if (pendingPayment) {
+      statusText = `Đang thanh toán (${money(pendingPayment.amount)})`;
+    } else if (activeTableOrders.length > 0) {
+      statusText = `${activeTableOrders.length} món đang phục vụ`;
+    } else if (t.status === 'occupied') {
+      statusText = 'Bàn đang có khách';
     }
 
     return `
       <article class="home-table-card ${escapeHtml(t.status)}">
         <header>
-          <strong>Bàn ${escapeHtml(t.id)}${isSelected ? ' <small style="font-size:.7rem;color:var(--leaf);">• Đang chọn</small>' : ''}</strong>
+          <strong>Bàn ${escapeHtml(t.id)}${isSelected ? ' <small style="font-size:.72rem;color:var(--leaf);font-weight:600;">(Đang chọn)</small>' : ''}</strong>
           ${badge(pendingPayment ? 'pending' : t.status)}
         </header>
         <div class="home-table-meta">
           <span>Khu vực: ${escapeHtml(t.zone)}</span>
           <span>${t.seats} chỗ ngồi</span>
         </div>
-        <small>${escapeHtml(orderInfo)}</small>
+        <small>${escapeHtml(statusText)}</small>
         <div class="home-table-actions">
           ${isCleaning
-            ? `<button type="button" class="button small quiet" disabled>Đang dọn bàn</button>`
+            ? `<button type="button" class="button small quiet" disabled>Đang dọn dẹp</button>`
             : `<button type="button" class="button small primary" data-enter-table="${escapeHtml(t.id)}">
                  ${t.status === 'occupied' ? 'Mở thực đơn bàn' : 'Quét QR / Ngồi bàn này'}
                </button>`
@@ -158,7 +120,7 @@ document.addEventListener('click', e => {
     const tables = getStore('tables', appData.tables || []);
     const target = tables.find(t => t.id === code);
     if (target && target.status === 'cleaning') {
-      toast(`Bàn ${code} đang được dọn dẹp, vui lòng chọn bàn khác`, 'error');
+      toast(`Bàn ${code} đang được dọn dẹp, quý khách vui lòng chọn bàn khác`, 'error');
       return;
     }
     if (target && (target.status === 'available' || target.status === 'reserved')) {
