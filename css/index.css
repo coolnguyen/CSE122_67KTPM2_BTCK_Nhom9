@@ -1,144 +1,340 @@
+/* ==========================================================================
+   css/index.css - Trang chủ MenuMind: Showroom Ẩm Thực & Sơ Đồ Bàn Thời Gian Thực
+   Thiết kế cao cấp, hiện đại, phong cách Bistro & Fine Dining POS
+   ========================================================================== */
+
+/* 1. HERO SECTION */
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(360px, .8fr);
-  gap: clamp(30px, 7vw, 100px);
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.95fr);
+  gap: clamp(32px, 6vw, 80px);
   align-items: center;
-  min-height: 620px;
-  padding-block: 30px 70px;
+  min-height: 600px;
+  padding-block: 40px 70px;
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-copy .kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(23, 107, 91, 0.08);
+  color: var(--leaf);
+  font: 700 0.76rem 'Be Vietnam Pro', sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-block-end: 18px;
 }
 
 .hero-copy h1 {
-  max-width: 760px;
-  font-size: clamp(2.75rem, 6.2vw, 6.5rem);
-  line-height: .96;
+  max-width: 720px;
+  font: 800 clamp(2.6rem, 5.5vw, 4.8rem)/1.08 'Manrope', sans-serif;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 0;
 }
 
 .hero-copy>p:not(.kicker) {
-  max-width: 650px;
-  margin-block: 24px 30px;
-  font-size: clamp(.95rem, 1.4vw, 1.12rem);
+  max-width: 620px;
+  margin-block: 20px 28px;
+  font-size: clamp(0.95rem, 1.25vw, 1.08rem);
+  line-height: 1.65;
+  color: var(--ink-2);
 }
 
-.quick-facts {
+.hero-actions {
   display: flex;
-  gap: clamp(24px, 4vw, 54px);
-  margin-block-start: 50px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Quick Facts Stats */
+.quick-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-block-start: 44px;
+  padding: 0;
 }
 
 .quick-facts div {
-  padding-inline-start: 13px;
-  border-inline-start: 2px solid var(--citrus);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 3px solid var(--leaf);
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 14px rgba(16, 42, 43, 0.03);
+  transition: transform 0.2s ease;
+}
+
+.quick-facts div:hover {
+  transform: translateY(-2px);
 }
 
 .quick-facts dt {
-  font: 800 1.1rem Manrope, sans-serif;
+  font: 800 1.25rem 'Manrope', sans-serif;
+  color: var(--ink);
+  line-height: 1.2;
 }
 
 .quick-facts dd {
-  margin: 2px 0 0;
+  margin: 4px 0 0;
   color: var(--muted);
-  font-size: .68rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1.35;
 }
 
-.service-pulse {
+/* 2. HERO SHOWCASE (GIAO DIỆN CAO CẤP THAY THẾ CHO SERVICE-PULSE) */
+.hero-showcase {
   position: relative;
-  display: grid;
-  place-items: center;
-  min-height: 500px;
-  border-radius: 48% 48% 46% 54%;
-  background: var(--lime);
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 520px;
+  padding: 30px 20px;
 }
 
-.service-pulse::before,
-.service-pulse::after {
-  content: '';
+/* Ambient Radial Glow */
+.showcase-glow {
   position: absolute;
-  width: 340px;
-  height: 340px;
-  border: 1px solid rgba(16, 42, 43, .14);
-  border-radius: 50%;
+  inset: -10%;
+  background: radial-gradient(circle at 55% 45%, rgba(23, 107, 91, 0.15) 0%, rgba(241, 163, 58, 0.12) 40%, transparent 72%);
+  filter: blur(55px);
+  z-index: 0;
+  pointer-events: none;
 }
 
-.service-pulse::after {
-  width: 440px;
-  height: 440px;
-}
-
-.plate {
+/* Thẻ Món Ăn Nổi Bật Trung Tâm */
+.showcase-main-card {
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 410px;
+  background: var(--surface);
+  border: 1px solid rgba(16, 42, 43, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 28px 65px -15px rgba(16, 42, 43, 0.16), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.showcase-main-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 35px 75px -15px rgba(16, 42, 43, 0.22);
+}
+
+.dish-image-wrapper {
+  position: relative;
+  height: 250px;
+  width: 100%;
+  overflow: hidden;
+  background: #edf1e9;
+}
+
+.hero-dish-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.showcase-main-card:hover .hero-dish-photo {
+  transform: scale(1.05);
+}
+
+.dish-tag-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(16, 42, 43, 0.88);
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+}
+
+.dish-card-info {
+  padding: 20px;
+}
+
+.dish-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-block-end: 12px;
+}
+
+.dish-card-header h3 {
+  font: 800 1.25rem 'Manrope', sans-serif;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+
+.dish-card-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.dish-card-emoji {
+  font-size: 1.75rem;
+  background: var(--paper);
+  padding: 8px;
+  border-radius: 12px;
   display: grid;
   place-items: center;
-  width: clamp(230px, 28vw, 350px);
-  aspect-ratio: 1;
-  border: 30px solid #f8faf5;
-  border-radius: 50%;
-  background: #d07d36;
-  box-shadow: 0 24px 55px rgba(16, 42, 43, .2), inset 0 0 0 14px #edc47c;
-  transform: rotate(-8deg);
+  line-height: 1;
+  flex-shrink: 0;
 }
 
-.plate span {
-  font-size: clamp(5rem, 10vw, 9rem);
-  filter: drop-shadow(0 14px 12px rgba(0, 0, 0, .16));
+.dish-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block-start: 14px;
+  border-block-start: 1px solid var(--line);
 }
 
-.plate i {
-  position: absolute;
-  inset: 15%;
-  border: 2px dashed rgba(255, 255, 255, .55);
-  border-radius: 50%;
+.dish-card-price {
+  font: 800 1.35rem 'Manrope', sans-serif;
+  color: var(--leaf);
 }
 
+.dish-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+.dish-card-meta .rating {
+  color: #d97706;
+}
+
+/* Floating Glassmorphism Cards */
 .pulse-card {
   position: absolute;
   z-index: 2;
-  display: grid;
-  padding: 13px 16px;
-  border: 1px solid rgba(16, 42, 43, .12);
-  border-radius: 9px;
-  background: rgba(255, 255, 255, .92);
-  color: #102a2b;
-  box-shadow: var(--shadow);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 20px 45px rgba(16, 42, 43, 0.12), 0 2px 6px rgba(16, 42, 43, 0.04);
+  border-radius: 16px;
+  padding: 14px 18px;
+  transition: transform 0.25s ease;
 }
 
-.pulse-card.top {
-  inset: 13% 5% auto auto;
-  grid-template-columns: auto 1fr;
-  column-gap: 9px;
+.pulse-card:hover {
+  transform: translateY(-2px);
 }
 
-.pulse-card.top small {
-  grid-column: 2;
+/* Thẻ Bếp */
+.pulse-card.kitchen-pulse {
+  top: 24px;
+  right: -15px;
+  width: 250px;
 }
 
-.pulse-card.bottom {
-  inset: auto auto 11% 3%;
+.pulse-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-block-end: 4px;
 }
 
-.pulse-card strong {
-  font-size: .75rem;
+.pulse-card-header strong {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
 }
 
 .pulse-card small {
-  font-size: .65rem;
+  display: block;
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-block-end: 8px;
 }
 
+.kitchen-capacity-bar {
+  width: 100%;
+  height: 5px;
+  background: #e6eee7;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.kitchen-capacity-fill {
+  height: 100%;
+  background: var(--leaf);
+  border-radius: 999px;
+  transition: width 0.5s ease, background-color 0.3s ease;
+}
+
+/* Thẻ Bàn Ăn */
+.pulse-card.table-pulse {
+  bottom: 24px;
+  left: -15px;
+  width: 260px;
+}
+
+.table-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+
+.live-pill {
+  margin-inline-start: auto;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: var(--citrus-soft);
+  color: #b45309;
+}
+
+.table-pulse small {
+  margin: 6px 0 0;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+/* 3. TABLE SECTION & REAL-TIME FLOOR PLAN */
 .table-section {
-  padding: clamp(24px, 4vw, 50px);
+  padding: clamp(28px, 4vw, 56px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
+  box-shadow: 0 4px 20px rgba(16, 42, 43, 0.02);
 }
 
 .metric-strip {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin-block: 24px 26px;
+  margin-block: 24px 28px;
   border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--surface);
+  border-radius: 12px;
+  background: var(--paper);
   overflow: hidden;
 }
 
@@ -147,6 +343,7 @@
   gap: 4px;
   padding: 18px 22px;
   border-inline-end: 1px solid var(--line);
+  background: var(--surface);
 }
 
 .metric-strip>div:last-child {
@@ -155,71 +352,75 @@
 
 .metric-strip span {
   color: var(--muted);
-  font-size: .68rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .metric-strip strong {
-  font: 800 1.8rem Manrope, sans-serif;
+  font: 800 1.9rem 'Manrope', sans-serif;
+  color: var(--ink);
 }
 
-.metric-strip strong small {
-  font-size: .9rem;
+.metric-strip .warm {
+  color: var(--citrus);
 }
 
-.metric-strip em {
-  color: #32805d;
-  font-size: .66rem;
-  font-style: normal;
-}
-
-.metric-strip .warm,
-.metric-strip em.down {
-  color: var(--red);
-}
-
-/* Home Interactive Table Selector */
+/* Zone Filter Bar */
 .home-zone-bar {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-block-end: 20px;
+  margin-block-end: 22px;
 }
 
 .home-zone-bar .chip {
-  padding: 8px 14px;
+  padding: 8px 18px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: var(--paper);
-  font-size: .78rem;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 0.8rem;
   font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.home-zone-bar .chip:hover {
+  background: #eaeee6;
+  border-color: #c4cdc0;
 }
 
 .home-zone-bar .chip.active {
   color: #fff;
   border-color: var(--leaf);
   background: var(--leaf);
+  box-shadow: 0 4px 12px rgba(23, 107, 91, 0.2);
 }
 
+/* Table Cards Grid */
 .home-table-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
+  gap: 16px;
 }
 
 .home-table-card {
   display: grid;
-  gap: 10px;
-  padding: 16px;
+  gap: 12px;
+  padding: 18px;
   border: 1px solid var(--line);
   border-block-start: 4px solid #7cb48b;
-  border-radius: 10px;
-  background: var(--paper);
-  transition: transform .15s ease, box-shadow .15s ease;
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: 0 2px 8px rgba(16, 42, 43, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .home-table-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(16, 42, 43, 0.08);
 }
 
 .home-table-card.occupied {
@@ -227,12 +428,13 @@
 }
 
 .home-table-card.reserved {
-  border-block-start-color: #779a9e;
+  border-block-start-color: #638c92;
 }
 
 .home-table-card.cleaning {
   border-block-start-color: var(--red);
-  opacity: .75;
+  background: #fafbfa;
+  opacity: 0.82;
 }
 
 .home-table-card header {
@@ -243,14 +445,25 @@
 }
 
 .home-table-card header strong {
-  font: 800 1.35rem Manrope, sans-serif;
+  font: 800 1.35rem 'Manrope', sans-serif;
+  color: var(--ink);
 }
 
 .home-table-meta {
   display: flex;
   justify-content: space-between;
   color: var(--muted);
-  font-size: .74rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+.home-table-card small {
+  font-size: 0.74rem;
+  color: var(--ink-2);
+  line-height: 1.4;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
 }
 
 .home-table-actions {
@@ -261,11 +474,21 @@
 
 .home-table-actions .button {
   flex: 1;
+  text-align: center;
 }
 
-@media (max-width: 1180px) {
+/* 4. RESPONSIVE QUERIES */
+@media (max-width: 1200px) {
   .hero-grid {
-    gap: 35px;
+    gap: 36px;
+  }
+
+  .pulse-card.kitchen-pulse {
+    right: -5px;
+  }
+
+  .pulse-card.table-pulse {
+    left: -5px;
   }
 
   .home-table-grid {
@@ -276,10 +499,17 @@
 @media (max-width: 900px) {
   .hero-grid {
     grid-template-columns: 1fr;
+    min-height: auto;
+    padding-block: 20px 50px;
   }
 
-  .service-pulse {
-    min-height: 430px;
+  .hero-showcase {
+    min-height: 480px;
+    margin-block-start: 10px;
+  }
+
+  .showcase-main-card {
+    max-width: 440px;
   }
 
   .home-table-grid {
@@ -288,43 +518,39 @@
 }
 
 @media (max-width: 640px) {
-  .hero-grid {
-    min-height: auto;
-    padding-block-start: 10px;
-  }
-
   .hero-copy h1 {
-    font-size: clamp(2.7rem, 15vw, 4.2rem);
+    font-size: clamp(2.4rem, 12vw, 3.4rem);
   }
 
   .quick-facts {
-    display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
   }
 
   .quick-facts div {
-    padding-inline-start: 8px;
+    padding: 10px 8px;
   }
 
-  .quick-facts dd {
-    line-height: 1.4;
+  .quick-facts dt {
+    font-size: 1.05rem;
   }
 
-  .service-pulse {
-    min-height: 370px;
+  .hero-showcase {
+    padding: 20px 0;
   }
 
-  .plate {
-    border-width: 22px;
+  .pulse-card.kitchen-pulse {
+    top: 10px;
+    right: 0;
+    width: 210px;
+    padding: 10px 14px;
   }
 
-  .pulse-card.top {
-    inset-block-start: 6%;
-  }
-
-  .pulse-card.bottom {
-    inset-block-end: 6%;
+  .pulse-card.table-pulse {
+    bottom: 10px;
+    left: 0;
+    width: 220px;
+    padding: 10px 14px;
   }
 
   .metric-strip {
@@ -344,8 +570,18 @@
   }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 420px) {
   .quick-facts {
     grid-template-columns: 1fr;
+  }
+
+  .pulse-card {
+    position: static;
+    width: 100% !important;
+    margin-block-start: 12px;
+  }
+
+  .hero-showcase {
+    flex-direction: column;
   }
 }

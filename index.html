@@ -58,16 +58,53 @@
                     </div>
                 </dl>
             </div>
-            <div class="service-pulse" aria-label="Minh họa nhịp phục vụ thời gian thực">
-                <div class="plate"><span id="hero-top-emoji">🐟</span><i></i></div>
-                <div class="pulse-card top">
-                    <span class="pulse-dot"></span>
-                    <strong id="hero-kitchen-status">Bếp đang ổn định</strong>
-                    <small id="hero-kitchen-detail">Đang đồng bộ dữ liệu bếp...</small>
+            <div class="hero-showcase" aria-label="Minh họa nhịp phục vụ thời gian thực">
+                <div class="showcase-glow" aria-hidden="true"></div>
+
+                <!-- Thẻ món ăn nổi bật thời gian thực -->
+                <div class="showcase-main-card">
+                    <div class="dish-image-wrapper">
+                        <img id="hero-top-img" src="assets/images/menu/m01.jpg" alt="Món ăn đặc trưng" class="hero-dish-photo">
+                        <span class="dish-tag-badge">★ Món bán chạy nhất</span>
+                    </div>
+                    <div class="dish-card-info">
+                        <div class="dish-card-header">
+                            <div>
+                                <h3 id="hero-top-dish-name">Cá hồi áp chảo sốt chanh</h3>
+                                <p id="hero-top-dish-desc">Cá hồi Nauy áp chảo da giòn, sốt chanh bơ đặc trưng</p>
+                            </div>
+                            <span class="dish-card-emoji" id="hero-top-emoji" aria-hidden="true">🐟</span>
+                        </div>
+                        <div class="dish-card-footer">
+                            <strong class="dish-card-price" id="hero-top-price">189.000 ₫</strong>
+                            <div class="dish-card-meta">
+                                <span class="rating" id="hero-top-rating">★ 4.9 (128 lượt)</span>
+                                <span class="dot">•</span>
+                                <span class="time" id="hero-top-time">~18 phút</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="pulse-card bottom">
-                    <strong>Món hợp gu hôm nay</strong>
-                    <small id="hero-top-dish">Cá hồi áp chảo sốt chanh · ★ 4.9</small>
+
+                <!-- Thẻ nhịp bếp trực tiếp -->
+                <div class="pulse-card kitchen-pulse">
+                    <div class="pulse-card-header">
+                        <span class="pulse-dot"></span>
+                        <strong id="hero-kitchen-status">Bếp đang ổn định</strong>
+                    </div>
+                    <small id="hero-kitchen-detail">Đang đồng bộ dữ liệu bếp...</small>
+                    <div class="kitchen-capacity-bar" aria-hidden="true">
+                        <div class="kitchen-capacity-fill" id="hero-kitchen-bar" style="width: 40%;"></div>
+                    </div>
+                </div>
+
+                <!-- Thẻ phiên gọi món tại bàn -->
+                <div class="pulse-card table-pulse">
+                    <div class="pulse-card-header">
+                        <span class="table-badge" id="hero-table-badge">Bàn A02 · VIP Sân Vườn</span>
+                        <span class="live-pill">Đang phục vụ</span>
+                    </div>
+                    <small id="hero-table-activity">2 món đang chế biến · Tiến độ ~12 phút</small>
                 </div>
             </div>
         </section>
