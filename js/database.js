@@ -302,7 +302,11 @@ async function closeQrSession(table) {
     // Chuyển các đơn đã sẵn sàng/đang nấu của bàn sang hoàn tất hoặc lưu lịch sử
     const orders = getStore('orders', appData?.orders || []);
     orders.forEach(o => {
-      if (o.table === code && ['new', 'cooking', 'ready'].includes(o.status)) {
+      if (o.table === code && o.status === 'cancel_requested') {
+        o.status = 'cancelled';
+        o.cancelledBy = 'session_closed';
+        o.updatedAt = new Date().toISOString();
+      } else if (o.table === code && ['new', 'cooking', 'ready'].includes(o.status)) {
         o.status = 'served';
         o.wait = typeof getOrderWait === 'function' ? getOrderWait(o) : (o.wait || 10);
         o.updatedAt = new Date().toISOString();

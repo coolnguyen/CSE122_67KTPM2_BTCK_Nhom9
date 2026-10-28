@@ -384,6 +384,7 @@ function statusLabel(s) {
     ready: 'Chờ phục vụ',
     served: 'Đã phục vụ',
     cancelled: 'Đã hủy',
+    cancel_requested: 'Chờ duyệt hủy',
     available: 'Sẵn sàng',
     occupied: 'Đang dùng',
     reserved: 'Đã đặt',
@@ -484,12 +485,26 @@ if (realtimeChannel) {
     triggerRealtimeRender(data.key);
 
     // Hiển thị thông báo thời gian thực thông minh theo vai trò
-    if (data.key === 'orders' && ['kitchen-board', 'kitchen-alerts'].includes(PAGE) && data.sourcePage === 'cart') {
-      toast('🔔 Có đơn gọi món mới vừa gửi vào bếp!', 'info');
+    if (data.key === 'orders') {
+      if (['kitchen-board', 'kitchen-alerts', 'kitchen-detail'].includes(PAGE)) {
+        if (data.action === 'cancel_request') {
+          toast(`⚠️ Bàn ${data.table || ''} vừa gửi yêu cầu hủy đơn ${data.orderId || ''}!`, 'warning');
+        } else if (data.action === 'cancel_withdrawn') {
+          toast(`ℹ️ Bàn ${data.table || ''} đã rút lại yêu cầu hủy đơn ${data.orderId || ''}.`, 'info');
+        } else if (data.sourcePage === 'cart') {
+          toast('🔔 Có đơn gọi món mới vừa gửi vào bếp!', 'info');
+        }
+      } else if (PAGE === 'status') {
+        if (data.action === 'cancel_approved') {
+          toast(`✓ Bếp trưởng đã chấp thuận hủy đơn ${data.orderId || ''}!`, 'success');
+        } else if (data.action === 'cancel_rejected') {
+          toast(`✕ Bếp thông báo: Món đang nấu nên không thể hủy đơn ${data.orderId || ''}.`, 'error');
+        } else if (data.sourcePage?.startsWith('kitchen')) {
+          toast('🍽️ Tiến độ món ăn của bàn bạn vừa được cập nhật!', 'info');
+        }
+      }
     } else if (data.key === 'payments' && PAGE === 'manager-payments' && data.sourcePage === 'status') {
       toast('💳 Có bàn vừa gửi yêu cầu thanh toán mới!', 'info');
-    } else if (data.key === 'orders' && PAGE === 'status' && data.sourcePage?.startsWith('kitchen')) {
-      toast('🍽️ Tiến độ món ăn của bàn bạn vừa được cập nhật!', 'info');
     } else if (data.key === 'payments' && PAGE === 'status' && data.sourcePage === 'manager-payments') {
       toast('✓ Nhân viên đã xác nhận thanh toán cho bàn của bạn!');
     }

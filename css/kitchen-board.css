@@ -88,6 +88,58 @@
   border-inline-start: 4px solid var(--citrus);
 }
 
+.kitchen-card.cancel-requested {
+  border: 2px solid #ea580c;
+  background: #fffdfa;
+  box-shadow: 0 4px 18px rgba(234, 88, 12, 0.18);
+  animation: kitchen-card-glow 2s infinite alternate;
+}
+
+[data-theme="dark"] .kitchen-card.cancel-requested {
+  background: #1c140e;
+  border-color: #ea580c;
+  box-shadow: 0 4px 18px rgba(234, 88, 12, 0.3);
+}
+
+@keyframes kitchen-card-glow {
+  from { border-color: #ea580c; }
+  to { border-color: #f97316; }
+}
+
+.kitchen-cancel-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  background: #ffedd5;
+  border-left: 4px solid #ea580c;
+  color: #9a3412;
+  font-size: .78rem;
+}
+
+[data-theme="dark"] .kitchen-cancel-banner {
+  background: rgba(154, 52, 18, 0.32);
+  color: #fed7aa;
+}
+
+.kitchen-cancel-banner strong {
+  font-size: .84rem;
+  color: #c2410c;
+}
+
+[data-theme="dark"] .kitchen-cancel-banner strong {
+  color: #fdba74;
+}
+
+.kitchen-cancel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
 .kitchen-card.completed {
   opacity: .72;
   border-color: var(--line);

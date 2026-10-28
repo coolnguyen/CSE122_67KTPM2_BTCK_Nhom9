@@ -229,7 +229,7 @@ function statusPageV2() {
     return;
   }
 
-  const openCount = orders.filter(o => ['new', 'cooking', 'ready'].includes(o.status)).length;
+  const openCount = orders.filter(o => ['new', 'cooking', 'ready', 'cancel_requested'].includes(o.status)).length;
   const cards = orders.map((order, index) => {
     const steps = ['new', 'cooking', 'ready', 'served'];
     const current = steps.indexOf(order.status);
@@ -240,7 +240,8 @@ function statusPageV2() {
       : order.createdAt;
     const liveWait = getOrderWait(order);
     const orderTotal = calculateOrderTotal(order);
-    const canCancel = order.status === 'new' && !paymentLocksOrdering(undefined, table);
+    const isCancelRequested = order.status === 'cancel_requested';
+    const canRequestCancel = ['new', 'cooking'].includes(order.status) && !paymentLocksOrdering(undefined, table);
 
     return `
       <article class="surface session-order-card">
@@ -252,13 +253,26 @@ function statusPageV2() {
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             ${badge(order.status)}
-            ${canCancel ? `<button type="button" class="button small danger" data-cancel-order="${escapeHtml(order.id)}">Hủy đơn</button>` : ''}
+            ${isCancelRequested ? `<button type="button" class="button small quiet" data-withdraw-cancel="${escapeHtml(order.id)}">Rút lại yêu cầu</button>` : ''}
+            ${(!isCancelRequested && canRequestCancel) ? `<button type="button" class="button small danger" data-request-cancel="${escapeHtml(order.id)}">Yêu cầu hủy</button>` : ''}
           </div>
         </header>
+        ${isCancelRequested ? `
+          <div class="cancel-request-notice pending">
+            <strong>⏳ Đang chờ Bếp trưởng duyệt yêu cầu hủy</strong>
+            <span>Yêu cầu đã được chuyển tới màn hình Bếp lúc ${order.cancelRequestedAt ? new Date(order.cancelRequestedAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) : createdLabel}. Bếp sẽ kiểm tra tình trạng chảo nấu và duyệt hủy cho quý khách nếu món chưa bắt đầu chế biến.</span>
+          </div>
+        ` : ''}
+        ${(!isCancelRequested && order.cancelRejected && order.status === 'cooking') ? `
+          <div class="cancel-request-notice rejected">
+            <strong>✕ Bếp không thể duyệt hủy đơn</strong>
+            <span>Thông báo từ Bếp trưởng: Món ăn đã được sơ chế và đang nấu trên bếp. Rất mong quý khách thông cảm dùng món!</span>
+          </div>
+        ` : ''}
         <div class="mini-order-progress" aria-label="Tiến độ đơn ${escapeHtml(order.id)}">
           ${steps.map((step, i) => `
-            <span class="${order.status === 'cancelled' ? 'cancelled' : i < current ? 'done' : i === current ? 'current' : ''}">
-              ${i < current ? '✓' : i + 1}
+            <span class="${order.status === 'cancelled' ? 'cancelled' : isCancelRequested ? (i === current ? 'current' : i < current ? 'done' : '') : i < current ? 'done' : i === current ? 'current' : ''}">
+              ${order.status === 'cancelled' ? '✕' : i < current ? '✓' : i + 1}
               <small>${['Đã nhận', 'Đang nấu', 'Chờ phục vụ', 'Đã phục vụ'][i]}</small>
             </span>
           `).join('')}
@@ -318,21 +332,86 @@ document.addEventListener('click', async e => {
   if (!b) return;
   const action = b.dataset.action;
 
+  if (b.dataset.requestCancel) {
+    const orderId = b.dataset.requestCancel;
+    const orders = getStore('orders', appData.orders || []);
+    const order = orders.find(o => o.id === orderId);
+    if (!order) return;
+    if (!['new', 'cooking'].includes(order.status)) {
+      toast('Đơn đã ở trạng thái không thể gửi yêu cầu hủy', 'error');
+      return;
+    }
+    const ok = window.confirm(`Gửi yêu cầu hủy đơn ${orderId} tới Bếp trưởng?\n\nBếp sẽ kiểm tra tình trạng trên chảo: nếu món chưa bắt đầu nấu sẽ duyệt hủy ngay cho quý khách.`);
+    if (!ok) return;
+
+    order.status = 'cancel_requested';
+    order.cancelRequestedAt = new Date().toISOString();
+    delete order.cancelRejected;
+    delete order.cancelRejectReason;
+    order.updatedAt = new Date().toISOString();
+    setStore('orders', orders);
+
+    realtimeChannel?.postMessage({
+      type: 'store:update',
+      key: 'orders',
+      action: 'cancel_request',
+      orderId: order.id,
+      table: order.table,
+      timestamp: Date.now(),
+      sourcePage: 'status'
+    });
+
+    statusPageV2();
+    toast(`Đã gửi yêu cầu hủy đơn ${orderId} tới Bếp trưởng. Vui lòng chờ xác nhận!`, 'info');
+    return;
+  }
+
+  if (b.dataset.withdrawCancel) {
+    const orderId = b.dataset.withdrawCancel;
+    const orders = getStore('orders', appData.orders || []);
+    const order = orders.find(o => o.id === orderId);
+    if (!order || order.status !== 'cancel_requested') return;
+    const ok = window.confirm(`Bạn muốn rút lại yêu cầu hủy và tiếp tục đợi món ${orderId}?`);
+    if (!ok) return;
+
+    const hasDoneItem = (order.items || []).some(x => x.done);
+    order.status = hasDoneItem ? 'cooking' : 'new';
+    delete order.cancelRequestedAt;
+    order.updatedAt = new Date().toISOString();
+    setStore('orders', orders);
+
+    realtimeChannel?.postMessage({
+      type: 'store:update',
+      key: 'orders',
+      action: 'cancel_withdrawn',
+      orderId: order.id,
+      table: order.table,
+      timestamp: Date.now(),
+      sourcePage: 'status'
+    });
+
+    statusPageV2();
+    toast(`Đã rút lại yêu cầu hủy đơn ${orderId}`);
+    return;
+  }
+
   if (b.dataset.cancelOrder) {
     const orderId = b.dataset.cancelOrder;
     const orders = getStore('orders', appData.orders || []);
     const order = orders.find(o => o.id === orderId);
     if (!order) return;
-    if (order.status !== 'new') {
-      toast('Đơn đã được bếp chế biến nên không thể tự hủy', 'error');
+    if (!['new', 'cooking'].includes(order.status)) {
+      toast('Đơn đã được chế biến xong nên không thể hủy', 'error');
       return;
     }
-    if (!window.confirm(`Bạn có chắc muốn hủy đơn ${orderId} không?`)) return;
-    order.status = 'cancelled';
+    const ok = window.confirm(`Gửi yêu cầu hủy đơn ${orderId} tới Bếp trưởng?`);
+    if (!ok) return;
+    order.status = 'cancel_requested';
+    order.cancelRequestedAt = new Date().toISOString();
     order.updatedAt = new Date().toISOString();
     setStore('orders', orders);
     statusPageV2();
-    toast(`Đã hủy đơn ${orderId}`, 'info');
+    toast(`Đã gửi yêu cầu hủy đơn ${orderId} tới Bếp`, 'info');
     return;
   }
 

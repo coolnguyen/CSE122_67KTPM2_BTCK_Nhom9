@@ -542,6 +542,58 @@ dialog::backdrop {
   background: var(--red-soft);
 }
 
+.status.cancel_requested {
+  color: #9a3412;
+  background: #ffedd5;
+  border: 1px solid #fdba74;
+  font-weight: 700;
+  animation: status-pulse-amber 2s infinite ease-in-out;
+}
+
+@keyframes status-pulse-amber {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(0.98); }
+}
+
+[data-theme="dark"] .status.cancel_requested {
+  color: #fdba74;
+  background: rgba(154, 52, 18, 0.28);
+  border-color: rgba(251, 146, 60, 0.45);
+}
+
+.cancel-request-notice {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 12px 14px;
+  margin: 14px 0 10px;
+  border-radius: 8px;
+  font-size: .8rem;
+  line-height: 1.45;
+}
+
+.cancel-request-notice.pending {
+  background: #fff7ed;
+  border-left: 4px solid #ea580c;
+  color: #9a3412;
+}
+
+[data-theme="dark"] .cancel-request-notice.pending {
+  background: rgba(234, 88, 12, 0.16);
+  color: #fed7aa;
+}
+
+.cancel-request-notice.rejected {
+  background: #fef2f2;
+  border-left: 4px solid #dc2626;
+  color: #991b1b;
+}
+
+[data-theme="dark"] .cancel-request-notice.rejected {
+  background: rgba(220, 38, 38, 0.16);
+  color: #fca5a5;
+}
+
 .empty-state {
   display: grid;
   justify-items: center;

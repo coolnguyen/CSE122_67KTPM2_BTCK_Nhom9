@@ -55,6 +55,24 @@ function kitchenDetailPage() {
       </div>`
     )}
     <div class="detail-layout">
+      ${o.status === 'cancel_requested' ? `
+        <div class="surface" style="grid-column: 1 / -1; border: 2px solid #ea580c; background: #fffdfa; padding: 16px 20px; border-radius: 10px; box-shadow: 0 4px 18px rgba(234, 88, 12, 0.18);">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap;">
+            <div>
+              <h3 style="color: #c2410c; margin: 0 0 4px; font-size: 1.1rem; display: flex; align-items: center; gap: 6px;">
+                ⚠️ THỰC KHÁCH BÀN ${escapeHtml(o.table)} YÊU CẦU HỦY ĐƠN HÀNG
+              </h3>
+              <p style="margin: 0; color: #9a3412; font-size: .84rem;">
+                Yêu cầu gửi lúc ${o.cancelRequestedAt ? new Date(o.cancelRequestedAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) : createdTimeLabel} (${liveWait} phút chờ). Bếp trưởng vui lòng kiểm tra thực tế trên chảo để xử lý:
+              </p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button type="button" class="button small danger" data-approve-cancel="${escapeHtml(o.id)}">✓ Chấp nhận hủy</button>
+              <button type="button" class="button small quiet" data-reject-cancel="${escapeHtml(o.id)}">✕ Từ chối (Món đang nấu)</button>
+            </div>
+          </div>
+        </div>
+      ` : ''}
       <section class="surface">
         <div class="section-title compact">
           <div>
@@ -91,7 +109,7 @@ function kitchenDetailPage() {
         <label>
           Chuyển trạng thái
           <select id="order-status">
-            ${['new', 'cooking', 'ready', 'served', 'cancelled'].map(s => `<option value="${s}" ${o.status === s ? 'selected' : ''}>${statusLabel(s)}</option>`).join('')}
+            ${['cancel_requested', 'new', 'cooking', 'ready', 'served', 'cancelled'].map(s => `<option value="${s}" ${o.status === s ? 'selected' : ''}>${statusLabel(s)}</option>`).join('')}
           </select>
         </label>
         <label>
@@ -146,6 +164,69 @@ document.addEventListener('change', e => {
 document.addEventListener('click', async e => {
   const b = e.target.closest('button');
   if (!b) return;
+
+  if (b.dataset.approveCancel) {
+    const orderId = b.dataset.approveCancel;
+    const orders = getStore('orders', appData.orders || []);
+    const o = orders.find(x => x.id === orderId);
+    if (!o) return;
+    const ok = window.confirm(`Xác nhận CHẤP NHẬN HỦY đơn ${orderId} (Bàn ${o.table})?\n\nĐơn sẽ được đánh dấu đã hủy và tự động khấu trừ khỏi hóa đơn của khách.`);
+    if (!ok) return;
+
+    o.status = 'cancelled';
+    o.cancelledBy = 'kitchen';
+    o.cancelApprovedAt = new Date().toISOString();
+    o.wait = getOrderWait(o);
+    o.updatedAt = new Date().toISOString();
+
+    setStore('orders', orders);
+    if (typeof updateOrderRemote === 'function') updateOrderRemote(o).catch(console.warn);
+
+    realtimeChannel?.postMessage({
+      type: 'store:update',
+      key: 'orders',
+      action: 'cancel_approved',
+      orderId: o.id,
+      table: o.table,
+      timestamp: Date.now(),
+      sourcePage: 'kitchen-detail'
+    });
+
+    toast(`✓ Đã chấp thuận hủy đơn ${orderId} cho Bàn ${o.table}`);
+    setTimeout(() => { location.href = 'kitchen-board.html'; }, 350);
+    return;
+  }
+
+  if (b.dataset.rejectCancel) {
+    const orderId = b.dataset.rejectCancel;
+    const orders = getStore('orders', appData.orders || []);
+    const o = orders.find(x => x.id === orderId);
+    if (!o) return;
+    const ok = window.confirm(`Xác nhận TỪ CHỐI hủy đơn ${orderId} (Bàn ${o.table})?\n\nThông báo sẽ được gửi tức thì tới khách rằng món ăn đã lên chảo/bếp và không thể hủy.`);
+    if (!ok) return;
+
+    o.status = 'cooking';
+    o.cancelRejected = true;
+    o.cancelRejectReason = 'Món ăn đã được sơ chế và đang nấu trên bếp.';
+    o.updatedAt = new Date().toISOString();
+
+    setStore('orders', orders);
+    if (typeof updateOrderRemote === 'function') updateOrderRemote(o).catch(console.warn);
+
+    realtimeChannel?.postMessage({
+      type: 'store:update',
+      key: 'orders',
+      action: 'cancel_rejected',
+      orderId: o.id,
+      table: o.table,
+      timestamp: Date.now(),
+      sourcePage: 'kitchen-detail'
+    });
+
+    toast(`✕ Đã từ chối hủy đơn ${orderId}. Tiếp tục chế biến món.`);
+    kitchenDetailPage();
+    return;
+  }
 
   if (b.dataset.updateOrder) {
     const orders = getStore('orders', appData.orders || []);

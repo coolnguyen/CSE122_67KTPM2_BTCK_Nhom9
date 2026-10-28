@@ -6,7 +6,7 @@ let thresholdInitialized = false;
 
 function kitchenAlertsPage() {
   const allOrders = getStore('orders', appData.orders || []);
-  const activeOrders = allOrders.filter(o => ['new', 'cooking', 'ready'].includes(o.status));
+  const activeOrders = allOrders.filter(o => ['new', 'cooking', 'ready', 'cancel_requested'].includes(o.status));
   const thresholdSelect = document.querySelector('#alert-threshold');
 
   if (thresholdSelect && !thresholdInitialized) {
@@ -73,7 +73,7 @@ function runLoadAI(form) {
   const el = document.querySelector('#load-result');
   if (!el) return;
 
-  const activeOrders = getStore('orders', appData.orders || []).filter(o => ['new', 'cooking', 'ready'].includes(o.status));
+  const activeOrders = getStore('orders', appData.orders || []).filter(o => ['new', 'cooking', 'ready', 'cancel_requested'].includes(o.status));
   const menuItems = getStore('menuItems', appData.menuItems || []);
   const complexDishesCount = activeOrders.reduce((acc, o) => {
     const hasLongDish = (o.items || []).some(x => {
