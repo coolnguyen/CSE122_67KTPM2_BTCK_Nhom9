@@ -230,96 +230,58 @@ function mountHeroCarousel(menuItems) {
 // ==========================================================================
 function homePage() {
   const tables = getStore('tables', appData.tables || []);
-  const orders = getStore('orders', appData.orders || []);
   const menuItems = getStore('menuItems', appData.menuItems || []);
-  const payments = getStore('payments', appData.payments || []);
 
   // 1. Khởi động Carousel món ăn tinh hoa bếp trưởng
   mountHeroCarousel(menuItems);
 
-  // 2. Render bộ lọc không gian (Khu vực nhà hàng)
-  const zones = ['Tất cả', ...new Set(tables.map(t => t.zone))];
-  const zoneBar = document.querySelector('#home-zone-filter');
-  if (zoneBar) {
-    zoneBar.innerHTML = zones.map(z => `
-      <button type="button" class="chip ${homeZoneFilter === z ? 'active' : ''}" data-home-zone="${escapeHtml(z)}">
-        ${escapeHtml(z)}
-      </button>
-    `).join('');
+  // 2. Render danh sách bàn trong chế độ giả lập QR Simulator
+  const currentSelectedTable = typeof getActiveTable === 'function' ? getActiveTable() : 'A01';
+  const simContainer = document.querySelector('#simulator-tables');
+  if (simContainer) {
+    simContainer.innerHTML = tables.map(t => {
+      const isCurrent = t.id === currentSelectedTable;
+      const zoneLabel = t.zone || 'Khu vực';
+      return `
+        <button type="button" class="chip simulator-table-chip ${isCurrent ? 'active' : ''}" data-sim-table="${escapeHtml(t.id)}">
+          <b>Bàn ${escapeHtml(t.id)}</b> · ${escapeHtml(zoneLabel)} (${t.seats} chỗ)
+        </button>
+      `;
+    }).join('');
   }
 
-  // 3. Render danh sách bàn ăn & không gian thưởng thức
-  const filteredTables = homeZoneFilter === 'Tất cả'
-    ? tables
-    : tables.filter(t => t.zone === homeZoneFilter);
-
-  const grid = document.querySelector('#home-table-grid');
-  if (!grid) return;
-
-  const currentSelectedTable = typeof getActiveTable === 'function' ? getActiveTable() : 'A01';
-
-  grid.innerHTML = filteredTables.map(t => {
-    const tableOrders = orders.filter(o => o.table === t.id && o.status !== 'cancelled');
-    const activeTableOrders = tableOrders.filter(o => ['new', 'cooking', 'ready'].includes(o.status));
-    const pendingPayment = payments.find(p => p.table_code === t.id && p.status === 'pending');
-    const isCleaning = t.status === 'cleaning';
-    const isSelected = t.id === currentSelectedTable;
-
-    let statusText = 'Sẵn sàng đón khách';
-    if (isCleaning) {
-      statusText = 'Đang dọn dẹp & sát khuẩn';
-    } else if (pendingPayment) {
-      statusText = `Đang thanh toán (${money(pendingPayment.amount)})`;
-    } else if (activeTableOrders.length > 0) {
-      statusText = `${activeTableOrders.length} món đang phục vụ`;
-    } else if (t.status === 'occupied') {
-      statusText = 'Bàn đang có khách';
-    }
-
-    return `
-      <article class="home-table-card ${escapeHtml(t.status)}">
-        <header>
-          <strong>Bàn ${escapeHtml(t.id)}${isSelected ? ' <small style="font-size:.72rem;color:var(--leaf);font-weight:600;">(Đang chọn)</small>' : ''}</strong>
-          ${badge(pendingPayment ? 'pending' : t.status)}
-        </header>
-        <div class="home-table-meta">
-          <span>Khu vực: ${escapeHtml(t.zone)}</span>
-          <span>${t.seats} chỗ ngồi</span>
-        </div>
-        <small>${escapeHtml(statusText)}</small>
-        <div class="home-table-actions">
-          ${isCleaning
-            ? `<button type="button" class="button small quiet" disabled>Đang dọn dẹp</button>`
-            : `<button type="button" class="button small primary" data-enter-table="${escapeHtml(t.id)}">
-                 ${t.status === 'occupied' ? 'Mở thực đơn bàn' : 'Quét QR / Ngồi bàn này'}
-               </button>`
-          }
-          ${tableOrders.length > 0 && !isCleaning
-            ? `<button type="button" class="button small quiet" data-track-table="${escapeHtml(t.id)}">Theo dõi đơn</button>`
-            : ''
-          }
-        </div>
-      </article>
-    `;
-  }).join('');
+  // 3. Thiết lập ngày tối thiểu cho form đặt bàn là hôm nay
+  const dateInput = document.querySelector('#reserve-date-input');
+  if (dateInput && !dateInput.value) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.min = today;
+    dateInput.value = today;
+  }
 }
 
 document.addEventListener('click', e => {
-  const b = e.target.closest('button');
+  const b = e.target.closest('button, a');
   if (!b) return;
 
-  if (b.dataset.homeZone) {
-    homeZoneFilter = b.dataset.homeZone;
-    homePage();
+  // Nút mở form đặt bàn theo không gian
+  if (b.classList.contains('open-reserve-btn') || b.dataset.zone) {
+    const zone = b.dataset.zone || 'Cửa sổ';
+    const dialog = document.querySelector('#reservation-dialog');
+    if (dialog) {
+      const select = dialog.querySelector('#reserve-zone-select');
+      if (select) select.value = zone;
+      dialog.showModal();
+    }
     return;
   }
 
-  if (b.dataset.enterTable) {
-    const code = b.dataset.enterTable;
+  // Nút giả lập chọn bàn QR
+  if (b.dataset.simTable) {
+    const code = b.dataset.simTable;
     const tables = getStore('tables', appData.tables || []);
     const target = tables.find(t => t.id === code);
     if (target && target.status === 'cleaning') {
-      toast(`Bàn ${code} đang được dọn dẹp, quý khách vui lòng chọn bàn khác`, 'error');
+      toast(`Bàn ${code} đang trong ca dọn dẹp, quý khách vui lòng chọn bàn khác`, 'error');
       return;
     }
     if (target && (target.status === 'available' || target.status === 'reserved')) {
@@ -327,14 +289,28 @@ document.addEventListener('click', e => {
       setStore('tables', tables);
     }
     const qr = setActiveTable(code);
-    location.href = `pages/diner-menu.html?table=${encodeURIComponent(qr.table)}&id=${encodeURIComponent(qr.token)}`;
+    toast(`✓ Đã kích hoạt phiên QR cho Bàn ${code}. Đang mở thực đơn...`);
+    setTimeout(() => {
+      location.href = `pages/diner-menu.html?table=${encodeURIComponent(qr.table)}&id=${encodeURIComponent(qr.token)}`;
+    }, 280);
     return;
   }
+});
 
-  if (b.dataset.trackTable) {
-    const code = b.dataset.trackTable;
-    const qr = setActiveTable(code);
-    location.href = `pages/diner-order-status.html?table=${encodeURIComponent(qr.table)}&id=${encodeURIComponent(qr.token)}`;
+// Xử lý gửi form đặt bàn trải nghiệm
+document.addEventListener('submit', e => {
+  if (e.target.id === 'reservation-form') {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const name = fd.get('name') || 'quý khách';
+    const zone = fd.get('zone') || 'Sảnh tiệc';
+    const date = fd.get('date');
+    const time = fd.get('time');
+    const guests = fd.get('guests') || 4;
+
+    document.querySelector('#reservation-dialog')?.close();
+    toast(`✓ MenuMind Bistro đã nhận thông tin đặt bàn của ${name}! Khu vực: ${zone} (${guests} khách, ngày ${date} lúc ${time}). Lễ tân sẽ liên hệ xác nhận sớm nhất.`);
+    e.target.reset();
   }
 });
 

@@ -141,13 +141,14 @@ function syncGlobalNav() {
   const currentPageKey = document.body.dataset.page || '';
   const currentFile = location.pathname.split('/').pop() || 'index.html';
 
-  const isTableOrder = currentFile === 'index.html' || currentPageKey === 'home';
+  const isHome = currentFile === 'index.html' || currentPageKey === 'home';
   const isMenu = ['menu', 'dish-detail'].includes(currentPageKey) || currentFile.includes('menu') || currentFile.includes('dish-detail');
   const isStatus = ['status', 'cart'].includes(currentPageKey) || currentFile.includes('order-status') || currentFile.includes('table-order');
   const isStaff = ['login', 'admin', 'manager', 'kitchen'].some(k => currentPageKey.startsWith(k)) || currentFile === 'login.html';
 
   nav.innerHTML = `
-    <a href="${rootPrefix}index.html#dining-spaces"${isTableOrder ? ' class="active" aria-current="page"' : ''}>Chọn bàn QR</a>
+    <a href="${rootPrefix}index.html"${isHome ? ' class="active" aria-current="page"' : ''}>Trang chủ</a>
+    ${isHome ? `<a href="#dining-spaces">Không gian</a><a href="#dining-journey">Trải nghiệm QR</a>` : ''}
     <a href="${prefix}diner-menu.html"${isMenu ? ' class="active" aria-current="page"' : ''}>Thực đơn</a>
     <a href="${prefix}diner-order-status.html"${isStatus ? ' class="active" aria-current="page"' : ''}>Theo dõi đơn</a>
     <a href="${prefix}login.html"${isStaff ? ' class="active" aria-current="page"' : ''}>Khu vực nhân viên</a>

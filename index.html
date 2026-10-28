@@ -28,7 +28,9 @@
             <span class="sr-only">Mở điều hướng</span>
         </button>
         <nav id="global-nav" class="global-nav" aria-label="Điều hướng chính">
-            <a href="#dining-spaces" class="active" aria-current="page">Chọn bàn QR</a>
+            <a href="index.html" class="active" aria-current="page">Trang chủ</a>
+            <a href="#dining-spaces">Không gian</a>
+            <a href="#dining-journey">Trải nghiệm QR</a>
             <a href="pages/diner-menu.html">Thực đơn</a>
             <a href="pages/diner-order-status.html">Theo dõi đơn</a>
             <a href="pages/login.html">Khu vực nhân viên</a>
@@ -50,7 +52,7 @@
                 </p>
                 <div class="hero-actions">
                     <a class="button primary brand-cta" href="pages/diner-menu.html">Khám phá thực đơn ngay</a>
-                    <a class="button quiet" href="#dining-spaces">Chọn bàn &amp; Không gian ngồi</a>
+                    <a class="button quiet" href="#dining-spaces">Khám phá không gian ẩm thực</a>
                 </div>
 
                 <!-- 3 Brand Pillars -->
@@ -155,27 +157,187 @@
             </div>
         </section>
 
-        <!-- 2. DINING SPACES & TABLE SELECTION -->
+        <!-- 2. DINING SPACES SHOWCASE -->
         <section class="spaces-section" id="dining-spaces">
             <div class="section-title">
                 <div>
-                    <p class="kicker">Không gian &amp; Thưởng thức</p>
-                    <h2>Chọn vị trí trải nghiệm tại MenuMind Bistro</h2>
+                    <p class="kicker">Không gian &amp; Cảm hứng ẩm thực</p>
+                    <h2>Không gian thưởng thức tại MenuMind Bistro</h2>
                 </div>
-                <p>Khám phá các góc không gian được bài trí tinh tế: từ sảnh tiệc ấm cúng, sân vườn thoáng đạt đến phòng VIP riêng tư sang trọng.</p>
+                <p>Mỗi góc không gian tại MenuMind Bistro đều được kiến tạo với tinh thần mỹ học đương đại – mang đến sự cân bằng hoàn hảo giữa ẩm thực tinh tuyển và bầu không khí thư thái.</p>
             </div>
 
-            <!-- Space / Zone Filter Tabs -->
-            <div class="home-zone-bar" id="home-zone-filter" aria-label="Lọc theo không gian">
-                <!-- Zone buttons render dynamically -->
+            <div class="spaces-showcase-grid">
+                <!-- Không gian 1: Sảnh Tiệc Ánh Sáng -->
+                <article class="space-showcase-card">
+                    <div class="space-card-media hall-view">
+                        <span class="space-badge">Trong nhà · Cửa sổ lớn</span>
+                    </div>
+                    <div class="space-card-body">
+                        <div class="space-head">
+                            <h3>Sảnh Tiệc Ánh Sáng (Main Dining Hall)</h3>
+                            <span class="space-capacity">2 – 4 Khách / bàn</span>
+                        </div>
+                        <p>Kiến trúc đương đại với vách kính lớn đón hoàng hôn, ánh sáng vàng dịu nhẹ cùng giai điệu Jazz mộc mạc. Trải nghiệm trọn vẹn nhịp chuyển động nghệ thuật từ gian bếp mở.</p>
+                        <div class="space-highlights">
+                            <span>Bàn cạnh cửa sổ</span>
+                            <span>Không gian lãng mạn</span>
+                            <span>Nhạc Jazz acoustics</span>
+                        </div>
+                        <button type="button" class="button quiet small open-reserve-btn" data-zone="Cửa sổ">
+                            Đặt bàn tại sảnh tiệc →
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Không gian 2: Vườn Thảo Mộc Xanh -->
+                <article class="space-showcase-card">
+                    <div class="space-card-media garden-view">
+                        <span class="space-badge">Ngoài trời · Sân vườn</span>
+                    </div>
+                    <div class="space-card-body">
+                        <div class="space-head">
+                            <h3>Vườn Thảo Mộc Xanh (Alfresco Courtyard)</h3>
+                            <span class="space-capacity">2 – 6 Khách / bàn</span>
+                        </div>
+                        <p>Khu vườn mở ngập tràn ánh tự nhiên ban ngày và ánh nến lung linh ban đêm. Bao quanh bởi các luống thảo mộc tươi mát được đầu bếp tuyển chọn sử dụng trực tiếp trong từng món ăn.</p>
+                        <div class="space-highlights">
+                            <span>Sân vườn thoáng đạt</span>
+                            <span>Gió trời tự nhiên</span>
+                            <span>Thư thái &amp; Tươi mát</span>
+                        </div>
+                        <button type="button" class="button quiet small open-reserve-btn" data-zone="Vườn">
+                            Đặt bàn sân vườn →
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Không gian 3: Phòng Yến Tiệc Riêng Tư -->
+                <article class="space-showcase-card">
+                    <div class="space-card-media suite-view">
+                        <span class="space-badge">Biệt lập · VIP Suite</span>
+                    </div>
+                    <div class="space-card-body">
+                        <div class="space-head">
+                            <h3>Phòng Yến Tiệc Riêng Tư (The Grand Suite)</h3>
+                            <span class="space-capacity">8 – 12 Khách / phòng</span>
+                        </div>
+                        <p>Không gian biệt lập dành riêng cho những buổi gặp gỡ đối tác ngoại giao, tiệc họp mặt doanh nghiệp hoặc kỷ niệm gia đình đầm ấm với hệ thống âm thanh bespoke và phục vụ riêng biệt.</p>
+                        <div class="space-highlights">
+                            <span>Riêng tư tuyệt đối</span>
+                            <span>Âm thanh Bespoke</span>
+                            <span>Bàn tiệc yến lớn</span>
+                        </div>
+                        <button type="button" class="button quiet small open-reserve-btn" data-zone="Riêng">
+                            Đặt phòng riêng tư →
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 3. SMART DINING JOURNEY -->
+        <section class="smart-journey-section" id="dining-journey">
+            <div class="section-title">
+                <div>
+                    <p class="kicker">Kỹ nghệ phục vụ số · MenuMind Experience</p>
+                    <h2>Trải nghiệm gọi món thông minh tại bàn</h2>
+                </div>
+                <p>Thực khách chỉ cần quét mã QR tại bàn – toàn bộ quy trình gọi món, tùy chỉnh khẩu vị và thanh toán được vận hành trơn tru trong vài chạm.</p>
             </div>
 
-            <!-- Interactive Tables Grid -->
-            <div class="home-table-grid" id="home-table-grid" aria-live="polite">
-                <!-- Table cards render dynamically -->
+            <div class="journey-grid">
+                <div class="journey-card">
+                    <span class="journey-step">01</span>
+                    <h3>Quét mã QR tại bàn</h3>
+                    <p>Mỗi bàn ăn sở hữu mã QR riêng biệt. Mở camera điện thoại quét để mở ngay thực đơn thông minh – hoàn toàn không cần tải ứng dụng hay đăng ký tài khoản phiền hà.</p>
+                </div>
+                <div class="journey-card">
+                    <span class="journey-step">02</span>
+                    <h3>Chọn món &amp; Tùy chỉnh gu</h3>
+                    <p>Khám phá bộ sưu tập món với hình ảnh thực tế, thời gian chế biến dự kiến và gửi ghi chú khẩu vị riêng (ít cay, không hành, dị ứng) thẳng vào hệ thống bếp nóng.</p>
+                </div>
+                <div class="journey-card">
+                    <span class="journey-step">03</span>
+                    <h3>Thưởng thức &amp; Thanh toán</h3>
+                    <p>Theo dõi tiến độ chế biến từng món theo thời gian thực. Khi dùng bữa xong, gửi yêu cầu thanh toán đa phương thức (VietQR, quẹt thẻ POS, tiền mặt) ngay tại chỗ.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. QR TABLE SIMULATOR (DÀNH CHO KIỂM THỬ & CHẤM ĐỒ ÁN) -->
+        <section class="simulator-section" id="qr-simulator">
+            <div class="simulator-card">
+                <div class="simulator-header">
+                    <div>
+                        <span class="simulator-pill">Simulator Mode · Chế độ giả lập đồ án</span>
+                        <h2>Mô phỏng trải nghiệm quét mã QR tại bàn</h2>
+                        <p>Dành cho Giảng viên &amp; Ban giám khảo: Chọn nhanh một bàn bên dưới để hệ thống giả lập hành động quét mã QR, tự động mở thực đơn và bắt đầu phiên gọi món:</p>
+                    </div>
+                </div>
+                <div class="simulator-tables-grid" id="simulator-tables">
+                    <!-- Danh sách chip bàn ăn render động qua js/index.js -->
+                </div>
             </div>
         </section>
     </main>
+
+    <!-- DIALOG ĐẶT BÀN TRƯỚC (RESERVATION MODAL) -->
+    <dialog id="reservation-dialog" class="reservation-dialog" aria-labelledby="reserve-dialog-title">
+        <header class="dialog-head">
+            <h2 id="reserve-dialog-title">Đặt bàn trải nghiệm tại MenuMind Bistro</h2>
+            <button class="icon-button" type="button" data-close="reservation-dialog" aria-label="Đóng">×</button>
+        </header>
+        <form id="reservation-form" class="reservation-form">
+            <div class="form-row">
+                <label>Họ và tên quý khách
+                    <input type="text" name="name" required placeholder="Nguyễn Văn A">
+                </label>
+                <label>Số điện thoại liên hệ
+                    <input type="tel" name="phone" required placeholder="0901 234 567">
+                </label>
+            </div>
+            <div class="form-row">
+                <label>Không gian mong muốn
+                    <select name="zone" id="reserve-zone-select" required>
+                        <option value="Cửa sổ">Sảnh Tiệc Ánh Sáng (Main Dining Hall)</option>
+                        <option value="Vườn">Vườn Thảo Mộc Xanh (Alfresco Courtyard)</option>
+                        <option value="Riêng">Phòng Yến Tiệc Riêng Tư (The Grand Suite)</option>
+                    </select>
+                </label>
+                <label>Số lượng khách
+                    <select name="guests" required>
+                        <option value="2">2 khách (Bàn hẹn hò)</option>
+                        <option value="4" selected>4 khách (Tiệc tiêu chuẩn)</option>
+                        <option value="6">6 khách (Tiệc gia đình)</option>
+                        <option value="8">8 khách (Phòng tiệc lớn)</option>
+                        <option value="12">10 - 12 khách (VIP Suite)</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-row">
+                <label>Ngày dùng bữa
+                    <input type="date" name="date" required id="reserve-date-input">
+                </label>
+                <label>Khung giờ
+                    <select name="time" required>
+                        <option value="11:30">11:30 (Trưa)</option>
+                        <option value="12:30">12:30 (Trưa)</option>
+                        <option value="18:00">18:00 (Tối hoàng hôn)</option>
+                        <option value="19:00" selected>19:00 (Bữa tối cao điểm)</option>
+                        <option value="20:00">20:00 (Bữa tối muộn)</option>
+                    </select>
+                </label>
+            </div>
+            <label>Ghi chú đặc biệt (dịp kỷ niệm, yêu cầu bài trí, món ăn yêu thích...)
+                <textarea name="notes" rows="3" placeholder="Ví dụ: Kỷ niệm ngày cưới, cần chỗ ngồi lãng mạn cạnh cửa kính..."></textarea>
+            </label>
+            <div class="dialog-actions">
+                <button type="button" class="button quiet" data-close="reservation-dialog">Hủy</button>
+                <button type="submit" class="button primary">Xác nhận gửi thông tin đặt bàn</button>
+            </div>
+        </form>
+    </dialog>
 
     <footer class="site-footer">
         <span>MenuMind Bistro · Nghệ thuật ẩm thực đương đại &amp; Thực đơn thông minh</span>
