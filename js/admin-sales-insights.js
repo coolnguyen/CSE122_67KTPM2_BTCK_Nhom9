@@ -1,130 +1,137 @@
 /**
  * ============================================================================
- * MENUMIND - MODULE BÁO CÁO DOANH SỐ & THỐNG KÊ (S13)
+ * MENUMIND - MODULE BÁO CÁO DOANH SỐ & THỐNG KÊ THỜI GIAN THỰC (S13)
  * Nguyễn Hoàng Hải (SV3 - Leader)
- * 
- * 🗺️ CẤU TRÚC PHÂN ĐOẠN LOGIC (JS ARCHITECTURE):
- * ----------------------------------------------------------------------------
- * 1. DỮ LIỆU BÁO CÁO THEO KỲ: SALES_DATA (Tuần này, Tuần trước, Tháng này)
- * 2. CẬP NHẬT CHỈ SỐ KPI & BIỂU ĐỒ CỘT: renderSalesDashboard()
- * 3. TÍNH TOÁN & XẾP HẠNG TOP MÓN BÁN CHẠY: renderTopDishes()
- * 4. LẮNG NGHE SỰ KIỆN: Đổi chu kỳ xem & Xuất file CSV định dạng UTF-8
  * ============================================================================
  */
 
-/* ==========================================================================
-   PHẦN 1: MÔ HÌNH DỮ LIỆU BÁO CÁO THEO TỪNG CHU KỲ KINH DOANH
-   ========================================================================== */
-const SALES_DATA = {
+const BASE_SALES_DATA = {
   'this-week': {
-    label: 'Tuần này',
-    kicker: 'Chu kỳ 7 ngày gần nhất',
-    metrics: {
-      revenue: '48,6',
-      revenueUnit: ' tr',
-      revenueTrend: '+12,4%',
-      revenueTrendClass: 'trend-up',
-      orders: '326',
-      ordersTrend: '+8,1%',
-      ordersTrendClass: 'trend-up',
-      aov: '149',
-      aovUnit: 'k',
-      aovTrend: '+3,2%',
-      aovTrendClass: 'trend-up',
-      wait: '13',
-      waitUnit: '′',
-      waitTrend: '−2 phút',
-      waitTrendClass: 'down'
-    },
+    label: 'Tuần này (Trực tiếp)',
+    kicker: 'Chu kỳ 7 ngày gần nhất + Doanh thu phiên hiện tại',
+    baseRevenueVnd: 48600000,
+    baseOrders: 326,
+    revenueTrend: '+12,4%',
+    ordersTrend: '+8,1%',
+    aovTrend: '+3,2%',
+    waitTrend: '−2 phút',
     days: [
-      { day: 'T2', val: '6.2tr', height: '62%' },
-      { day: 'T3', val: '7.8tr', height: '78%' },
-      { day: 'T4', val: '5.4tr', height: '54%' },
-      { day: 'T5', val: '8.8tr', height: '88%' },
-      { day: 'T6', val: '7.2tr', height: '72%' },
-      { day: 'T7', val: '9.6tr', height: '96%' },
-      { day: 'CN', val: '8.4tr', height: '84%' }
-    ],
-    csv: 'Thứ,Ngày,Doanh thu (VND),Số đơn\nThứ 2,20/10/2026,6200000,42\nThứ 3,21/10/2026,7800000,53\nThứ 4,22/10/2026,5400000,38\nThứ 5,23/10/2026,8800000,60\nThứ 6,24/10/2026,7200000,49\nThứ 7,25/10/2026,9600000,65\nChủ Nhật,26/10/2026,8400000,57'
+      { day: 'T2', date: '20/10/2026', rev: 6200000, orders: 42 },
+      { day: 'T3', date: '21/10/2026', rev: 7800000, orders: 53 },
+      { day: 'T4', date: '22/10/2026', rev: 5400000, orders: 38 },
+      { day: 'T5', date: '23/10/2026', rev: 8800000, orders: 60 },
+      { day: 'T6', date: '24/10/2026', rev: 7200000, orders: 49 },
+      { day: 'T7', date: '25/10/2026', rev: 9600000, orders: 65 },
+      { day: 'H.Nay', date: '27/10/2026', rev: 3600000, orders: 19, isLiveToday: true }
+    ]
   },
   'last-week': {
     label: 'Tuần trước',
     kicker: 'Chu kỳ 7 ngày trước',
-    metrics: {
-      revenue: '43,2',
-      revenueUnit: ' tr',
-      revenueTrend: '+5,2%',
-      revenueTrendClass: 'trend-up',
-      orders: '301',
-      ordersTrend: '+4,0%',
-      ordersTrendClass: 'trend-up',
-      aov: '144',
-      aovUnit: 'k',
-      aovTrend: '+1,5%',
-      aovTrendClass: 'trend-up',
-      wait: '15',
-      waitUnit: '′',
-      waitTrend: '0 phút',
-      waitTrendClass: 'trend-up'
-    },
+    baseRevenueVnd: 43200000,
+    baseOrders: 301,
+    revenueTrend: '+5,2%',
+    ordersTrend: '+4,0%',
+    aovTrend: '+1,5%',
+    waitTrend: '0 phút',
     days: [
-      { day: 'T2', val: '5.5tr', height: '55%' },
-      { day: 'T3', val: '6.4tr', height: '64%' },
-      { day: 'T4', val: '5.1tr', height: '51%' },
-      { day: 'T5', val: '7.3tr', height: '73%' },
-      { day: 'T6', val: '6.8tr', height: '68%' },
-      { day: 'T7', val: '8.2tr', height: '82%' },
-      { day: 'CN', val: '7.5tr', height: '75%' }
-    ],
-    csv: 'Thứ,Ngày,Doanh thu (VND),Số đơn\nThứ 2,13/10/2026,5500000,38\nThứ 3,14/10/2026,6400000,44\nThứ 4,15/10/2026,5100000,35\nThứ 5,16/10/2026,7300000,51\nThứ 6,17/10/2026,6800000,47\nThứ 7,18/10/2026,8200000,58\nChủ Nhật,19/10/2026,7500000,52'
+      { day: 'T2', date: '13/10/2026', rev: 5500000, orders: 38 },
+      { day: 'T3', date: '14/10/2026', rev: 6400000, orders: 44 },
+      { day: 'T4', date: '15/10/2026', rev: 5100000, orders: 35 },
+      { day: 'T5', date: '16/10/2026', rev: 7300000, orders: 51 },
+      { day: 'T6', date: '17/10/2026', rev: 6800000, orders: 47 },
+      { day: 'T7', date: '18/10/2026', rev: 8200000, orders: 58 },
+      { day: 'CN', date: '19/10/2026', rev: 3900000, orders: 28 }
+    ]
   },
   'this-month': {
-    label: 'Tháng này',
-    kicker: 'Tổng hợp từ đầu tháng',
-    metrics: {
-      revenue: '186,4',
-      revenueUnit: ' tr',
-      revenueTrend: '+15,8%',
-      revenueTrendClass: 'trend-up',
-      orders: '1.280',
-      ordersTrend: '+10,2%',
-      ordersTrendClass: 'trend-up',
-      aov: '146',
-      aovUnit: 'k',
-      aovTrend: '+4,1%',
-      aovTrendClass: 'trend-up',
-      wait: '14',
-      waitUnit: '′',
-      waitTrend: '−1 phút',
-      waitTrendClass: 'down'
-    },
+    label: 'Tháng này (Trực tiếp)',
+    kicker: 'Tổng hợp từ đầu tháng + Phiên trực tiếp',
+    baseRevenueVnd: 186400000,
+    baseOrders: 1280,
+    revenueTrend: '+15,8%',
+    ordersTrend: '+10,2%',
+    aovTrend: '+4,1%',
+    waitTrend: '−1 phút',
     days: [
-      { day: 'T1', val: '43.2tr', height: '72%' },
-      { day: 'T2', val: '48.6tr', height: '81%' },
-      { day: 'T3', val: '46.1tr', height: '77%' },
-      { day: 'T4', val: '48.5tr', height: '81%' },
-      { day: 'T5', val: '0tr', height: '0%' },
-      { day: '—', val: '', height: '0%' },
-      { day: '—', val: '', height: '0%' }
-    ],
-    csv: 'Tuần,Giai đoạn,Doanh thu (VND),Số đơn\nTuần 1,01/10-07/10,43200000,301\nTuần 2,08/10-14/10,48600000,326\nTuần 3,15/10-21/10,46100000,318\nTuần 4,22/10-28/10,48500000,335'
+      { day: 'Tuần 1', date: '01/10-07/10', rev: 43200000, orders: 301 },
+      { day: 'Tuần 2', date: '08/10-14/10', rev: 48600000, orders: 326 },
+      { day: 'Tuần 3', date: '15/10-21/10', rev: 46100000, orders: 318 },
+      { day: 'Tuần 4', date: '22/10-28/10', rev: 48500000, orders: 335, isLiveToday: true }
+    ]
   }
 };
 
 let currentPeriod = 'this-week';
 
-/* ==========================================================================
-   PHẦN 2: ĐỒNG BỘ DỮ LIỆU CHỈ SỐ KPI & RENDER BIỂU ĐỒ CỘT
-   Logic:
-   - Cập nhật số liệu 4 thẻ KPI (Doanh thu, Đơn hàng, AOV, Thời gian chờ)
-   - Vẽ các cột của biểu đồ theo tỷ lệ chiều cao (%)
-   - Tự động gọi lại hàm tính toán Top món bán chạy
-   ========================================================================== */
-function renderSalesDashboard(periodKey) {
-  const data = SALES_DATA[periodKey] || SALES_DATA['this-week'];
-  currentPeriod = periodKey;
+// Tính toán doanh số phát sinh trực tiếp từ các đơn hàng & thanh toán trong hệ thống
+function getLiveSessionDelta() {
+  const orders = getStore('orders', appData.orders || []);
+  const validOrders = orders.filter(o => o.status !== 'cancelled');
+  const liveRevenue = validOrders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+  const liveOrdersCount = validOrders.length;
 
-  // 1. Cập nhật các thẻ chỉ số KPI
+  const avgWait = validOrders.length
+    ? Math.round(validOrders.reduce((sum, o) => sum + getOrderWait(o), 0) / validOrders.length)
+    : 13;
+
+  return { liveRevenue, liveOrdersCount, avgWait };
+}
+
+function formatMillions(vnd) {
+  return (vnd / 1000000).toFixed(1).replace('.', ',');
+}
+
+function buildPeriodSnapshot(periodKey) {
+  const base = BASE_SALES_DATA[periodKey] || BASE_SALES_DATA['this-week'];
+  const { liveRevenue, liveOrdersCount, avgWait } = getLiveSessionDelta();
+  const isLivePeriod = periodKey === 'this-week' || periodKey === 'this-month';
+
+  const totalRev = base.baseRevenueVnd + (isLivePeriod ? liveRevenue : 0);
+  const totalOrd = base.baseOrders + (isLivePeriod ? liveOrdersCount : 0);
+  const aovK = Math.round(totalRev / Math.max(1, totalOrd) / 1000);
+
+  const days = base.days.map(d => {
+    const rev = d.rev + (d.isLiveToday ? liveRevenue : 0);
+    const ord = d.orders + (d.isLiveToday ? liveOrdersCount : 0);
+    return { ...d, rev, orders: ord };
+  });
+
+  const maxRev = Math.max(...days.map(d => d.rev), 1);
+  const chartDays = days.map(d => ({
+    day: d.day,
+    date: d.date,
+    rev: d.rev,
+    orders: d.orders,
+    val: `${(d.rev / 1000000).toFixed(1)}tr`,
+    height: `${Math.max(12, Math.round((d.rev / maxRev) * 96))}%`
+  }));
+
+  const csvRows = [
+    'Giai đoạn,Ngày,Doanh thu (VND),Số đơn',
+    ...chartDays.map(d => `${d.day},${d.date},${d.rev},${d.orders}`)
+  ].join('\n');
+
+  return {
+    label: base.label,
+    kicker: base.kicker,
+    revenueStr: formatMillions(totalRev),
+    ordersStr: totalOrd.toLocaleString('vi-VN'),
+    aovStr: String(aovK),
+    waitStr: String(isLivePeriod ? avgWait : 15),
+    revenueTrend: base.revenueTrend,
+    ordersTrend: base.ordersTrend,
+    aovTrend: base.aovTrend,
+    waitTrend: base.waitTrend,
+    chartDays,
+    csv: csvRows
+  };
+}
+
+function renderSalesDashboard(periodKey = currentPeriod) {
+  currentPeriod = periodKey;
+  const snap = buildPeriodSnapshot(periodKey);
+
   const revEl = document.querySelector('#metric-revenue');
   const revTrend = document.querySelector('#metric-revenue-trend');
   const ordersEl = document.querySelector('#metric-orders');
@@ -135,64 +142,48 @@ function renderSalesDashboard(periodKey) {
   const waitTrend = document.querySelector('#metric-wait-trend');
   const kickerEl = document.querySelector('#chart-kicker');
 
-  if (revEl) revEl.innerHTML = `${data.metrics.revenue}<small>${data.metrics.revenueUnit}</small>`;
+  if (revEl) revEl.innerHTML = `${snap.revenueStr}<small> tr</small>`;
   if (revTrend) {
-    revTrend.textContent = data.metrics.revenueTrend;
-    revTrend.className = data.metrics.revenueTrendClass;
+    revTrend.textContent = snap.revenueTrend;
+    revTrend.className = 'trend-up';
   }
-
-  if (ordersEl) ordersEl.textContent = data.metrics.orders;
+  if (ordersEl) ordersEl.textContent = snap.ordersStr;
   if (ordersTrend) {
-    ordersTrend.textContent = data.metrics.ordersTrend;
-    ordersTrend.className = data.metrics.ordersTrendClass;
+    ordersTrend.textContent = snap.ordersTrend;
+    ordersTrend.className = 'trend-up';
   }
-
-  if (aovEl) aovEl.innerHTML = `${data.metrics.aov}<small>${data.metrics.aovUnit}</small>`;
+  if (aovEl) aovEl.innerHTML = `${snap.aovStr}<small>k</small>`;
   if (aovTrend) {
-    aovTrend.textContent = data.metrics.aovTrend;
-    aovTrend.className = data.metrics.aovTrendClass;
+    aovTrend.textContent = snap.aovTrend;
+    aovTrend.className = 'trend-up';
   }
-
-  if (waitEl) waitEl.innerHTML = `${data.metrics.wait}<small>${data.metrics.waitUnit}</small>`;
+  if (waitEl) waitEl.innerHTML = `${snap.waitStr}<small>′</small>`;
   if (waitTrend) {
-    waitTrend.textContent = data.metrics.waitTrend;
-    waitTrend.className = data.metrics.waitTrendClass;
+    waitTrend.textContent = snap.waitTrend;
+    waitTrend.className = 'down';
   }
+  if (kickerEl) kickerEl.textContent = snap.kicker;
 
-  if (kickerEl) kickerEl.textContent = data.kicker;
-
-  // 2. Cập nhật Biểu đồ cột doanh thu theo ngày
   const chartEl = document.querySelector('#sales-chart');
   if (chartEl) {
-    chartEl.innerHTML = data.days.map(d => `
+    chartEl.innerHTML = snap.chartDays.map(d => `
       <div>
         <span style="height: ${d.height}">
           ${d.val ? `<b>${d.val}</b>` : ''}
         </span>
-        <small>${d.day}</small>
+        <small>${escapeHtml(d.day)}</small>
       </div>
     `).join('');
   }
 
-  // 3. Cập nhật danh sách Top món bán chạy
   renderTopDishes();
 }
 
-
-/* ==========================================================================
-   PHẦN 3: LOGIC TÍNH TOÁN VÀ SẮP XẾP MÓN BÁN CHẠY (TOP DISHES)
-   Logic:
-   - Đọc danh sách món ăn từ LocalStorage
-   - Sắp xếp giảm dần theo thuộc tính `orders` (lượt gọi món)
-   - Lấy top 5 món dẫn đầu và sinh giao diện xếp hạng
-   ========================================================================== */
 function renderTopDishes() {
   const ranksEl = document.querySelector('#top-dish-ranks');
   if (!ranksEl) return;
 
   const menuItems = getStore('menuItems', appData.menuItems || []);
-  
-  // Thuật toán sắp xếp giảm dần theo số lượt gọi món
   const sorted = [...menuItems].sort((a, b) => (b.orders || 0) - (a.orders || 0)).slice(0, 5);
 
   if (sorted.length === 0) {
@@ -213,36 +204,25 @@ function renderTopDishes() {
 }
 
 function salesPage() {
-  renderSalesDashboard('this-week');
+  const select = document.querySelector('#period-select');
+  renderSalesDashboard(select?.value || currentPeriod || 'this-week');
 }
 
-
-/* ==========================================================================
-   PHẦN 4: LẮNG NGHE SỰ KIỆN ĐỔI KỲ BÁO CÁO & XUẤT TẬP TIN CSV
-   Logic:
-   - Bắt sự kiện change trên dropdown chọn chu kỳ -> render lại dashboard
-   - Bắt sự kiện click nút xuất CSV -> sinh Blob UTF-8 kèm ký tự BOM (\uFEFF)
-     để hỗ trợ hiển thị tiếng Việt trọn vẹn trên MS Excel
-   ========================================================================== */
-
-// 1. Thay đổi chu kỳ báo cáo
 document.addEventListener('change', e => {
   if (e.target.id === 'period-select') {
     const period = e.target.value;
     renderSalesDashboard(period);
-    toast(`Đã cập nhật số liệu: ${SALES_DATA[period]?.label || 'Kỳ đã chọn'}`);
+    toast(`Đã cập nhật số liệu: ${BASE_SALES_DATA[period]?.label || 'Kỳ đã chọn'}`);
   }
 });
 
-// 2. Xuất dữ liệu báo cáo ra file CSV
 document.addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
 
   if (b.dataset.action === 'export-csv' || b.id === 'btn-export-csv') {
-    const data = SALES_DATA[currentPeriod] || SALES_DATA['this-week'];
-    // Thêm ký tự BOM (\uFEFF) để Excel hiển thị tiếng Việt có dấu chuẩn 100%
-    const csvContent = '\uFEFF' + data.csv;
+    const snap = buildPeriodSnapshot(currentPeriod);
+    const csvContent = '\uFEFF' + snap.csv;
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -252,9 +232,8 @@ document.addEventListener('click', e => {
     link.click();
     URL.revokeObjectURL(url);
 
-    toast(`Xuất báo cáo thành công (${data.label})`);
+    toast(`Xuất báo cáo CSV thành công (${snap.label})`);
   }
 });
 
-// Khởi chạy nạp dữ liệu ban đầu
 bootPage(salesPage);

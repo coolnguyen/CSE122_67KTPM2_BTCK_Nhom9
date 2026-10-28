@@ -1,26 +1,10 @@
 /**
  * ============================================================================
- * MENUMIND - MODULE QUẢN LÝ THỰC ĐƠN & BẢNG GIÁ (S12)
+ * MENUMIND - MODULE QUẢN LÝ THỰC ĐƠN & BẢNG GIÁ THỜI GIAN THỰC (S12)
  * Nguyễn Hoàng Hải (SV3 - Leader)
- * 
- * 🗺️ CẤU TRÚC PHÂN ĐOẠN LOGIC (JS ARCHITECTURE):
- * ----------------------------------------------------------------------------
- * 1. KHỞI TẠO STATE & DATA STORE: debounce(), getMenuItems()
- * 2. RENDER GIAO DIỆN & TRÌNH BÀY DOM: renderMenuTableRows()
- * 3. BỘ LỌC ĐA TIÊU CHÍ & QUẢN LÝ TRẠNG THÁI: applyMenuFilters()
- * 4. LẮNG NGHE SỰ KIỆN TƯƠNG TÁC (EVENTS): Input, Change, Click, Toggle trạng thái
- * 5. XỬ LÝ BIỂU MẪU & VALIDATION: Submit #add-dish-form, kiểm tra hợp lệ
  * ============================================================================
  */
 
-/* ==========================================================================
-   PHẦN 1: HÀM TIỆN ÍCH & TRUY XUẤT DỮ LIỆU LOCALSTORAGE
-   ========================================================================== */
-
-/**
- * Hàm Debounce: Trì hoãn thực thi hàm cho đến khi người dùng ngừng thao tác
- * Giúp tối ưu hiệu năng khi gõ tìm kiếm liên tục
- */
 function debounce(fn, delay = 300) {
   let timer;
   return function (...args) {
@@ -29,19 +13,10 @@ function debounce(fn, delay = 300) {
   };
 }
 
-/**
- * Lấy danh sách món ăn từ LocalStorage (key: 'menumind:menuItems')
- * Tự động nạp danh sách mặc định nếu bộ nhớ chưa có dữ liệu
- */
 function getMenuItems() {
   return getStore('menuItems', appData.menuItems || []);
 }
 
-
-/* ==========================================================================
-   PHẦN 2: RENDER CÁC HÀNG CỦA BẢNG DỮ LIỆU (TABLE ROWS TEMPLATE)
-   Logic: Sinh mã HTML cho từng món ăn (Ảnh, Tên, Danh mục, Giá, Trạng thái bán)
-   ========================================================================== */
 function renderMenuTableRows(items) {
   return items.map(item => `
     <tr>
@@ -52,7 +27,7 @@ function renderMenuTableRows(items) {
           </span>
           <div>
             <strong>${escapeHtml(item.name)}</strong>
-            <small>${item.time || 15} phút · ★ ${item.rating || '5.0'}</small>
+            <small>${item.time || 15} phút · ★ ${item.rating || '5.0'}${item.spicy ? ' · ' + '🌶️'.repeat(item.spicy) : ''}</small>
           </div>
         </div>
       </td>
@@ -61,36 +36,27 @@ function renderMenuTableRows(items) {
       <td data-label="Lượt gọi">${item.orders || 0}</td>
       <td data-label="Trạng thái">${badge(item.available ? 'active' : 'inactive')}</td>
       <td data-label="Thao tác">
-        <button 
-          type="button"
-          class="link-button ${item.available ? 'danger-text' : ''}" 
-          data-toggle-dish="${escapeHtml(item.id)}">
-          ${item.available ? 'Tạm ẩn' : 'Mở bán'}
-        </button>
+        <div style="display:inline-flex;gap:10px;align-items:center;">
+          <button type="button" class="link-button" data-edit-dish="${escapeHtml(item.id)}">Sửa</button>
+          <button 
+            type="button"
+            class="link-button ${item.available ? 'danger-text' : ''}" 
+            data-toggle-dish="${escapeHtml(item.id)}">
+            ${item.available ? 'Tạm ẩn' : 'Mở bán'}
+          </button>
+        </div>
       </td>
     </tr>
   `).join('');
 }
 
-
-/* ==========================================================================
-   PHẦN 3: LOGIC BỘ LỌC ĐA TIÊU CHÍ, BỘ ĐẾM KẾT QUẢ & XỬ LÝ TRẠNG THÁI RỖNG
-   Logic:
-   - Thu thập đồng thời: Từ khóa tìm kiếm + Giá trị lọc Danh mục + Giá trị lọc Trạng thái
-   - Lọc mảng dữ liệu theo các điều kiện kết hợp
-   - Cập nhật số đếm kết quả thực tế
-   - Nếu kết quả rỗng ([]): Hiển thị Empty State với nút CTA khôi phục
-   - Nếu có kết quả: Hiển thị bảng dữ liệu hoàn chỉnh
-   ========================================================================== */
 function applyMenuFilters() {
   const query = (document.querySelector('#manager-menu-search')?.value || '').trim().toLowerCase();
-// Lấy từ khóa tìm kiếm, cắt khoảng trắng và đưa về chữ thường để so khớp không phân biệt hoa thường.
   const categoryFilter = document.querySelector('#manager-menu-category-filter')?.value || 'all';
   const statusFilter = document.querySelector('#manager-menu-status-filter')?.value || 'all';
 
   const allItems = getMenuItems();
 
-  // Lọc kết hợp đa tiêu chí trên danh sách món ăn
   const filtered = allItems.filter(item => {
     const name = String(item.name || '').toLowerCase();
     const category = String(item.category || '').toLowerCase();
@@ -100,20 +66,15 @@ function applyMenuFilters() {
     return matchesQuery && matchesCategory && matchesStatus;
   });
 
-  // Có thể bổ sung sắp xếp mảng tại đây (ví dụ: theo giá hoặc theo tên A-Z)
-  // filtered.sort((a, b) => a.price - b.price);
-
   const tableEl = document.querySelector('#manager-menu-table');
   const countBadge = document.querySelector('#menu-count-badge');
 
-  // Cập nhật bộ đếm hiển thị số lượng kết quả
   if (countBadge) {
-    countBadge.textContent = `Hiển thị ${filtered.length}/${allItems.length} món ăn`;
+    countBadge.textContent = `Hiển thị ${filtered.length}/${allItems.length} món ăn (${allItems.filter(i => i.available).length} đang mở bán)`;
   }
 
   if (!tableEl) return;
 
-  // Xử lý trạng thái rỗng (Empty State) khi không có món nào khớp
   if (filtered.length === 0) {
     tableEl.innerHTML = `
       <div class="table-empty-state">
@@ -124,7 +85,6 @@ function applyMenuFilters() {
       </div>
     `;
   } else {
-    // Trạng thái bình thường: Render bảng danh sách dữ liệu
     tableEl.innerHTML = `
       <table>
         <thead>
@@ -149,17 +109,44 @@ function managerMenuPage() {
   applyMenuFilters();
 }
 
+function openDishModal(dish = null) {
+  const dialog = document.querySelector('#dish-dialog');
+  const form = document.querySelector('#add-dish-form');
+  const title = document.querySelector('#dialog-title');
+  const editIdInput = document.querySelector('#edit-dish-id');
+  const nameInput = document.querySelector('#dish-name');
+  const catInput = document.querySelector('#dish-category');
+  const priceInput = document.querySelector('#dish-price');
+  const timeInput = document.querySelector('#dish-prep-time');
+  const spicyInput = document.querySelector('#dish-spicy-level');
+  const descInput = document.querySelector('#dish-description');
+  const preview = document.querySelector('#dish-image-preview');
 
-/* ==========================================================================
-   PHẦN 4: LẮNG NGHE VÀ ĐIỀU HƯỚNG SỰ KIỆN TƯƠNG TÁC NGƯỜI DÙNG
-   Logic:
-   - Debounce tìm kiếm khi gõ
-   - Thay đổi dropdown bộ lọc
-   - Xóa bộ lọc về mặc định ban đầu
-   - Bật / Tắt trạng thái kinh doanh của món ăn
-   ========================================================================== */
+  if (!dialog || !form) return;
+  form.reset();
+  document.querySelectorAll('.field-error').forEach(el => {
+    el.textContent = '';
+    el.classList.remove('active');
+  });
+  if (preview) preview.hidden = true;
 
-// 1. Tìm kiếm với cơ chế Debounce 300ms
+  if (dish) {
+    if (title) title.textContent = `Chỉnh sửa món: ${dish.name}`;
+    if (editIdInput) editIdInput.value = dish.id;
+    if (nameInput) nameInput.value = dish.name || '';
+    if (catInput) catInput.value = dish.category || 'Món chính';
+    if (priceInput) priceInput.value = dish.price || 10000;
+    if (timeInput) timeInput.value = dish.time || 15;
+    if (spicyInput) spicyInput.value = String(dish.spicy || 0);
+    if (descInput) descInput.value = dish.description || '';
+  } else {
+    if (title) title.textContent = 'Thêm món mới';
+    if (editIdInput) editIdInput.value = '';
+  }
+
+  dialog.showModal();
+}
+
 const debouncedMenuSearch = debounce(() => {
   applyMenuFilters();
 }, 300);
@@ -168,8 +155,6 @@ document.addEventListener('input', e => {
   if (e.target.id === 'manager-menu-search') {
     debouncedMenuSearch();
   }
-
-  // Tự động làm sạch thông báo lỗi khi người dùng gõ sửa lại vào ô nhập
   if (e.target.id === 'dish-name') {
     const err = document.querySelector('#err-dish-name');
     if (err) { err.textContent = ''; err.classList.remove('active'); }
@@ -184,13 +169,11 @@ document.addEventListener('input', e => {
   }
 });
 
-// 2. Lắng nghe thay đổi giá trị của các thẻ select bộ lọc & Xem trước ảnh tải lên
 document.addEventListener('change', e => {
   if (e.target.id === 'manager-menu-category-filter' || e.target.id === 'manager-menu-status-filter') {
     applyMenuFilters();
   }
 
-  // Xử lý tạo URL xem trước ảnh (Image Preview)
   if (e.target.id === 'dish-image') {
     const preview = document.querySelector('#dish-image-preview');
     const image = preview?.querySelector('img');
@@ -214,12 +197,22 @@ document.addEventListener('change', e => {
   }
 });
 
-// 3. Xử lý sự kiện click: Nút Đặt lại bộ lọc (Reset) & Nút Đổi trạng thái món
 document.addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
 
-  // Đặt lại toàn bộ ô tìm kiếm và các dropdown về trạng thái ban đầu
+  if (b.id === 'btn-open-add-dish') {
+    openDishModal(null);
+    return;
+  }
+
+  if (b.dataset.editDish) {
+    const items = getMenuItems();
+    const item = items.find(x => x.id === b.dataset.editDish);
+    if (item) openDishModal(item);
+    return;
+  }
+
   if (b.id === 'btn-reset-menu-filters') {
     const searchInput = document.querySelector('#manager-menu-search');
     const catSelect = document.querySelector('#manager-menu-category-filter');
@@ -232,7 +225,6 @@ document.addEventListener('click', e => {
     return;
   }
 
-  // Chuyển đổi trạng thái Đang bán <-> Tạm ẩn
   if (b.dataset.toggleDish) {
     const items = getMenuItems();
     const item = items.find(x => x.id === b.dataset.toggleDish);
@@ -252,26 +244,18 @@ document.addEventListener('click', e => {
   }
 });
 
-
-/* ==========================================================================
-   PHẦN 5: XỬ LÝ FORM THÊM MỚI MÓN ĂN & KIỂM SOÁT HỢP LỆ (FORM VALIDATION)
-   Logic:
-   - Kiểm tra tên món: Bắt buộc, tối thiểu 3 ký tự
-   - Kiểm tra giá bán: Bắt buộc số nguyên, tối thiểu 10.000₫
-   - Kiểm tra mô tả: Bắt buộc, tối thiểu 10 ký tự
-   - Hiển thị thông báo lỗi màu đỏ ngay dưới ô nhập sai
-   - Ngăn chặn gửi lặp (Anti double-submit)
-   - Lưu bản ghi mới vào đầu danh sách LocalStorage và render lại
-   ========================================================================== */
 document.addEventListener('submit', async e => {
   const f = e.target;
   if (f.id !== 'add-dish-form') return;
   e.preventDefault();
 
   const fd = new FormData(f);
+  const editId = String(fd.get('editId') || '').trim();
   const name = String(fd.get('name') || '').trim();
   const category = String(fd.get('category') || 'Món chính');
   const price = parseInt(fd.get('price'), 10);
+  const prepTime = Math.max(1, parseInt(fd.get('time'), 10) || 15);
+  const spicyLevel = Math.max(0, parseInt(fd.get('spicy'), 10) || 0);
   const description = String(fd.get('description') || '').trim();
   const file = fd.get('image');
 
@@ -281,7 +265,6 @@ document.addEventListener('submit', async e => {
 
   let isValid = true;
 
-  // 1. Kiểm tra tính hợp lệ của Tên món ăn
   if (!name || name.length < 3) {
     if (errName) {
       errName.textContent = 'Tên món ăn phải có ít nhất 3 ký tự.';
@@ -290,7 +273,6 @@ document.addEventListener('submit', async e => {
     isValid = false;
   }
 
-  // 2. Kiểm tra tính hợp lệ của Giá bán
   if (isNaN(price) || price < 10000) {
     if (errPrice) {
       errPrice.textContent = 'Giá bán phải tối thiểu 10.000₫.';
@@ -299,7 +281,6 @@ document.addEventListener('submit', async e => {
     isValid = false;
   }
 
-  // 3. Kiểm tra tính hợp lệ của Mô tả món
   if (!description || description.length < 10) {
     if (errDesc) {
       errDesc.textContent = 'Mô tả món ăn phải có ít nhất 10 ký tự.';
@@ -310,7 +291,6 @@ document.addEventListener('submit', async e => {
 
   if (!isValid) return;
 
-  // Khóa nút submit để chống double-submit
   const submitButton = document.querySelector('#btn-save-dish');
   if (submitButton) {
     submitButton.disabled = true;
@@ -319,32 +299,48 @@ document.addEventListener('submit', async e => {
 
   try {
     const items = getMenuItems();
-    const id = uid('m');
+    const id = editId || uid('m');
+    const existingItem = editId ? items.find(x => x.id === editId) : null;
 
-    let imagePath = 'assets/images/menu/m01.jpg';
+    let imagePath = existingItem?.image || 'assets/images/menu/m01.jpg';
     if (file && file.size > 0 && typeof uploadMenuImage === 'function') {
       const uploaded = await uploadMenuImage(file, id).catch(() => null);
-      if (uploaded) imagePath = uploaded;
+      if (uploaded?.publicUrl) imagePath = uploaded.publicUrl;
+      else if (typeof uploaded === 'string' && uploaded) imagePath = uploaded;
     }
 
-    const newDish = {
-      id,
-      name,
-      category,
-      price,
-      time: 15,
-      spicy: 0,
-      vegetarian: category === 'Món chay',
-      available: true,
-      rating: 5.0,
-      orders: 0,
-      emoji: '🍽️',
-      image: imagePath,
-      description,
-      tags: ['mới', category.toLowerCase()]
-    };
+    if (existingItem) {
+      existingItem.name = name;
+      existingItem.category = category;
+      existingItem.price = price;
+      existingItem.time = prepTime;
+      existingItem.spicy = spicyLevel;
+      existingItem.vegetarian = category === 'Món chay' || existingItem.vegetarian;
+      existingItem.image = imagePath;
+      existingItem.description = description;
+      if (typeof updateMenuRemote === 'function') {
+        updateMenuRemote(existingItem).catch(console.warn);
+      }
+    } else {
+      const newDish = {
+        id,
+        name,
+        category,
+        price,
+        time: prepTime,
+        spicy: spicyLevel,
+        vegetarian: category === 'Món chay',
+        available: true,
+        rating: 5.0,
+        orders: 0,
+        emoji: '🍽️',
+        image: imagePath,
+        description,
+        tags: ['mới', category.toLowerCase()]
+      };
+      items.unshift(newDish);
+    }
 
-    items.unshift(newDish);
     setStore('menuItems', items);
     appData.menuItems = items;
 
@@ -354,9 +350,9 @@ document.addEventListener('submit', async e => {
     if (preview) preview.hidden = true;
 
     applyMenuFilters();
-    toast(`Đã thêm món "${name}" vào thực đơn`);
+    toast(existingItem ? `Đã cập nhật món "${name}"` : `Đã thêm món "${name}" vào thực đơn`);
   } catch (error) {
-    toast(`Không thể thêm món: ${error.message}`, 'error');
+    toast(`Không thể lưu món: ${error.message}`, 'error');
   } finally {
     if (submitButton) {
       submitButton.disabled = false;
@@ -365,5 +361,4 @@ document.addEventListener('submit', async e => {
   }
 });
 
-// Khởi chạy nạp dữ liệu ban đầu cho trang
 bootPage(managerMenuPage);

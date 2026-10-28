@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/index.css">
     <script src="js/database.js" defer></script>
     <script src="js/common.js" defer></script>
+    <script src="js/api.js" defer></script>
     <script src="js/header.js" defer></script>
     <script src="js/index.js" defer></script>
 </head>
@@ -25,6 +26,7 @@
         </button>
         <nav id="global-nav" class="global-nav" aria-label="Điều hướng chính">
             <a href="#qr-order">Gọi món bằng QR</a>
+            <a href="pages/diner-menu.html">Thực đơn</a>
             <a href="pages/diner-order-status.html">Theo dõi đơn</a>
             <a href="pages/login.html">Khu vực nhân viên</a>
         </nav>
@@ -36,36 +38,36 @@
             <div class="hero-copy">
                 <p class="kicker">Thực đơn biết lắng nghe</p>
                 <h1>Quét QR tại bàn.<br>Gọi món đúng nhịp.</h1>
-                <p>Mỗi lượt dùng bàn có một mã QR riêng. Mã tự hết hiệu lực khi nhân viên kết thúc phiên, giúp đơn hàng luôn gắn đúng bàn và đúng lượt khách.</p>
+                <p>Mỗi lượt dùng bàn có một mã QR riêng đồng bộ thời gian thực với Bếp và Thu ngân. Mã tự hết hiệu lực khi nhân viên kết thúc phiên, giúp đơn hàng luôn gắn đúng bàn và đúng lượt khách.</p>
                 <div class="hero-actions">
-                    <a class="button primary" href="#qr-order">Cách gọi món</a>
+                    <a class="button primary" href="#qr-order">Chọn bàn &amp; Gọi món ngay</a>
                     <a class="button quiet" href="pages/login.html">Đăng nhập nhân viên</a>
                 </div>
                 <dl class="quick-facts">
                     <div>
-                        <dt>1 mã</dt>
-                        <dd>cho mỗi lượt dùng bàn</dd>
+                        <dt id="hero-fact-tables">12 bàn</dt>
+                        <dd>đồng bộ trạng thái trực tiếp</dd>
                     </div>
                     <div>
-                        <dt>8 giờ</dt>
-                        <dd>thời hạn tối đa</dd>
+                        <dt id="hero-fact-dishes">24 món</dt>
+                        <dd>gợi ý AI theo khẩu vị</dd>
                     </div>
                     <div>
-                        <dt>An toàn</dt>
-                        <dd>xác thực trên máy chủ</dd>
+                        <dt>Thời gian thực</dt>
+                        <dd>liên thông Khách – Bếp – Quản lý</dd>
                     </div>
                 </dl>
             </div>
-            <div class="service-pulse" aria-label="Minh họa nhịp phục vụ">
-                <div class="plate"><span>🍊</span><i></i></div>
+            <div class="service-pulse" aria-label="Minh họa nhịp phục vụ thời gian thực">
+                <div class="plate"><span id="hero-top-emoji">🐟</span><i></i></div>
                 <div class="pulse-card top">
                     <span class="pulse-dot"></span>
-                    <strong>Bếp đang ổn định</strong>
-                    <small>8 đơn · 74% công suất</small>
+                    <strong id="hero-kitchen-status">Bếp đang ổn định</strong>
+                    <small id="hero-kitchen-detail">Đang đồng bộ dữ liệu bếp...</small>
                 </div>
                 <div class="pulse-card bottom">
                     <strong>Món hợp gu hôm nay</strong>
-                    <small>Cá hồi sốt quýt · 96%</small>
+                    <small id="hero-top-dish">Cá hồi áp chảo sốt chanh · ★ 4.9</small>
                 </div>
             </div>
         </section>
@@ -73,23 +75,32 @@
         <section class="table-section" id="qr-order">
             <div class="section-title">
                 <div>
-                    <p class="kicker">Gọi món tại bàn</p>
-                    <h2>Quét mã QR được cấp cho lượt ăn này</h2>
+                    <p class="kicker">Gọi món tại bàn · Thời gian thực</p>
+                    <h2>Chọn bàn hoặc mở phiên QR đang phục vụ</h2>
                 </div>
-                <p>Không cần nhập mã bàn thủ công. Quý khách chỉ cần dùng điện thoại quét mã QR được đặt sẵn trên bàn để mở thực đơn và gọi món trực tiếp.</p>
+                <p>Chọn bàn trống để mở phiên gọi món mới, hoặc chọn bàn đang dùng để gọi thêm món và theo dõi tiến độ chế biến trực tiếp.</p>
             </div>
-            <div class="metric-strip">
-                <div><span>Bước 1</span><strong>Ngồi đúng bàn</strong></div>
-                <div><span>Bước 2</span><strong>Quét QR</strong></div>
-                <div><span>Bước 3</span><strong>Chọn món</strong></div>
-                <div><span>Bước 4</span><strong>Gửi bếp</strong></div>
+
+            <div class="metric-strip" id="home-table-metrics">
+                <div><span>Bàn sẵn sàng</span><strong id="home-avail-count">0</strong></div>
+                <div><span>Bàn đang phục vụ</span><strong id="home-occ-count">0</strong></div>
+                <div><span>Đơn bếp đang nấu</span><strong id="home-active-orders">0</strong></div>
+                <div><span>Bàn đang dọn</span><strong class="warm" id="home-clean-count">0</strong></div>
+            </div>
+
+            <div class="home-zone-bar" id="home-zone-filter" aria-label="Lọc bàn theo khu vực">
+                <!-- Các nút lọc khu vực được render động -->
+            </div>
+
+            <div class="home-table-grid" id="home-table-grid" aria-live="polite">
+                <!-- Danh sách bàn ăn thời gian thực -->
             </div>
         </section>
     </main>
 
     <footer class="site-footer">
         <span>MenuMind · vận hành thông minh, phục vụ có nhịp</span>
-        <span>Hệ thống vận hành nhà hàng</span>
+        <span>Hệ thống vận hành nhà hàng thời gian thực</span>
     </footer>
 </body>
 

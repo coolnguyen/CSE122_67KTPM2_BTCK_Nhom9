@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/login.css">
     <script src="../js/database.js" defer></script>
     <script src="../js/common.js" defer></script>
+    <script src="../js/api.js" defer></script>
     <script src="../js/header.js" defer></script>
     <script src="../js/login.js" defer></script>
 </head>
@@ -25,6 +26,7 @@
         </button>
         <nav id="global-nav" class="global-nav" aria-label="Điều hướng chính">
             <a href="../index.html#qr-order">Gọi món bằng QR</a>
+            <a href="diner-menu.html">Thực đơn</a>
             <a href="diner-order-status.html">Theo dõi đơn</a>
             <a href="login.html">Khu vực nhân viên</a>
         </nav>
@@ -36,7 +38,7 @@
             <section>
                 <p class="kicker">Không gian vận hành MenuMind</p>
                 <h1>Một tài khoản.<br>Đúng khu vực làm việc.</h1>
-                <p>Đăng nhập bằng tài khoản nhà hàng. MenuMind tự nhận diện vai trò và đưa bạn đến đúng bảng điều phối.</p>
+                <p>Đăng nhập bằng tài khoản nhà hàng. MenuMind tự nhận diện vai trò và đưa bạn đến đúng bảng điều phối thời gian thực.</p>
                 <div class="flow-line">
                     <span>Đăng nhập</span>
                     <i></i>
@@ -59,22 +61,25 @@
                         <button type="button" class="chip-account" data-login-email="minhanh@menumind.vn" title="Đăng nhập Bếp trưởng (Minh Anh)">
                             👨‍🍳 Bếp trưởng (Minh Anh)
                         </button>
+                        <button type="button" class="chip-account" data-login-email="linhchi@menumind.vn" title="Đăng nhập Phục vụ (Linh Chi)">
+                            🛎️ Phục vụ (Linh Chi)
+                        </button>
                     </div>
                 </div>
 
                 <form id="login-form" class="login-form">
                     <label>
                         Email công việc
-                        <input name="email" type="email" autocomplete="username" required placeholder="ten@nhahang.vn">
+                        <input name="email" type="email" autocomplete="username" required placeholder="ten@menumind.vn">
                     </label>
                     <label>
                         Mật khẩu
-                        <input name="password" type="password" autocomplete="current-password" minlength="6" required placeholder="Nhập mật khẩu">
+                        <input name="password" type="password" autocomplete="current-password" minlength="6" required placeholder="Nhập mật khẩu (mặc định: 123456)">
                     </label>
                     <button class="button primary full" type="submit">Đăng nhập</button>
                     <div id="login-feedback" class="form-feedback" aria-live="polite"></div>
                 </form>
-                <p class="privacy-note">Quyền truy cập được kiểm soát theo vai trò tài khoản trên hệ thống.</p>
+                <p class="privacy-note">Quyền truy cập được kiểm soát theo vai trò và trạng thái tài khoản trên hệ thống thời gian thực.</p>
             </section>
         </div>
     </main>

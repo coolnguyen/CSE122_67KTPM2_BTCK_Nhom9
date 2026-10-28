@@ -1,21 +1,10 @@
 /**
  * ============================================================================
- * MENUMIND - MODULE QUẢN LÝ TÀI KHOẢN NHÂN SỰ & PHÂN QUYỀN (S15)
+ * MENUMIND - MODULE QUẢN LÝ TÀI KHOẢN NHÂN SỰ & PHÂN QUYỀN THỜI GIAN THỰC (S15)
  * Nguyễn Hoàng Hải (SV3 - Leader)
- * 
- * 🗺️ CẤU TRÚC PHÂN ĐOẠN LOGIC (JS ARCHITECTURE):
- * ----------------------------------------------------------------------------
- * 1. QUẢN LÝ DỮ LIỆU NHÂN SỰ: staffDirectory(), roleDisplayName()
- * 2. RENDER BẢNG TÀI KHOẢN: renderUserTableRows()
- * 3. BỘ LỌC ĐA TIÊU CHÍ & SỐ ĐẾM: applyFilters()
- * 4. LẮNG NGHE SỰ KIỆN: Debounce tìm kiếm, Kích hoạt / Vô hiệu hóa tài khoản
- * 5. XỬ LÝ FORM TẠO MỚI & KIỂM TRA CHỐNG TRÙNG LẶP: #add-user-form
  * ============================================================================
  */
 
-/* ==========================================================================
-   PHẦN 1: TIỆN ÍCH & TRUY XUẤT DANH SÁCH NHÂN SỰ TỪ LOCALSTORAGE
-   ========================================================================== */
 function debounce(fn, delay = 300) {
   let timer;
   return function (...args) {
@@ -29,7 +18,7 @@ function staffDirectory() {
   const currentStaff = getAuthSession()?.staff;
   const directory = Array.isArray(remoteStaff) ? [...remoteStaff] : [];
   if (currentStaff?.email && !directory.some(item => String(item.email).toLowerCase() === String(currentStaff.email).toLowerCase())) {
-    directory.unshift({ ...currentStaff, shift: currentStaff.shift || 'Chưa thiết lập', currentSession: true });
+    directory.unshift({ ...currentStaff, shift: currentStaff.shift || 'Cả ngày', currentSession: true });
   }
   return directory;
 }
@@ -44,11 +33,6 @@ function roleDisplayName(role) {
   return roles[role] || role || 'Chưa gán';
 }
 
-
-/* ==========================================================================
-   PHẦN 2: RENDER CÁC HÀNG CỦA BẢNG TÀI KHOẢN (TABLE ROWS TEMPLATE)
-   Logic: Sinh avatar viết tắt, tên, email, nhãn vai trò, ca làm, trạng thái
-   ========================================================================== */
 function renderUserTableRows(staffList) {
   const currentEmail = String(getAuthSession()?.staff?.email || '').toLowerCase();
 
@@ -86,14 +70,6 @@ function renderUserTableRows(staffList) {
   }).join('');
 }
 
-
-/* ==========================================================================
-   PHẦN 3: BỘ LỌC ĐA TIÊU CHÍ, SỐ ĐẾM KẾT QUẢ & XỬ LÝ TRẠNG THÁI RỖNG
-   Logic:
-   - Lọc kết hợp: Từ khóa (Tên / Email) + Phân quyền vai trò + Trạng thái hoạt động
-   - Cập nhật số lượng nhân sự hiển thị
-   - Hiển thị Empty State khi không tìm thấy ai phù hợp
-   ========================================================================== */
 function applyFilters() {
   const query = (document.querySelector('#user-search')?.value || '').trim().toLowerCase();
   const roleFilter = document.querySelector('#user-role-filter')?.value || 'all';
@@ -101,7 +77,6 @@ function applyFilters() {
 
   const allStaff = staffDirectory();
 
-  // Lọc kết hợp 3 điều kiện đồng thời
   const filtered = allStaff.filter(user => {
     const name = String(user.name || '').toLowerCase();
     const email = String(user.email || '').toLowerCase();
@@ -114,14 +89,12 @@ function applyFilters() {
   const tableEl = document.querySelector('#user-table');
   const countBadge = document.querySelector('#user-count-badge');
 
-  // Cập nhật bộ đếm hiển thị
   if (countBadge) {
-    countBadge.textContent = `Hiển thị ${filtered.length}/${allStaff.length} nhân sự`;
+    countBadge.textContent = `Hiển thị ${filtered.length}/${allStaff.length} nhân sự (${allStaff.filter(u => u.status === 'active').length} đang hoạt động)`;
   }
 
   if (!tableEl) return;
 
-  // Xử lý Empty State khi mảng rỗng
   if (filtered.length === 0) {
     tableEl.innerHTML = `
       <div class="table-empty-state">
@@ -155,14 +128,6 @@ function adminUsersPage() {
   applyFilters();
 }
 
-
-/* ==========================================================================
-   PHẦN 4: LẮNG NGHE SỰ KIỆN TƯƠNG TÁC (DEBOUNCE SEARCH & ĐỔI TRẠNG THÁI)
-   Logic:
-   - Debounce tìm kiếm khi nhập liệu
-   - Reset toàn bộ bộ lọc
-   - Đổi trạng thái tài khoản giữa Hoạt động <-> Vô hiệu hóa
-   ========================================================================== */
 const debouncedSearch = debounce(() => {
   applyFilters();
 }, 300);
@@ -171,8 +136,6 @@ document.addEventListener('input', e => {
   if (e.target.id === 'user-search') {
     debouncedSearch();
   }
-
-  // Xóa cảnh báo lỗi khi người dùng gõ sửa
   if (e.target.id === 'add-user-name') {
     const err = document.querySelector('#err-name');
     if (err) { err.textContent = ''; err.classList.remove('active'); }
@@ -193,7 +156,6 @@ document.addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
 
-  // Nút đặt lại tất cả bộ lọc về mặc định
   if (b.id === 'btn-reset-filters') {
     const searchInput = document.querySelector('#user-search');
     const roleSelect = document.querySelector('#user-role-filter');
@@ -206,7 +168,6 @@ document.addEventListener('click', e => {
     return;
   }
 
-  // Vô hiệu hóa hoặc Kích hoạt tài khoản nhân sự
   if (b.dataset.toggleUser) {
     const allStaff = staffDirectory();
     const user = allStaff.find(u => u.id === b.dataset.toggleUser);
@@ -214,20 +175,15 @@ document.addEventListener('click', e => {
 
     user.status = user.status === 'active' ? 'inactive' : 'active';
     setStore('staff', allStaff);
+    if (appData) appData.staff = allStaff;
+    if (typeof setStaffStatusRemote === 'function') {
+      setStaffStatusRemote(user.id, user.status).catch(console.warn);
+    }
     applyFilters();
     toast(`Đã ${user.status === 'active' ? 'kích hoạt' : 'vô hiệu hóa'} tài khoản ${user.name}`);
   }
 });
 
-
-/* ==========================================================================
-   PHẦN 5: XỬ LÝ BIỂU MẪU TẠO TÀI KHOẢN & KIỂM TRA CHỐNG TRÙNG LẶP
-   Logic:
-   - Validate Họ tên: Bắt buộc, tối thiểu 3 ký tự
-   - Validate Email: Bắt buộc, đúng định dạng Regex
-   - Kiểm tra chống trùng lặp: Duyệt mảng đảm bảo email chưa từng tồn tại
-   - Lưu tài khoản mới vào LocalStorage
-   ========================================================================== */
 document.addEventListener('submit', async e => {
   const f = e.target;
   if (f.id !== 'add-user-form') return;
@@ -244,7 +200,6 @@ document.addEventListener('submit', async e => {
 
   let isValid = true;
 
-  // 1. Kiểm tra Họ và tên
   if (!name || name.length < 3) {
     if (errName) {
       errName.textContent = 'Họ và tên phải có ít nhất 3 ký tự.';
@@ -253,7 +208,6 @@ document.addEventListener('submit', async e => {
     isValid = false;
   }
 
-  // 2. Kiểm tra định dạng Email chuẩn
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailPattern.test(email)) {
     if (errEmail) {
@@ -263,7 +217,6 @@ document.addEventListener('submit', async e => {
     isValid = false;
   }
 
-  // 3. Cơ chế kiểm tra chống trùng lặp dữ liệu Email
   const allStaff = staffDirectory();
   const isDuplicate = allStaff.some(u => String(u.email || '').toLowerCase() === email);
   if (isDuplicate) {
@@ -292,13 +245,18 @@ document.addEventListener('submit', async e => {
       status: 'active'
     };
 
+    if (typeof createStaffProfileRemote === 'function') {
+      await createStaffProfileRemote(newUser).catch(console.warn);
+    }
+
     allStaff.unshift(newUser);
     setStore('staff', allStaff);
+    if (appData) appData.staff = allStaff;
 
     document.querySelector('#user-dialog')?.close();
     f.reset();
     applyFilters();
-    toast(`Đã thêm nhân viên ${name} (${roleDisplayName(role)})`);
+    toast(`Đã thêm nhân viên ${name} (${roleDisplayName(role)}) — có thể đăng nhập ngay!`);
   } catch (error) {
     toast(`Không thể tạo tài khoản: ${error.message}`, 'error');
   } finally {
@@ -309,5 +267,4 @@ document.addEventListener('submit', async e => {
   }
 });
 
-// Khởi chạy nạp dữ liệu ban đầu
 bootPage(adminUsersPage);

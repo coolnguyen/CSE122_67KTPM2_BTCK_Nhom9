@@ -582,6 +582,7 @@ dialog::backdrop {
 
 .toast-region {
   position: fixed;
+  pointer-events: none;
   z-index: 100;
   inset: auto 20px 20px auto;
   display: grid;

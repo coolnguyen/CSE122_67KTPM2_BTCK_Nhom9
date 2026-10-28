@@ -2,25 +2,9 @@
  * ============================================================================
  * MENUMIND - MODULE TRUNG TÂM PHẢN HỒI & AI-3 FEEDBACK THEME EXTRACTOR (S14)
  * Nguyễn Hoàng Hải (SV3 - Leader)
- * 
- * 🗺️ CẤU TRÚC PHÂN ĐOẠN LOGIC (JS ARCHITECTURE):
- * ----------------------------------------------------------------------------
- * 1. BỘ DỮ LIỆU ĐÁNH GIÁ MẪU: DEFAULT_FEEDBACK & getFeedbackList()
- * 2. RENDER DANH SÁCH & TÍNH TOÁN ĐIỂM SAO: feedbackPage()
- * 3. LOGIC XỬ LÝ AI-3 (FEEDBACK THEME EXTRACTOR): runThemeAI()
- *    - Xử lý trường hợp độ tin cậy thấp / dữ liệu không đủ (AI Uncertainty UX)
- *    - Hiển thị tiến trình phân tích (Processing State)
- *    - Xuất kết quả kèm chỉ số tin cậy và giải trình mô hình (Explainability)
- * 4. TƯƠNG TÁC NGƯỜI DÙNG & LƯU TRỮ (USER CONTROL & STORAGE):
- *    - Chỉnh sửa trực tiếp nội dung đề xuất (Inline Edit)
- *    - Tạo lại phương án khác (Regenerate)
- *    - Lưu kết quả phân tích vào LocalStorage hệ thống
  * ============================================================================
  */
 
-/* ==========================================================================
-   PHẦN 1: MÔ HÌNH DỮ LIỆU ĐÁNH GIÁ MẪU & TRUY XUẤT TỪ BỘ NHỚ CỤC BỘ
-   ========================================================================== */
 const DEFAULT_FEEDBACK = [
   { id: 'f01', table: 'A02', rating: 5, text: 'Cá hồi áp chảo rất tươi và ngon, nhân viên phục vụ tận tình chu đáo.', theme: 'Hương vị món', status: 'new' },
   { id: 'f02', table: 'C01', rating: 3, text: 'Món ăn ngon vừa miệng nhưng khung giờ tối chờ món chính hơi lâu (khoảng 25 phút).', theme: 'Thời gian chờ', status: 'new' },
@@ -35,20 +19,12 @@ function getFeedbackList() {
   let feedback = getStore('feedback', null);
   if (!Array.isArray(feedback) || feedback.length === 0) {
     feedback = (Array.isArray(appData.feedback) && appData.feedback.length > 0) ? appData.feedback : DEFAULT_FEEDBACK;
-    setStore('feedback', feedback);
+    setStore('feedback', feedback, true);
     if (appData) appData.feedback = feedback;
   }
   return feedback;
 }
 
-
-/* ==========================================================================
-   PHẦN 2: TÍNH TOÁN THỐNG KÊ ĐIỂM SAO & RENDER DANH SÁCH PHẢN HỒI
-   Logic:
-   - Tính điểm đánh giá trung bình (1-5 sao)
-   - Tính tỷ lệ phần trăm tích cực (≥ 4 sao) và cần cải thiện (≤ 3 sao)
-   - Sinh danh sách thẻ nhận xét có gắn tag chủ đề và nút phản hồi
-   ========================================================================== */
 function feedbackPage() {
   const feedback = getFeedbackList();
   const ratings = feedback.map(item => Number(item.rating)).filter(value => value >= 1 && value <= 5);
@@ -113,33 +89,28 @@ function feedbackPage() {
   if (listEl) listEl.innerHTML = items;
 }
 
-
-/* ==========================================================================
-   PHẦN 3: THUẬT TOÁN AI-3 KHAI PHÁ CHỦ ĐỀ (FEEDBACK THEME EXTRACTOR)
-   Logic:
-   - Kiểm tra dữ liệu đầu vào: nếu chưa đủ dữ liệu hoặc chuỗi tìm kiếm quá ngắn (< 10 ký tự),
-     kích hoạt trạng thái cảnh báo không chắc chắn (Uncertainty) và cung cấp gợi ý mẫu (Prompt Chips)
-   - Mô phỏng quá trình xử lý NLP qua độ trễ 800ms
-   - Sinh kết quả với chỉ số độ tin cậy (Confidence Score 88%), 3 chủ đề trọng yếu,
-     đoạn kiến nghị hành động và khối giải trình lý do (Explainability)
-   ========================================================================== */
 function runThemeAI(form) {
-  const feedback = getFeedbackList();
-  const goal = (new FormData(form).get('goal') || '').trim();
+  const allFeedback = getFeedbackList();
+  const fd = new FormData(form);
+  const source = String(fd.get('source') || 'all');
+  const goal = String(fd.get('goal') || '').trim();
   const el = document.querySelector('#theme-result');
   if (!el) return;
 
-  if (!feedback.length) {
+  const targetFeedback = source === 'low'
+    ? allFeedback.filter(f => Number(f.rating) <= 3)
+    : allFeedback;
+
+  if (!targetFeedback.length) {
     el.innerHTML = `
       <div class="ai-warning">
-        <strong>Chưa có dữ liệu phản hồi</strong>
-        <p>Hệ thống cần ít nhất 3 nhận xét từ khách để tiến hành khai phá chủ đề.</p>
+        <strong>Chưa có dữ liệu phản hồi ở nhóm này</strong>
+        <p>Hiện không có phản hồi nào thuộc bộ lọc đã chọn để AI tiến hành khai phá chủ đề.</p>
       </div>
     `;
     return;
   }
 
-  // Xử lý trường hợp đầu vào quá ngắn hoặc mập mờ (AI Uncertainty / Failure UX)
   if (goal.length < 10) {
     el.innerHTML = `
       <div class="ai-warning" role="alert">
@@ -156,38 +127,55 @@ function runThemeAI(form) {
     return;
   }
 
-  // Trạng thái đang xử lý (Processing State)
   el.innerHTML = `
     <div class="ai-loading">
       <span></span>
-      <p>AI đang khai phá và phân nhóm ${feedback.length} phản hồi của khách...</p>
+      <p>AI đang khai phá và phân nhóm ${targetFeedback.length} phản hồi thực tế...</p>
     </div>
   `;
 
-  // Mô phỏng độ trễ xử lý mô hình trong 800ms
   setTimeout(() => {
-    // Trạng thái kết quả đầu ra: Chỉ số tin cậy + 3 chủ đề + Giải trình + Quyền kiểm soát
+    // Tính toán tỷ lệ chủ đề thực tế từ danh sách feedback
+    const counts = {};
+    targetFeedback.forEach(item => {
+      const t = item.theme || 'Dịch vụ chung';
+      counts[t] = (counts[t] || 0) + 1;
+    });
+    const topThemes = Object.entries(counts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([name, count], idx) => ({
+        rank: idx + 1,
+        name,
+        pct: Math.round((count / targetFeedback.length) * 100)
+      }));
+
+    const sampleTables = [...new Set(targetFeedback.slice(0, 4).map(f => `Bàn ${f.table}`))].join(', ');
+    const topIssue = topThemes[0]?.name || 'Thời gian chờ';
+
+    let proposalText = 'Ưu tiên tăng cường 1 nhân sự phụ bếp khung giờ cao điểm 18:30–20:00 và rà soát tốc độ phục vụ khu vực bàn vườn.';
+    if (topIssue.includes('Hương vị') || goal.toLowerCase().includes('món')) {
+      proposalText = 'Giữ chuẩn công thức món Cá hồi áp chảo & Salad vườn đang được khen nhiều, đồng thời thêm tùy chọn giảm cay cho trẻ nhỏ.';
+    } else if (topIssue.includes('Thái độ') || goal.toLowerCase().includes('nhân viên')) {
+      proposalText = 'Phân công cố định 1 nhân viên trực khu vực Sân vườn để chủ động châm nước lọc và hỗ trợ khách không cần nhắc lại.';
+    }
+
     el.innerHTML = `
       <article class="ai-answer">
-        <span class="confidence">Độ tin cậy: <strong>88%</strong> (Rất cao)</span>
-        <h3>3 Chủ đề nổi bật được phân nhóm:</h3>
+        <span class="confidence">Độ tin cậy: <strong>91%</strong> (${targetFeedback.length} mẫu đánh giá)</span>
+        <h3>Chủ đề nổi bật được phân nhóm:</h3>
         <ol class="theme-list">
-          <li><span>1. Thời gian chờ lên món</span><b>38%</b></li>
-          <li><span>2. Hương vị món ăn</span><b>34%</b></li>
-          <li><span>3. Thái độ phục vụ tại bàn</span><b>28%</b></li>
+          ${topThemes.map(t => `<li><span>${t.rank}. ${escapeHtml(t.name)}</span><b>${t.pct}%</b></li>`).join('')}
         </ol>
 
-        <!-- Cho phép người dùng chỉnh sửa trực tiếp nội dung kiến nghị trước khi áp dụng -->
         <label for="ai-theme-copy" class="sr-only">Đề xuất hành động của AI</label>
-        <textarea id="ai-theme-copy" rows="3" aria-label="Đề xuất hành động từ AI">Ưu tiên tăng cường 1 nhân sự phụ bếp khung giờ cao điểm 18:30–19:30 để giảm độ trễ món chính.</textarea>
+        <textarea id="ai-theme-copy" rows="3" aria-label="Đề xuất hành động từ AI">${escapeHtml(proposalText)}</textarea>
 
-        <!-- Tính minh bạch: Giải thích cơ sở phân tích của AI (Explainability) -->
         <details>
           <summary>Vì sao AI đề xuất kết quả này?</summary>
-          <p>Thuật toán trích xuất các từ khóa xuất hiện lặp lại nhiều lần: "chờ lâu", "chậm", "nhắc nước", tập trung 80% vào các bàn khu vực vườn và sảnh ngoài.</p>
+          <p>Thuật toán tổng hợp trực tiếp từ ${targetFeedback.length} đánh giá tại ${escapeHtml(sampleTables)} theo mục tiêu “${escapeHtml(goal)}”.</p>
         </details>
 
-        <!-- Các thao tác can thiệp của người dùng (User Control) -->
         <div class="ai-actions">
           <button type="button" class="button small primary" data-action="save-theme">Lưu insight</button>
           <button type="button" class="button small quiet" data-action="edit-ai">Chỉnh sửa</button>
@@ -196,24 +184,13 @@ function runThemeAI(form) {
         </div>
       </article>
     `;
-  }, 800);
+  }, 550);
 }
 
-
-/* ==========================================================================
-   PHẦN 4: LẮNG NGHE SỰ KIỆN TƯƠNG TÁC NGƯỜI DÙNG & LƯU DỮ LIỆU
-   Logic:
-   - Xử lý click chọn Prompt Chips gợi ý
-   - Chỉnh sửa trực tiếp nội dung gợi ý (focus và select văn bản)
-   - Tạo lại phân tích (Regenerate / Rerun)
-   - Lưu insight phân tích vào LocalStorage
-   - Cập nhật trạng thái phản hồi khách hàng (status: replied)
-   ========================================================================== */
 document.addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
 
-  // Chọn gợi ý nhanh từ Prompt Chips cho AI
   if (b.dataset.prompt) {
     const input = document.querySelector('#theme-form input[name="goal"]');
     if (input) {
@@ -222,7 +199,6 @@ document.addEventListener('click', e => {
     }
   }
 
-  // Chọn mẫu phản hồi nhanh cho Quản lý
   if (b.dataset.replyTemplate) {
     const messageInput = document.querySelector('#reply-message');
     if (messageInput) {
@@ -233,20 +209,18 @@ document.addEventListener('click', e => {
 
   const action = b.dataset.action;
 
-  // Lưu đề xuất AI vào LocalStorage
   if (action === 'save-theme') {
     const textProposal = document.querySelector('#ai-theme-copy')?.value || '';
     const decision = {
       type: 'feedback-theme-extraction',
       proposal: textProposal,
-      confidence: '88%',
+      confidence: '91%',
       savedAt: new Date().toISOString()
     };
     setStore('aiDecision', decision);
     toast('Đã lưu kết quả phân tích AI vào hệ thống');
   }
 
-  // Cho phép người dùng chỉnh sửa nội dung văn bản trực tiếp
   if (action === 'edit-ai') {
     const textarea = document.querySelector('#ai-theme-copy');
     if (textarea) {
@@ -256,12 +230,10 @@ document.addEventListener('click', e => {
     }
   }
 
-  // Chạy lại phân tích để lấy phương án khác (Regenerate)
   if (action === 'rerun-theme') {
     document.querySelector('#theme-form')?.requestSubmit();
   }
 
-  // Từ chối và hủy bỏ đề xuất
   if (action === 'reject-ai') {
     const res = document.querySelector('#theme-result');
     if (res) {
@@ -270,7 +242,6 @@ document.addEventListener('click', e => {
     toast('Đã từ chối gợi ý của AI', 'info');
   }
 
-  // Mở popup phản hồi hoặc xem & sửa phản hồi gửi thực khách
   if (b.dataset.replyFeedback) {
     const feedback = getFeedbackList();
     const item = feedback.find(f => f.id === b.dataset.replyFeedback);
@@ -295,7 +266,6 @@ document.addEventListener('click', e => {
   }
 });
 
-// Bắt sự kiện gửi form phân tích AI & gửi form phản hồi khách hàng
 document.addEventListener('submit', e => {
   if (e.target.id === 'theme-form') {
     e.preventDefault();
@@ -309,7 +279,7 @@ document.addEventListener('submit', e => {
     const replyText = form.querySelector('#reply-message')?.value?.trim();
 
     if (!id || !replyText) {
-      toast('Vui lòng nhập nội dung phản hồi', 'danger');
+      toast('Vui lòng nhập nội dung phản hồi', 'error');
       return;
     }
 
@@ -330,5 +300,4 @@ document.addEventListener('submit', e => {
   }
 });
 
-// Khởi chạy nạp dữ liệu ban đầu
 bootPage(feedbackPage);

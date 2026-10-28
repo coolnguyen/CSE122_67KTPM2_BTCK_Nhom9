@@ -1,5 +1,5 @@
 // ==========================================================================
-// Quản lý Dark / Light Theme & Điều hướng Header
+// Quản lý Dark / Light Theme, Điều hướng Header & Đồng bộ Bàn/Vai trò
 // ==========================================================================
 
 const THEME_STORAGE_KEY = 'menumind:theme';
@@ -64,14 +64,12 @@ function mountThemeButton() {
   }
 }
 
-// Lắng nghe thay đổi theme từ các tab khác
 window.addEventListener('storage', e => {
   if (e.key === THEME_STORAGE_KEY && (e.newValue === 'dark' || e.newValue === 'light')) {
     applyTheme(e.newValue);
   }
 });
 
-// Điều hướng trên mobile (hamburger menu) & sự kiện click đổi theme
 document.addEventListener('click', e => {
   const toggle = e.target.closest('.nav-toggle');
   if (toggle) {
@@ -90,7 +88,6 @@ document.addEventListener('click', e => {
   }
 });
 
-// Tự động gắn nút theme, đồng bộ vai trò và sidebar khi DOM sẵn sàng
 function initHeaderAndNav() {
   mountThemeButton();
   updateRolePill();
@@ -106,11 +103,21 @@ if (document.readyState === 'loading') {
 function updateRolePill() {
   const rolePill = document.querySelector('.role-pill');
   if (!rolePill) return;
+  const currentPageKey = document.body.dataset.page || '';
+  const isDinerPage = ['home', 'menu', 'dish-detail', 'cart', 'status'].includes(currentPageKey);
   const session = typeof getAuthSession === 'function' ? getAuthSession() : null;
+
+  if (isDinerPage && currentPageKey !== 'home') {
+    const table = typeof getActiveTable === 'function' ? getActiveTable() : (sessionStorage.getItem('menumind:table') || 'A01');
+    rolePill.innerHTML = `<span class="pulse-dot"></span>Bàn ${escapeHtml(table)}`;
+    rolePill.setAttribute('title', `Đang phục vụ Bàn ${table} · Nhấn để đổi vai trò`);
+    return;
+  }
+
   if (session?.staff?.role) {
     const roleLabels = { manager: 'Quản lý', admin: 'Quản trị', kitchen: 'Bếp', service: 'Phục vụ' };
     const label = roleLabels[session.staff.role] || session.staff.role;
-    rolePill.innerHTML = `<span class="pulse-dot"></span>${label}`;
+    rolePill.innerHTML = `<span class="pulse-dot"></span>${escapeHtml(session.staff.name || label)} (${label})`;
     rolePill.setAttribute('title', `Tài khoản: ${session.staff.name || session.staff.email} (${label})`);
   }
 }
@@ -126,7 +133,6 @@ function syncSidebar() {
   const currentPageKey = document.body.dataset.page || '';
   const currentFile = location.pathname.split('/').pop() || 'index.html';
 
-  // Xác định vai trò: ưu tiên phiên đăng nhập, sau đó suy diễn từ trang hiện tại
   let role = session?.staff?.role;
   if (!role) {
     if (currentPageKey.startsWith('admin-')) role = 'admin';
@@ -135,7 +141,6 @@ function syncSidebar() {
     else role = 'admin';
   }
 
-  // Bộ biểu tượng SVG chuẩn hóa sắc nét
   const ICONS = {
     account: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
     tables: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`,
@@ -155,6 +160,8 @@ function syncSidebar() {
     sideNav.setAttribute('aria-label', 'Điều hướng admin');
     navItems = [
       { href: 'admin-user-management.html', pages: ['admin-users'], label: 'Tài khoản', icon: ICONS.account },
+      { href: 'manager-table-management.html', pages: ['manager-tables', 'admin-tables'], label: 'Bàn ăn & QR', icon: ICONS.tables },
+      { href: 'manager-menu-management.html', pages: ['manager-menu'], label: 'Thực đơn', icon: ICONS.menu },
       { href: 'admin-sales-insights.html', pages: ['admin-sales', 'admin-sales-insights', 'manager-sales'], label: 'Bán hàng', icon: ICONS.sales },
       { href: 'manager-feedback-center.html', pages: ['manager-feedback'], label: 'Phản hồi', icon: ICONS.feedback },
       { href: 'admin-settings.html', pages: ['admin-settings'], label: 'Cài đặt', icon: ICONS.settings },
@@ -189,7 +196,7 @@ function syncSidebar() {
 
   if (!navItems.length) return;
 
-  const html = `
+  sideNav.innerHTML = `
     <p>Không gian làm việc</p>
     ${navItems.map(item => {
       const isMatch = item.href === currentFile || (item.pages && item.pages.includes(currentPageKey));
@@ -197,6 +204,4 @@ function syncSidebar() {
       return `<a${activeAttr} href="${item.href}"><span aria-hidden="true">${item.icon}</span>${item.label}</a>`;
     }).join('\n    ')}
   `;
-
-  sideNav.innerHTML = html;
 }

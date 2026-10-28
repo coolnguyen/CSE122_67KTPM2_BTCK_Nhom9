@@ -1,13 +1,20 @@
+// ==========================================================================
+// js/login.js - Xác thực vai trò nhân viên & Kiểm tra trạng thái hoạt động
+// ==========================================================================
+
 function getMockStaff(email) {
-  const staffList = (appData && Array.isArray(appData.staff) && appData.staff.length)
-    ? appData.staff
-    : [
-        { id: 'u03', name: 'Thu Hà', email: 'thuha@menumind.vn', role: 'manager', status: 'active', shift: 'Cả ngày' },
-        { id: 'u04', name: 'Hoàng Nam', email: 'hoangnam@menumind.vn', role: 'admin', status: 'active', shift: 'Cả ngày' },
-        { id: 'u01', name: 'Minh Anh', email: 'minhanh@menumind.vn', role: 'kitchen', status: 'active', shift: 'Chiều' },
-        { id: 'u05', name: 'Linh Chi', email: 'linhchi@menumind.vn', role: 'service', status: 'active', shift: 'Sáng' }
-      ];
-  return staffList.find(s => s.email.toLowerCase() === email.toLowerCase());
+  const storedStaff = getStore('staff', null);
+  const staffList = (Array.isArray(storedStaff) && storedStaff.length)
+    ? storedStaff
+    : (appData && Array.isArray(appData.staff) && appData.staff.length)
+      ? appData.staff
+      : [
+          { id: 'u03', name: 'Thu Hà', email: 'thuha@menumind.vn', role: 'manager', status: 'active', shift: 'Cả ngày' },
+          { id: 'u04', name: 'Hoàng Nam', email: 'hoangnam@menumind.vn', role: 'admin', status: 'active', shift: 'Cả ngày' },
+          { id: 'u01', name: 'Minh Anh', email: 'minhanh@menumind.vn', role: 'kitchen', status: 'active', shift: 'Chiều' },
+          { id: 'u05', name: 'Linh Chi', email: 'linhchi@menumind.vn', role: 'service', status: 'active', shift: 'Sáng' }
+        ];
+  return staffList.find(s => String(s.email || '').toLowerCase() === String(email || '').toLowerCase());
 }
 
 async function performLogin(email, password, button, feedback) {
@@ -23,18 +30,42 @@ async function performLogin(email, password, button, feedback) {
   let session = null;
   let staff = null;
 
+  // Kiểm tra danh bạ nhân sự cục bộ trước để đảm bảo trạng thái kích hoạt/vô hiệu hóa mới nhất
+  const localRecord = getMockStaff(email);
+  if (localRecord && localRecord.status === 'inactive') {
+    if (button) {
+      button.disabled = false;
+      button.textContent = 'Đăng nhập';
+    }
+    if (feedback) {
+      feedback.className = 'form-feedback error';
+      feedback.textContent = `Tài khoản ${localRecord.name} (${localRecord.email}) đã bị vô hiệu hóa. Vui lòng liên hệ Quản trị viên.`;
+    }
+    toast('Tài khoản đã bị vô hiệu hóa', 'error');
+    return;
+  }
+
   try {
     session = await signIn(email, password);
     staff = await getStaffRole(session.user.email, session.access_token);
   } catch (error) {
-    console.warn('Đăng nhập trực tuyến không thành công, sử dụng tài khoản cục bộ:', error.message);
-    const mock = getMockStaff(email);
-    if (mock) {
-      staff = mock;
+    if (localRecord) {
+      if (localRecord.status !== 'active') {
+        if (button) {
+          button.disabled = false;
+          button.textContent = 'Đăng nhập';
+        }
+        if (feedback) {
+          feedback.className = 'form-feedback error';
+          feedback.textContent = 'Tài khoản này hiện đang bị khóa hoặc vô hiệu hóa.';
+        }
+        return;
+      }
+      staff = localRecord;
       session = {
         access_token: 'demo-local-token',
         refresh_token: 'demo-local-refresh',
-        user: { email: mock.email, id: mock.id }
+        user: { email: localRecord.email, id: localRecord.id }
       };
     } else {
       if (button) {
@@ -43,7 +74,7 @@ async function performLogin(email, password, button, feedback) {
       }
       if (feedback) {
         feedback.className = 'form-feedback error';
-        feedback.textContent = error.message || 'Email hoặc mật khẩu không chính xác.';
+        feedback.textContent = 'Email không tồn tại trong danh sách nhân sự nhà hàng hoặc mật khẩu không đúng.';
       }
       return;
     }
@@ -57,7 +88,7 @@ async function performLogin(email, password, button, feedback) {
       staff
     }));
 
-    toast(`Đăng nhập thành công với vai trò ${statusLabel(staff.role) || staff.role}`);
+    toast(`Đăng nhập thành công: ${staff.name} (${statusLabel(staff.role) || staff.role})`);
 
     const next = new URLSearchParams(location.search).get('next');
     setTimeout(() => {
@@ -66,7 +97,7 @@ async function performLogin(email, password, button, feedback) {
       } else {
         location.href = roleHome(staff.role);
       }
-    }, 350);
+    }, 300);
   }
 }
 
@@ -77,21 +108,20 @@ function loginPage() {
     feedback.className = 'form-feedback current-session-badge';
     feedback.innerHTML = `
       <span>Đang đăng nhập: <strong>${escapeHtml(current.staff.name)}</strong> (${statusLabel(current.staff.role)})</span>
-      <button type="button" class="button small quiet" id="btn-logout" style="margin-left: 8px;">Đăng xuất</button>
+      <a class="button small primary" href="${roleHome(current.staff.role)}" style="margin-left: 8px;">Vào khu vực làm việc</a>
+      <button type="button" class="button small quiet" id="btn-logout" style="margin-left: 6px;">Đăng xuất</button>
     `;
   }
 }
 
 document.addEventListener('click', e => {
-  // Nút đăng xuất
   if (e.target.id === 'btn-logout' || e.target.closest('#btn-logout')) {
     sessionStorage.removeItem('menumind:session');
     toast('Đã đăng xuất khỏi phiên làm việc', 'info');
-    setTimeout(() => location.reload(), 300);
+    setTimeout(() => location.reload(), 250);
     return;
   }
 
-  // Nút đăng nhập nhanh bằng chip tài khoản mẫu
   const chip = e.target.closest('[data-login-email]');
   if (chip) {
     const email = chip.dataset.loginEmail;
