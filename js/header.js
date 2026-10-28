@@ -93,12 +93,39 @@ function initHeaderAndNav() {
   mountThemeButton();
   updateRolePill();
   syncSidebar();
+  setupLinkPrefetching();
 }
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initHeaderAndNav);
 } else {
   initHeaderAndNav();
+}
+
+// ==========================================================================
+// TỰ ĐỘNG PREFETCH TRANG KHI RÊ CHUỘT (LINK PREFETCHING) - CHUYỂN TRANG 0MS
+// ==========================================================================
+function setupLinkPrefetching() {
+  const prefetched = new Set();
+  function prefetch(url) {
+    if (!url || prefetched.has(url)) return;
+    if (url.startsWith('#') || url.startsWith('http') || url.startsWith('mailto:') || url.startsWith('tel:')) return;
+    prefetched.add(url);
+    const linkEl = document.createElement('link');
+    linkEl.rel = 'prefetch';
+    linkEl.href = url;
+    document.head.appendChild(linkEl);
+  }
+
+  document.addEventListener('mouseover', e => {
+    const a = e.target.closest('a[href]');
+    if (a) prefetch(a.getAttribute('href'));
+  }, { passive: true });
+
+  document.addEventListener('touchstart', e => {
+    const a = e.target.closest('a[href]');
+    if (a) prefetch(a.getAttribute('href'));
+  }, { passive: true });
 }
 
 // ==========================================================================

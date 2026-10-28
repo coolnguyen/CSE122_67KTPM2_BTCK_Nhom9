@@ -506,76 +506,33 @@ async function bootPage(renderPage) {
   currentRenderFn = renderPage;
   getBootTimestamp();
 
-  // 1. Luôn nạp dữ liệu mẫu từ app-data.json để làm seed dữ liệu chuẩn
-  try {
-    const res = await fetch(`${ROOT}/assets/data/app-data.json`, { cache: 'no-store' });
-    if (res.ok) {
-      const localSeed = await res.json();
-      setStore('seed', localSeed, true);
+  // 1. Tải ngay dữ liệu từ bộ nhớ cục bộ để RENDER NGAY LẬP TỨC (Zero-Wait, không giật lag)
+  refreshAppDataFromStorage();
 
+  const hasSeed = Boolean(localStorage.getItem('menumind:seed'));
+  if (!hasSeed) {
+    try {
+      const res = await fetch(`${ROOT}/assets/data/app-data.json`);
+      if (res.ok) {
+        const localSeed = await res.json();
+        setStore('seed', localSeed, true);
+        ['staff', 'orders', 'feedback', 'payments', 'tables', 'menuItems'].forEach(key => {
+          const current = getStore(key, null);
+          if (!current || (Array.isArray(current) && current.length === 0)) {
+            setStore(key, localSeed[key] || [], true);
+          }
+        });
+        refreshAppDataFromStorage();
+      }
+    } catch (err) {
+      setStore('seed', fallbackData, true);
       ['staff', 'orders', 'feedback', 'payments', 'tables', 'menuItems'].forEach(key => {
         const current = getStore(key, null);
         if (!current || (Array.isArray(current) && current.length === 0)) {
-          setStore(key, localSeed[key] || [], true);
-        } else if (key === 'orders') {
-          // Tự động nâng cấp các đơn cũ thiếu trường total hoặc unitPrice
-          let patched = false;
-          current.forEach(o => {
-            if (!o.total && Array.isArray(o.items)) {
-              const sub = o.items.reduce((s, x) => {
-                const m = (localSeed.menuItems || []).find(i => i.id === x.menuId);
-                x.unitPrice = x.unitPrice || m?.price || 0;
-                return s + x.unitPrice * (Number(x.qty) || 1);
-              }, 0);
-              o.subtotal = sub;
-              o.serviceFee = Math.round(sub * 0.05);
-              o.total = sub + o.serviceFee;
-              patched = true;
-            }
-          });
-          if (patched) setStore('orders', current, true);
-        } else if (key === 'staff') {
-          // Đảm bảo tài khoản mẫu Phục vụ (Linh Chi) sẵn sàng nếu dữ liệu cũ chưa có
-          const hasService = current.some(s => s.role === 'service');
-          if (!hasService && localSeed.staff) {
-            setStore('staff', localSeed.staff, true);
-          }
+          setStore(key, fallbackData[key] || [], true);
         }
       });
-    }
-  } catch (err) {
-    if (!localStorage.getItem('menumind:seed')) {
-      setStore('seed', fallbackData, true);
-    }
-    ['staff', 'orders', 'feedback', 'payments', 'tables', 'menuItems'].forEach(key => {
-      const current = getStore(key, null);
-      if (!current || (Array.isArray(current) && current.length === 0)) {
-        setStore(key, fallbackData[key] || [], true);
-      }
-    });
-  }
-
-  refreshAppDataFromStorage();
-
-  // Khởi tạo phiên QR mặc định cho các bàn đang có khách (occupied)
-  if (typeof ensureTableSession === 'function' && Array.isArray(appData.tables)) {
-    appData.tables.forEach(t => {
-      if (t.status === 'occupied') {
-        ensureTableSession(t.id, false);
-      }
-    });
-  }
-
-  // 2. Thử đồng bộ từ Supabase nếu có phiên đăng nhập thực
-  if (typeof configureSupabase === 'function') {
-    await configureSupabase();
-    try {
-      const remote = typeof readRemoteData === 'function' ? await readRemoteData() : null;
-      if (remote && remote.menuItems && remote.menuItems.length) {
-        cacheData(remote);
-      }
-    } catch (remoteError) {
-      console.warn('Chế độ đồng bộ cục bộ thời gian thực đang bật.');
+      refreshAppDataFromStorage();
     }
   }
 
@@ -595,11 +552,37 @@ async function bootPage(renderPage) {
     return;
   }
 
+  // 2. Kiểm tra quyền và RENDER TRANG TỨC THÌ (0ms)
   if (!(await guardQrOrder())) return;
   if (!guardPage()) return;
 
   applySystemSettingsToDOM();
   renderPage();
+
+  // 3. Xử lý đồng bộ nền ngầm phía sau (không làm khựng giao diện người dùng)
+  setTimeout(() => {
+    if (typeof ensureTableSession === 'function' && Array.isArray(appData.tables)) {
+      appData.tables.forEach(t => {
+        if (t.status === 'occupied') {
+          ensureTableSession(t.id, false);
+        }
+      });
+    }
+
+    if (typeof configureSupabase === 'function') {
+      configureSupabase().then(async () => {
+        try {
+          const remote = typeof readRemoteData === 'function' ? await readRemoteData() : null;
+          if (remote && remote.menuItems && remote.menuItems.length) {
+            cacheData(remote);
+            if (typeof currentRenderFn === 'function') {
+              currentRenderFn();
+            }
+          }
+        } catch (remoteError) {}
+      });
+    }
+  }, 10);
 
   // Bộ đếm nhịp thời gian thực (cập nhật thời gian chờ mỗi 15 giây)
   if (realtimeTickerId) clearInterval(realtimeTickerId);

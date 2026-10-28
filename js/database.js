@@ -54,24 +54,39 @@ async function getStaffRole(email, token) {
   return staff;
 }
 
+let remoteConfigured = false;
+let supabaseConfigCache = null;
+
 async function configureSupabase() {
-  if (remoteEnabled) return;
+  if (remoteEnabled || remoteConfigured) return;
   const root = typeof ROOT !== 'undefined' ? ROOT : '.';
   try {
-    const response = await fetch(`${root}/assets/config/supabase.json`, { cache: 'no-store' });
-    if (!response.ok) throw new Error('config unavailable');
-    const config = await response.json();
-    SUPABASE_URL = String(config.url || '').replace(/\/$/, '');
-    SUPABASE_KEY = String(config.publishableKey || '');
-    remoteEnabled = Boolean(
-      SUPABASE_URL &&
-      SUPABASE_KEY &&
-      !SUPABASE_KEY.toLowerCase().includes('your') &&
-      !SUPABASE_KEY.includes('<')
-    );
+    if (!supabaseConfigCache) {
+      const saved = sessionStorage.getItem('menumind:supabase_config');
+      if (saved) {
+        supabaseConfigCache = JSON.parse(saved);
+      } else {
+        const response = await fetch(`${root}/assets/config/supabase.json`);
+        if (response.ok) {
+          supabaseConfigCache = await response.json();
+          sessionStorage.setItem('menumind:supabase_config', JSON.stringify(supabaseConfigCache));
+        }
+      }
+    }
+    if (supabaseConfigCache) {
+      SUPABASE_URL = String(supabaseConfigCache.url || '').replace(/\/$/, '');
+      SUPABASE_KEY = String(supabaseConfigCache.publishableKey || '');
+      remoteEnabled = Boolean(
+        SUPABASE_URL &&
+        SUPABASE_KEY &&
+        !SUPABASE_KEY.toLowerCase().includes('your') &&
+        !SUPABASE_KEY.includes('<')
+      );
+    }
   } catch (error) {
     remoteEnabled = false;
   }
+  remoteConfigured = true;
 }
 
 async function readRemoteData() {
