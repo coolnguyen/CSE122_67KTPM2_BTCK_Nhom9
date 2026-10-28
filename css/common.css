@@ -26,13 +26,58 @@
 
 html {
   scroll-behavior: smooth;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
+  max-width: 100%;
+  overflow-x: hidden;
   color: var(--ink);
   background: var(--paper);
   font: 400 15px/1.65 'Be Vietnam Pro', sans-serif;
+}
+
+/* ==========================================================================
+   TINH CHỈNH THANH CUỘN HIỆN ĐẠI (Sleek Luxury Scrollbar Engine)
+   Thay thế thanh cuộn xám dày thô kệch mặc định của Windows bằng thanh cuộn
+   bo tròn siêu mỏng, trong suốt, tinh tế theo phong cách Apple / Linear / Stripe
+   ========================================================================== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(16, 42, 43, 0.22) transparent;
+}
+
+[data-theme="dark"] * {
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 42, 43, 0.22);
+  border-radius: 999px;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--leaf);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #2dd4bf;
 }
 
 body::before {
